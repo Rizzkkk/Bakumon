@@ -1,11 +1,13 @@
 # Brand assets
 
-Files live in `assets/brand/` and are **not gitignored**, unlike the mined artwork.
-Nothing is literally tracked yet - `git init` has never been run on this repo.
+Files live in `assets/brand/` and are **not gitignored**, unlike the mined artwork. All of
+them are tracked as of the first commit, 2026-09-23.
 
 | File | Dimensions | Format | Size | Role |
 |---|---|---|---|---|
-| `logo-transparent.png` | 392 x 383 | PNG, RGBA, **alpha** | 186 KB | the mark, source of truth |
+| `logo-1267.png` | 1267 x 1241 | PNG, RGBA, **alpha** | 936 KB | the mark at full size - hero and share card (ADR 0010) |
+| `wordmark.png` | 2172 x 724 | PNG, RGBA, **alpha** | 1.48 MB | the wordmark, new with the design kit |
+| `logo-transparent.png` | 392 x 383 | PNG, RGBA, **alpha** | 186 KB | favicon source - `npm run brand` downsamples from this pixel grid |
 | `Logo.png` | 1254 x 1254 | PNG, RGB, no alpha | 1.08 MB | superseded, kept for reference |
 | `Banner.png` | 1672 x 941 | PNG, RGB, no alpha | 2.23 MB | hero original |
 | `logo.webp` | 256 x 256 | WebP, alpha | 16 KB | generated |

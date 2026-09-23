@@ -46,10 +46,11 @@ Steps 1 to 5 are done. `apps/web` is a Vite SPA with a landing page, browse, sea
 Pokemon and item pages, both legal pages and a 404, verified by `npm run verify:web` and
 built by `npm run web:build`. The one thing still missing from it is six to eight server
 screenshots - the gallery hides itself until they exist. Step 6, deployment, is not
-started, and `git init` has still never been run.
+started. Version control does now exist: `git init` ran on 2026-09-23 and the tree as
+built is its first commit, closing `pre-production.md` item 30.
 
 `00-project/architecture.md` remains the spec, with the corrections in
-`03-database/schema.md` applied and the cancellations recorded in ADRs 0005 to 0009.
+`03-database/schema.md` applied and the cancellations recorded in ADRs 0005 to 0010.
 
 **`00-project/pre-production.md` is the checklist for everything still standing between
 here and a live site**, split into what needs a decision or an asset from the project

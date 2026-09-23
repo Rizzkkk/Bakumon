@@ -22,7 +22,7 @@ Blockers are marked **[blocker]**. Everything else can ship after launch without
 | React frontend | **done** - landing, wiki, both legal pages, 404; builds and verified |
 | Legal pages and attribution footer | **done** - `/privacy-policy`, `/terms-of-service`, footer on every page |
 | Deployment | **not started, and no deployment artifact exists** |
-| Version control | **not started - `git init` has never been run** |
+| Version control | **done** - `git init` ran 2026-09-23, 147 files in the first commit |
 
 The single largest remaining item is **deployment**, and behind it **version control**.
 Items 13 to 23 were all facets of the frontend's absence and are now mostly closed; what
@@ -30,11 +30,11 @@ survives from that block is narrow and listed there - robots.txt and the sitemap
 per-page meta descriptions (item 16), and the absolute `og:image` URL that needs a domain
 (item 23).
 
-**Item 30 (`git init`) is the blocker to do first**, and nothing depends on it being done
-later. Until it runs there is no history and no rollback for ~45 source files, and the
-`.gitignore` that excludes `.env` and 130 MB of artwork is a file describing intentions to
-a tool that was never started. The runbook now also carries a database password step,
-which makes this sharper.
+**Item 30 (`git init`) was the blocker to do first and is now done**, 2026-09-23, ahead of
+the design-kit work that rewrites most of `apps/web`. 147 files in the first commit; the
+three real `.env` files were correctly excluded and only the three `.env.example` files are
+tracked, so the `.gitignore` is now in force rather than describing intentions to a tool
+that was never started. No remote is configured yet - see item 31 and the runbook.
 
 
 ---
@@ -272,11 +272,15 @@ All of the following are **missing** - I checked, none of it exists yet:
 Added 2026-09-19 after an audit found these missing entirely. None were on this list
 before, which is why none of them had ever been actioned.
 
-30. **[blocker] `git init` has never been run.** There is no `.git` directory. The
-    `.gitignore` that excludes `.env` and the 130 MB of artwork is therefore **not in
-    force** - it is a file describing intentions to a tool that was never started. There
-    is no history, no remote, no rollback, and no way to deploy by pulling. Do this before
-    a real VPS password goes into `.env`.
+30. **[done] `git init`.** Ran 2026-09-23, before the design-kit work began, because that
+    work rewrites roughly 30 of the 41 frontend files and there was nothing to roll back
+    to. 147 files in the first commit. Verified at stage time that the three real `.env`
+    files were excluded and only the `.env.example` files tracked, so the `.gitignore` is
+    in force. A `.gitattributes` pinning `eol=lf` was added in the same commit: the deploy
+    target is Linux (ADR 0005) and the authoring machine is Windows.
+
+    Still open, and moved to item 31: no remote, so there is still no way to deploy by
+    pulling.
 
 31. **No deployment artifacts exist.** Everything about deployment lives as prose in
     `06-deployment/runbook.md`. Missing as files: a Dockerfile for the API, an nginx config
@@ -301,8 +305,14 @@ before, which is why none of them had ever been actioned.
 
 34. **No test runner, no linter, no CI.** `npm run validate` and `npm run smoke` are real
     assertion suites and cover the data and the HTTP contract well, but there is no harness
-    for unit-testing API internals or anything in the frontend to come, and nothing runs
-    automatically. CI is moot until item 30 is done.
+    for unit-testing API internals and nothing in the frontend beyond `npm run verify:web`,
+    which exercises four pure logic modules and asserts nothing about rendering. Item 30 no
+    longer blocks CI; nothing else does either, so this is now the honest top of the
+    engineering-hygiene list.
+
+    Sharpened by the design-kit work: a full visual redesign cannot fail any check in this
+    repository. Every phase gate is a manual pass plus an agent review, which is weaker
+    than a suite and should not be mistaken for one.
 
 ## Security and resilience review, 2026-09-23
 
