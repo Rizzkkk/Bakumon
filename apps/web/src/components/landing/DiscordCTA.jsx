@@ -1,19 +1,21 @@
-import { DISCORD_INVITE } from '../../lib/serverFacts.js';
+import { CtaButton } from '../common/CtaButton.jsx';
 
+// landing-d-light.html / landing-m-dark.html's second CTA band: the server address, the
+// version and how to join all live in Discord rather than on this page, so they can change
+// without a site deploy going stale (ADR "one call to action site-wide").
 export function DiscordCTA() {
   return (
-    <section className="panel panel--cta">
-      <h2 style={{ margin: 0 }}>Everything else is in Discord</h2>
-      <p style={{ margin: 0, color: 'var(--text-muted)' }}>
-        The server address, the version, the modpack and how to join are all posted there.
-        They live in Discord rather than on this page so they stay current without waiting
-        on a site update.
-      </p>
-      <p style={{ margin: 0 }}>
-        <a className="button button--primary" href={DISCORD_INVITE} rel="noreferrer noopener" target="_blank">
-          Join the Discord
-        </a>
-      </p>
+    <section className="cta-band">
+      <div className="cta-band__inner">
+        <div className="cta-band__copy">
+          <h2 className="cta-band__title">The server address lives in Discord</h2>
+          <p className="cta-band__body">
+            So do the version, the rules and how to join. Say hello there and someone will
+            help you get in.
+          </p>
+        </div>
+        <CtaButton size={60} />
+      </div>
     </section>
   );
 }

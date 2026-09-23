@@ -1,22 +1,352 @@
-/* Owner: Phase 4/5 (pokemon-detail, item-detail, ditto-detail, legendary-detail). */
+/* Owner: Phase 5 (pokemon-detail, item-detail, ditto-detail, legendary-detail). */
 
-/* Carried over from the pre-kit global.css so DescriptionPanel, EventSpawnPanel,
-   SpawnTable and ItemDetail keep rendering until Phase 5 rebuilds these screens from the
-   pokemon-detail, item-detail, ditto-detail and legendary-detail artboards. Not kit
-   markup - do not treat as reference. */
+/* ---- Layout: intro/prose + infobox ----
+   Mobile: infobox sits above the prose (states-detail-*, pokemon-detail-m-*). Desktop: prose
+   left, infobox fixed-width right. column-reverse achieves the mobile order without a second
+   DOM copy of the infobox - the infobox is the second child in markup (matches its position
+   in the desktop row) and the browser flips it to first only below the breakpoint. */
+.article-layout {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+}
+@media (min-width: 768px) {
+  .article-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+}
+.article-intro {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.article-lede {
+  margin: 0;
+  font-size: 18px;
+  line-height: 29px;
+}
+
+/* ---- Infobox ---- */
+
+.infobox {
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background: var(--surface);
+  border: 2px solid var(--line-strong);
+}
+@media (min-width: 768px) {
+  .infobox { width: 320px; }
+}
+.infobox__caption {
+  padding: 10px 14px;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+}
+.infobox__art {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  background: var(--surface2);
+}
+.infobox table { width: 100%; border-collapse: collapse; }
+.infobox th, .infobox td {
+  padding: 10px 12px;
+  font-size: 15px;
+  line-height: 22px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.infobox th {
+  width: 44%;
+  background: var(--surface2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ---- Contents box: nav on desktop, details/summary on mobile. Same items, rendered twice,
+   toggled by breakpoint rather than by JS - matching WikiSidebar/WikiDrawer's own pattern. ---- */
+
+.contents-box {
+  align-self: flex-start;
+  min-width: 260px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.contents-box__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}
+.contents-box ol {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+  line-height: 22px;
+}
+.contents-box ol ol { margin: 4px 0 0; padding-left: 22px; gap: 2px; }
+
+.contents-box--mobile {
+  display: flex;
+  padding: 0;
+  min-width: 0;
+}
+.contents-box--mobile summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+}
+.contents-box--mobile__body { padding: 0 14px 14px; }
+
+@media (min-width: 768px) {
+  .contents-box--desktop { display: flex; }
+  .contents-box--mobile { display: none; }
+}
+
+/* ---- Callout note: icon + paragraph, border colour overridable per call site (Ditto's
+   multi-bucket note borrows the ultra-rare token so the note visually points at the reason
+   it exists). ---- */
+.callout-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 2px solid var(--line-strong);
+}
+.callout-note__icon { display: flex; padding-top: 3px; flex-shrink: 0; }
+.callout-note p { margin: 0; font-size: 16px; line-height: 25px; }
+
+/* ---- Definition list glossary ("Reading spawn rows"): 1 column on mobile, 3 on desktop. ---- */
+.definition-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 16px 28px;
+}
+@media (min-width: 768px) {
+  .definition-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.definition-list__item { display: flex; flex-direction: column; gap: 2px; }
+.definition-list dt { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.definition-list dd { margin: 0; font-size: 15px; line-height: 23px; color: var(--muted); }
+
+/* ---- Spawning section toolbar: distribution bar + expand-all ---- */
+.spawn-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.spawn-toolbar__label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.spawn-distribution { display: flex; flex-wrap: wrap; gap: 3px; max-width: 360px; }
+.spawn-distribution__cell { width: 14px; height: 14px; }
+
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 16px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line-strong);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---- Spawn groups ---- */
+.spawn-groups { display: flex; flex-direction: column; gap: 10px; }
+.spawn-group { background: var(--surface); border: 2px solid var(--line); }
+.spawn-group__summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 60px;
+  padding: 10px 16px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+.spawn-group__icon { color: var(--muted); display: flex; flex-shrink: 0; }
+.spawn-group__title { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 180px; }
+.spawn-group__name { font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 22px; }
+.spawn-group__aspect { font-family: var(--font-mono); font-size: 13px; color: var(--faint); }
+.spawn-group__chips { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.spawn-group__count { font-family: var(--font-mono); font-size: 14px; color: var(--muted); min-width: 56px; text-align: right; }
+
+.spawn-group__table-wrap { display: none; padding: 0 16px 16px; }
+.spawn-group__cards { display: flex; flex-direction: column; gap: 10px; padding: 0 12px 12px; }
+@media (min-width: 768px) {
+  .spawn-group__table-wrap { display: block; }
+  .spawn-group__cards { display: none; }
+}
+
+/* ---- Spawn table (desktop, one per group) ---- */
+.spawn-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 22px; }
+.spawn-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid var(--line);
+}
+.spawn-table td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--line); }
+.spawn-table td.mono { font-family: var(--font-mono); font-size: 15px; }
+
+.biome-stack { display: flex; flex-direction: column; gap: 6px; }
+.biome-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  background: var(--surface2);
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+/* ---- Spawn row card (mobile, one per row inside a group) ---- */
+.spawn-row-card {
+  padding: 14px;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.spawn-row-card__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.spawn-row-card__meta { font-family: var(--font-mono); font-size: 14px; color: var(--muted); }
+.spawn-row-card__meta strong { color: var(--text); font-weight: 400; }
+.spawn-row-card__dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 8px 12px;
+  font-size: 15px;
+  line-height: 22px;
+}
+.spawn-row-card__dl dt {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.spawn-row-card__dl dd { margin: 0; }
+
+/* ---- Legendary panel: replaces the spawn table entirely (no biome tables to search). ---- */
+.legendary-panel {
+  background: var(--t-legendary-bg);
+  color: var(--t-legendary-fg);
+  padding: 24px;
+  box-shadow: inset 0 0 0 3px var(--t-legendary-edge), 6px 6px 0 var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+@media (min-width: 768px) {
+  .legendary-panel { padding: 32px; }
+}
+.legendary-panel__label { display: flex; align-items: center; gap: 12px; }
+.legendary-panel__label span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.legendary-panel__headline { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.2; }
+@media (min-width: 768px) {
+  .legendary-panel__headline { font-size: 30px; }
+}
+.legendary-panel__body { margin: 0; max-width: 680px; font-size: 17px; line-height: 27px; }
+.legendary-dl { margin: 0; }
+.legendary-dl__row { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px 24px; padding: 12px 0; border-top: 1px solid var(--t-legendary-edge); }
+.legendary-dl dt {
+  width: 200px;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.legendary-dl dd { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.legendary-dl .biome-pill { background: var(--t-legendary-fg); color: var(--t-legendary-bg); }
+
+/* ---- Wiki credit line: a licence requirement (CC BY 4.0), not decoration. ---- */
+.wiki-credit {
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--faint);
+}
+.wiki-credit__icon { display: flex; padding-top: 3px; flex-shrink: 0; }
+.wiki-credit a { color: var(--muted); }
+
+/* ---- Evolution uses table (items) ---- */
+.evolution-table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 15px; line-height: 22px; }
+.evolution-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.evolution-table td { padding: 10px 12px; border: 1px solid var(--line); vertical-align: top; }
+
+/* ---- Carried over from the pre-kit global.css: still used by ItemName's %s chip and by
+   ItemDetail/DescriptionPanel's plain info boxes. ADR 0009 keeps the placeholder chip. ---- */
 .panel {
   padding: 16px;
   background: var(--surface2);
   border-radius: var(--radius);
 }
 
-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--surface2); }
-th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
-
-/* The %s in four item names is a flavour the game substitutes at runtime. The token is
-   shown, not stripped - the workbook is authoritative (ADR 0004) - but rendered as a chip
-   so a visitor reads it as a placeholder rather than as a broken string. ADR 0009. */
 .placeholder-token {
   padding: 0 6px;
   font-size: 0.85em;
@@ -26,8 +356,18 @@ th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: 
   border-radius: 4px;
 }
 
-/* Legal copy is read, not scanned, so it gets a measure rather than the full width. Also
-   used by EventSpawnPanel's random-spawn note. */
-.prose { max-width: var(--measure); }
-.prose h2 { margin-top: 32px; font-size: 1.15rem; }
-.prose li { margin-bottom: 6px; }
+/* ---- Not-found search state (states-detail-*) ---- */
+.detail-not-found__form { display: flex; flex-direction: column; gap: 6px; }
+.detail-not-found__field { position: relative; display: flex; align-items: center; }
+.detail-not-found__icon { position: absolute; left: 14px; color: var(--muted); display: flex; }
+.detail-not-found__input {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 14px 0 46px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line-strong);
+  font: var(--type-body);
+}
+.detail-not-found__actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }

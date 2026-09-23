@@ -1,44 +1,56 @@
-import { DISCORD_INVITE } from '../../lib/serverFacts.js';
+import { CtaButton } from '../common/CtaButton.jsx';
+import { GrassSkyline } from './GrassSkyline.jsx';
 
-// The banner already carries the BAKUMON wordmark, so the page does not repeat it as
-// heading text beside the image. The h1 is still present and still says the name, for the
-// search engine and the screen reader; it is visually hidden because rendering it would be
-// the same word twice, once enormous.
+// landing-d-light.html's right slot holds the logo alone. This deliberately departs from
+// that: the isometric character render is the server owner's own Minecraft skin and does
+// not appear anywhere else on the site, so it earns the more prominent spot next to the
+// logo rather than being left out. ADR 0010.
 export function Hero() {
   return (
-    <section className="hero">
-      <h1 className="visually-hidden">Bakumon</h1>
+    <>
+      <section className="hero gridbg">
+        <div className="hero__inner">
+          <div className="hero__copy">
+            <img
+              className="hero__wordmark"
+              src="/assets/brand/wordmark.png"
+              alt="Bakumon SMP"
+              width={620}
+              height={207}
+            />
+            <h1 className="hero__title">A safe, friendly Cobblemon server.</h1>
+            <p className="hero__lede">
+              Catch, trade and explore with people who look out for each other. Legendaries
+              turn up at random, so any trip out could be the one.
+            </p>
+            <div className="hero__cta">
+              <CtaButton size={60} />
+            </div>
+          </div>
 
-      {/* srcset because this is the largest thing on the page and decides mobile load
-          time. A 375px phone takes the 768px encode, 85 KB rather than 258 KB. The PNG
-          original is 2.2 MB and is deliberately not served. */}
-      <img
-        className="hero__image"
-        src="/assets/brand/banner-1280.webp"
-        srcSet="/assets/brand/banner-768.webp 768w, /assets/brand/banner-1280.webp 1280w, /assets/brand/banner-1672.webp 1672w"
-        sizes="100vw"
-        width={1672}
-        height={941}
-        alt="Bakumon - Pokemon gathered around a campfire in a Minecraft landscape"
-        fetchPriority="high"
-      />
-
-      <div className="hero__body">
-        <p className="hero__tagline">
-          A Cobblemon server with a rebalanced spawn table, and a wiki that documents
-          every bit of it.
-        </p>
-
-        {/* The single call to action, not one of several. Everything else about the
-            server - address, versions, modpack, how to join - lives in Discord, where it
-            can change without a site deploy going stale. Decided 2026-09-17. */}
-        <p className="hero__actions">
-          <a className="button button--primary" href={DISCORD_INVITE} rel="noreferrer noopener" target="_blank">
-            Join the Discord
-          </a>
-          <a className="button" href="/wiki">Browse the wiki</a>
-        </p>
-      </div>
-    </section>
+          <div className="hero__figure">
+            <picture>
+              <source
+                type="image/webp"
+                srcSet="/assets/brand/character-320.webp 320w, /assets/brand/character-480.webp 420w"
+                sizes="(max-width: 767px) 220px, 240px"
+              />
+              <img
+                className="hero__character"
+                src="/assets/brand/character.png"
+                width={420}
+                height={790}
+                alt="An isometric render of the Bakumon server owner's Minecraft character"
+              />
+            </picture>
+            {/* alt="": decorative next to the character here, and already named by the
+                header and footer marks that appear on every page. */}
+            <img className="hero__logo" src="/assets/brand/logo-1267.png" alt="" width={1267} height={1241} />
+          </div>
+        </div>
+      </section>
+      <GrassSkyline />
+      <div className="skyline__moss" aria-hidden="true" />
+    </>
   );
 }

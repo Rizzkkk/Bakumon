@@ -1,67 +1,306 @@
-/* Owner: Phase 4 (pokemon/items index pages). */
+/* Owner: Phase 4 (WikiHome, PokemonIndex, ItemsIndex, and the filter/results/pagination
+   components they use). Class names follow the kit's blocky, 2px-border visual language -
+   pokemon-index-*, items-index-*, filter-sheet-m-* and wiki-home-* artboards - rather than
+   the pre-kit .card/.chip/.search/.pager rules that used to live here; those pages have
+   been rebuilt from the artboards and no longer use them. */
 
-/* Carried over from the pre-kit global.css so PokemonCard, ItemCard, CategoryNav,
-   SearchBar and ResultsGrid keep rendering until Phase 4 rebuilds these screens from the
-   pokemon-index, items-index and filter-sheet artboards. Not kit markup - do not treat as
-   reference. */
-.card {
+.index-intro {
+  margin: 0;
+  max-width: var(--measure);
+  font: var(--type-body-lg);
+}
+
+/* ---- Shared filter field/fieldset markup: FilterRail and FilterSheet render the same
+   FilterFields into two shells, so this is the one place their look is defined. ---- */
+
+.filter-rail {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 18px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  background: var(--surface2);
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  color: inherit;
-  text-decoration: none;
+  gap: 24px;
 }
-.card:hover { border-color: var(--line); }
-.card__name { font-weight: 600; line-height: 1.3; }
-.card__meta { color: var(--muted); font-size: 0.82rem; }
+.filter-rail__title { font-family: var(--font-display); font-weight: 700; font-size: 19px; }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
-.chip {
-  padding: 5px 11px;
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--muted);
-  background: var(--surface2);
-  border: 1px solid transparent;
-  border-radius: 999px;
-  cursor: pointer;
-}
-.chip:hover { color: var(--text); }
-.chip[aria-pressed="true"] { color: var(--bg); background: var(--text); font-weight: 600; }
+.filter-field { display: flex; flex-direction: column; gap: 6px; }
+.filter-field label { font-family: var(--font-display); font-weight: 600; font-size: 15px; }
 
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  border-radius: 999px;
-  border: 1px solid currentColor;
-}
-
-.search {
+.filter-search { position: relative; display: flex; align-items: center; }
+.filter-search svg { position: absolute; left: 14px; color: var(--muted); }
+.filter-search input {
   width: 100%;
-  padding: 12px 14px;
-  font: inherit;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 12px 0 42px;
+  background: var(--surface);
   color: var(--text);
-  background: var(--surface2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 2px solid var(--line-strong);
+  font: var(--type-body);
+  font-size: 15px;
 }
-.search::placeholder { color: var(--muted); }
+.filter-search input::placeholder { color: var(--faint); }
+.filter-search--lg input { height: 48px; padding-left: 46px; font-size: 16px; }
+.filter-search--lg svg { left: 16px; }
 
-.pager { display: flex; align-items: center; justify-content: center; gap: 16px; padding-top: 8px; }
-.pager button {
-  padding: 8px 14px;
-  font: inherit;
-  color: var(--text);
+.filter-fieldset { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px; }
+.filter-fieldset legend { padding: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.filter-fieldset__intro { margin: 0; font-size: 14px; line-height: 21px; color: var(--muted); }
+.filter-fieldset__cap { margin: 0; padding: 8px 10px; background: var(--surface2); font-size: 13px; color: var(--muted); }
+
+.filter-checkbox { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; padding: 6px 0; box-sizing: border-box; cursor: pointer; }
+.filter-checkbox input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--text); flex-shrink: 0; }
+.filter-checkbox__body { display: flex; flex-direction: column; gap: 4px; }
+.filter-checkbox__help { font-size: 13px; line-height: 18px; color: var(--muted); max-width: 46ch; }
+
+.filter-biome-list { border: 2px solid var(--line); background: var(--surface); max-height: 420px; overflow-y: auto; }
+.filter-biome-list__caption {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 6px;
   background: var(--surface2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: sticky;
+  top: 0;
+}
+.filter-biome-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 4px 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+}
+.filter-biome-row input { width: 20px; height: 20px; margin: 0; accent-color: var(--text); flex-shrink: 0; }
+.filter-biome-row input:disabled { cursor: not-allowed; }
+.filter-biome-row:has(input:disabled) { opacity: 0.5; }
+
+/* ---- FilterSheet: fieldsets above, a sticky action row pinned to the drawer's own
+   scroll container (Drawer.jsx has no footer slot, so the sticky offset accounts for its
+   .drawer__body padding directly rather than asking Phase 2 to add one). ---- */
+
+.filter-sheet__body { display: flex; flex-direction: column; gap: 24px; }
+.filter-sheet__footer {
+  position: sticky;
+  bottom: -16px;
+  margin: 16px -8px -16px;
+  padding: 12px 16px 16px;
+  display: flex;
+  gap: 12px;
+  border-top: 2px solid var(--line);
+  background: var(--surface);
+}
+.filter-sheet__apply {
+  flex: 1;
+  height: 48px;
+  background: var(--text);
+  color: var(--bg);
+  border: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
   cursor: pointer;
 }
-.pager button:disabled { opacity: 0.4; cursor: default; }
+
+/* ---- Generic action buttons: "Clear all filters", "Try again"-weight secondary actions.
+   Not .cta - DESIGN-HANDOFF.md reserves that styling for the one site-wide Discord button. ---- */
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 16px;
+  background: var(--text);
+  color: var(--bg);
+  border: 2px solid var(--line-strong);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+.action-button--outline { background: var(--surface); color: var(--text); }
+
+/* ---- Removable filter chip (the empty state's "3 filters on" row). ---- */
+
+.removable-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 10px 0 8px;
+  background: var(--surface);
+  border: 2px solid var(--line-strong);
+  color: var(--text);
+  font: var(--type-body);
+  font-size: 15px;
+  cursor: pointer;
+}
+.removable-chip__content { display: inline-flex; align-items: center; }
+
+.active-filters { display: flex; flex-direction: column; gap: 8px; }
+.active-filters__label { font: var(--type-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.active-filters__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---- Pagination. ---- */
+
+.pagination { display: flex; flex-direction: column; gap: 16px; }
+.pagination__summary { margin: 0; font-size: 15px; color: var(--muted); }
+.pagination__numbers { display: none; align-items: center; gap: 6px; }
+.pagination__mobile { display: flex; align-items: center; gap: 12px; }
+.pagination__step, .pagination__num {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+.pagination__num[aria-current="page"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pagination__step:disabled, .pagination__num:disabled { opacity: 0.4; cursor: default; }
+.pagination__ellipsis { display: inline-flex; width: 28px; justify-content: center; color: var(--faint); }
+.pagination__mobile-label { flex: 1; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+
+@media (min-width: 768px) {
+  .pagination__numbers { display: flex; }
+  .pagination__mobile { display: none; }
+}
+
+/* ---- PokemonIndex / ItemsIndex toolbars, results bar, table and mobile list. ---- */
+
+.index-toolbar { display: flex; gap: 10px; align-items: flex-end; }
+.index-toolbar .filter-field { flex: 1; }
+.index-toolbar__filters {
+  height: 48px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line-strong);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.items-filter-bar { display: flex; flex-direction: column; gap: 20px; }
+.items-source { display: flex; flex-direction: column; gap: 8px; }
+.items-source__label { font-family: var(--font-display); font-weight: 600; font-size: 15px; }
+.items-source__chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.source-chip {
+  height: 44px;
+  padding: 0 16px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+.source-chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+.index-results-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.index-results-bar__count { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.index-results-bar__sort { font-size: 14px; color: var(--muted); }
+
+.index-table { display: none; }
+.index-table table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 15px; line-height: 22px; }
+.index-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+.index-table td { padding: 8px 12px; border: 1px solid var(--line); vertical-align: middle; }
+.index-table__name { display: block; font-family: var(--font-display); font-weight: 600; }
+
+.index-list { margin: 0; padding: 0; list-style: none; background: var(--surface); border: 2px solid var(--line); border-top-width: 1px; }
+.index-list-skeleton { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 2px solid var(--line); }
+.index-list-skeleton .index-row { background: var(--surface); }
+
+.index-row { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-top: 1px solid var(--line); }
+.index-list > .index-row:first-child { border-top: 0; }
+.index-row__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.index-row__name { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+.index-row__slug { color: var(--faint); font-size: 0.78em; }
+.index-row__meta { font-size: 14px; color: var(--muted); }
+
+@media (min-width: 768px) {
+  .index-toolbar { display: none; }
+  .index-table { display: block; }
+  .index-list, .index-list-skeleton { display: none; }
+}
+
+/* ---- WikiHome hub. ---- */
+
+.hub-search { max-width: 760px; display: flex; flex-direction: column; gap: 6px; }
+.hub-search label { font-family: var(--font-display); font-weight: 600; font-size: 15px; }
+
+.hub-cards { display: flex; flex-direction: column; gap: 24px; }
+.hub-card { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--surface); border: 2px solid var(--line); }
+.hub-card__header { display: flex; align-items: center; gap: 12px; }
+.hub-card__badge {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+}
+.hub-card__header h2 { margin: 0; font: var(--type-h2); font-size: 28px; line-height: 1.2; }
+.hub-card__count { margin-left: auto; font-size: 15px; color: var(--muted); }
+.hub-card p { margin: 0; color: var(--muted); }
+.hub-card__browse { display: flex; flex-direction: column; gap: 4px; }
+.hub-card__browse-label { font: var(--type-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.hub-card__chips { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0 10px; }
+.hub-card__chip-link { display: flex; align-items: center; min-height: 44px; text-decoration: none; }
+.hub-card__source-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+.hub-card__source-list li { display: flex; align-items: center; min-height: 36px; font-size: 16px; }
+.hub-card__all { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+
+.hub-help { display: flex; flex-direction: column; gap: 12px; padding: 24px; background: var(--surface2); }
+.hub-help h3 { margin: 0; font: var(--type-h3); }
+.hub-help ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+
+@media (min-width: 900px) {
+  .hub-cards { flex-direction: row; }
+}

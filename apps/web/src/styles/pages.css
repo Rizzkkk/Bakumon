@@ -1,58 +1,223 @@
-/* Owner: Phase 3 (landing page) and legal pages. */
+/* Owner: Phase 6 (landing page, 404, legal pages). Built from the landing, not-found,
+   privacy and terms artboards in design/artboards. */
 
-/* Carried over from the pre-kit global.css so Hero, DiscordCTA and ScreenshotGrid keep
-   rendering until Phase 3 rebuilds the landing page from landing-*. Not kit markup - do
-   not treat as reference. */
-.button {
-  display: inline-block;
-  padding: 11px 20px;
-  font-weight: 600;
-  color: var(--text);
-  text-decoration: none;
-  background: var(--surface2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-.button:hover { border-color: var(--muted); }
+/* ---- Hero ---- */
 
-/* White label, not the field colour: measured 5.08:1 on --cta and 7.20:1 on --link, where
-   the field colour is 3.62:1 and fails AA at this size. */
-.button--primary {
-  color: var(--cta-text);
-  background: var(--cta);
-  border-color: var(--cta);
-}
-.button--primary:hover { background: var(--link); border-color: var(--link); }
-
-.hero__image {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1672 / 941;
-}
-
-.hero__body {
-  max-width: 1100px;
+.hero { background: var(--hero); }
+.hero__inner {
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 24px var(--gutter) 0;
+  padding: 28px 16px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
-.hero__tagline {
-  max-width: 44ch;
-  margin: 0 0 20px;
-  font-size: 1.25rem;
-  line-height: 1.4;
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 620px;
+}
+.hero__wordmark { display: block; width: 100%; max-width: 358px; height: auto; image-rendering: pixelated; }
+.hero__title { margin: 0; font: var(--type-h1); font-family: var(--font-display); max-width: 620px; }
+.hero__lede { margin: 0; max-width: 560px; font-size: 17px; line-height: 27px; color: var(--muted); }
+.hero__cta { padding-top: 8px; }
+.hero__cta .cta { width: 100%; justify-content: center; }
+
+.hero__figure {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.hero__character { display: block; width: 220px; height: auto; margin: 0 auto; image-rendering: pixelated; }
+.hero__logo { display: none; width: 140px; height: auto; image-rendering: pixelated; }
+
+@media (min-width: 768px) {
+  .hero__inner { flex-direction: row; align-items: center; padding: 64px 32px 56px; gap: 48px; }
+  .hero__copy { flex: 1; gap: 24px; }
+  .hero__wordmark { max-width: 620px; margin-left: -12px; }
+  .hero__cta { display: inline-block; }
+  .hero__cta .cta { width: auto; }
+  .hero__figure { justify-content: center; }
+  .hero__character { width: 240px; }
+  .hero__logo { display: block; }
+}
+
+/* ---- Grass skyline: decorative, aria-hidden. Tokens per ADR 0010 - the artboard's own
+   hardcoded hex is not licence for a component to hardcode one too. ---- */
+.skyline {
+  display: flex;
+  align-items: flex-end;
+  height: 48px;
+  background: var(--hero);
+}
+.skyline__column { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.skyline__lime { height: 8px; background: var(--brand-lime); }
+.skyline__leaf { flex: 1; background: var(--brand-leaf); }
+.skyline__moss {
+  height: 12px;
+  background: var(--brand-leaf);
+  box-shadow: inset 0 -4px 0 var(--brand-moss);
+}
+
+/* ---- Feature cards ---- */
+
+.feature-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.feature-section__title { margin: 0; font: var(--type-h2); font-family: var(--font-display); }
+
+.feature-grid { display: flex; flex-direction: column; gap: 16px; }
+.feature-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: var(--surface);
+  border: 2px solid var(--line);
+}
+.feature-card__icon {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.feature-card__icon--brand { background: var(--cta); color: var(--cta-text); box-shadow: inset 0 0 0 2px var(--cta-edge); }
+.feature-card__icon--legendary { background: var(--t-legendary-bg); color: var(--t-legendary-fg); box-shadow: inset 0 0 0 2px var(--t-legendary-edge); }
+.feature-card__icon--muted { background: var(--surface2); color: var(--text); box-shadow: inset 0 0 0 2px var(--line-strong); }
+.feature-card__title { margin: 0; font: var(--type-h3); font-family: var(--font-display); }
+.feature-card__body { margin: 0; color: var(--muted); font-size: 17px; line-height: 27px; }
+.feature-card__link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .feature-section { padding: 72px 32px; gap: 32px; }
+  .feature-grid { flex-direction: row; gap: 24px; }
+}
+
+/* ---- CTA band ---- */
+
+.cta-band { background: var(--surface2); border-top: 2px solid var(--line); }
+.cta-band__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 36px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.cta-band__inner .cta { width: 100%; justify-content: center; }
+.cta-band__copy { display: flex; flex-direction: column; gap: 10px; max-width: 640px; }
+.cta-band__title { margin: 0; font: var(--type-h2); font-family: var(--font-display); }
+.cta-band__body { margin: 0; color: var(--muted); font-size: 17px; line-height: 27px; }
+
+@media (min-width: 768px) {
+  .cta-band__inner { flex-direction: row; align-items: center; justify-content: space-between; padding: 56px 32px; }
+  .cta-band__inner .cta { width: auto; }
+}
+
+/* ---- Mobile sticky CTA bar. Hidden entirely at the desktop breakpoint - it is the same
+   tree on every viewport per ADR 0008, only shown or hidden here. ---- */
+.mobile-cta-spacer { height: 84px; }
+.mobile-cta-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 15;
+  padding: 12px 16px 16px;
+  background: var(--bg);
+  border-top: 2px solid var(--line);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .mobile-cta-spacer, .mobile-cta-bar { display: none; }
+}
+
+/* ---- 404 ---- */
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+.not-found__mark { display: block; filter: grayscale(1); opacity: 0.5; width: 160px; height: auto; image-rendering: pixelated; }
+.not-found__body { display: flex; flex-direction: column; align-items: center; gap: 18px; max-width: 620px; }
+.not-found__label { font-size: 15px; color: var(--muted); }
+.not-found__title { margin: 0; font: var(--type-h1); font-family: var(--font-display); }
+.not-found__lede { margin: 0; font-size: 18px; line-height: 28px; color: var(--muted); }
+
+.not-found__search { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 360px; }
+.not-found__search-label { font-family: var(--font-display); font-weight: 600; font-size: 15px; text-align: left; }
+.not-found__search-field { position: relative; display: flex; align-items: center; }
+.not-found__search-icon { position: absolute; left: 14px; color: var(--muted); display: flex; }
+.not-found__search-input {
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 14px 0 46px;
+  background: var(--surface);
   color: var(--text);
+  border: 2px solid var(--line-strong);
+  font: var(--type-body);
 }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
+.not-found__search-input::placeholder { color: var(--faint); }
 
-.panel--cta { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-
-.grid--wide { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-.shot { margin: 0; }
-.shot img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
-
-@media (max-width: 767px) {
-  .hero__tagline { font-size: 1.1rem; }
-  .button { display: block; text-align: center; }
-  .hero__actions { display: grid; gap: 10px; }
+.not-found__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
 }
+.not-found__links a { min-height: 44px; display: inline-flex; align-items: center; }
+
+@media (min-width: 768px) {
+  .not-found { flex-direction: row; align-items: center; text-align: left; gap: 56px; padding: 80px 0; }
+  .not-found__mark { width: 260px; }
+  .not-found__body { align-items: flex-start; }
+  .not-found__links { justify-content: flex-start; }
+}
+
+/* ---- Legal pages (privacy, terms) ---- */
+
+.legal { padding-top: 48px; padding-bottom: 80px; }
+.legal__article { max-width: 720px; display: flex; flex-direction: column; gap: 28px; }
+.legal__head { display: flex; flex-direction: column; gap: 12px; }
+.legal__title { margin: 0; font: var(--type-h1); font-family: var(--font-display); }
+.legal__meta { font-size: 15px; color: var(--faint); }
+.legal__lede { margin: 0; font-size: 21px; line-height: 32px; }
+.legal__section { display: flex; flex-direction: column; gap: 8px; }
+.legal__heading { margin: 0; font: var(--type-h2); font-family: var(--font-display); font-size: 26px; line-height: 1.2; }
+.legal__article p, .legal__article ul { margin: 0; font-size: 18px; line-height: 29px; }
+.legal__article ul { padding-left: 22px; display: flex; flex-direction: column; gap: 4px; }

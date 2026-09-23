@@ -4,14 +4,20 @@ import { ItemName } from '../common/ItemName.jsx';
 import { itemAlt } from '../../lib/altText.js';
 import { sourceCategoryLabel } from '../../lib/labels.js';
 
+// items-index-m-light.html's list row - one <li> per item, mobile only (the desktop
+// ItemsIndex page renders the same fields into a <table> row instead).
 export function ItemCard({ item }) {
   return (
-    <Link className="card" to={`/wiki/items/${encodeURIComponent(item.itemId)}`}>
-      {/* imageUrl, not a thumbnail: item art is 16x16 game texture averaging 1.4 KB, so a
-          24-card page is 33 KB and a thumbnail would save nothing worth a migration. */}
-      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={128} pixel />
-      <span className="card__name"><ItemName name={item.name} /></span>
-      <span className="card__meta">{sourceCategoryLabel(item.sourceCategory)}</span>
-    </Link>
+    <li className="index-row">
+      {/* imageUrl, not a thumbnail: item art is a 16x16 game texture averaging 1.4 KB, so a
+          24-row page is 33 KB and a thumbnail would save nothing worth a migration. */}
+      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={44} pixel />
+      <div className="index-row__body">
+        <Link className="index-row__name" to={`/wiki/items/${encodeURIComponent(item.itemId)}`}>
+          <ItemName name={item.name} />
+        </Link>
+        <span className="index-row__meta">{sourceCategoryLabel(item.sourceCategory)}</span>
+      </div>
+    </li>
   );
 }
