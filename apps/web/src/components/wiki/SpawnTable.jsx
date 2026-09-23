@@ -1,4 +1,4 @@
-import { BucketBadge } from './BucketBadge.jsx';
+import { BucketChip } from './BucketChip.jsx';
 import { BiomeLabel } from './BiomeLabel.jsx';
 import { EMPTY, levelRange, numberOrEmpty } from '../../lib/labels.js';
 
@@ -24,7 +24,7 @@ export function SpawnTable({ rows }) {
         <tbody>
           {rows.map((row, index) => (
             <tr key={index}>
-              <td>{row.bucket ? <BucketBadge bucket={row.bucket} /> : EMPTY}</td>
+              <td>{row.bucket ? <BucketChip slug={row.bucket} /> : EMPTY}</td>
               <td className="mono">{numberOrEmpty(row.weight)}</td>
               <td className="mono">{levelRange(row.levelMin, row.levelMax)}</td>
               <td>{row.context ?? EMPTY}</td>

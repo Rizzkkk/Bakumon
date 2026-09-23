@@ -59,7 +59,7 @@ export default function WikiHome() {
       <div className="hub-cards">
         <section className="hub-card">
           <div className="hub-card__header">
-            <span className="hub-card__badge" aria-hidden="true" />
+            <span className="hub-card__badge" aria-hidden="true"><PixelIcon name="pokemon" size={20} /></span>
             <h2>Pokemon</h2>
             <span className="mono hub-card__count">{pokemonTotal ?? '…'}</span>
           </div>
@@ -113,6 +113,48 @@ export default function WikiHome() {
           <li><a href="#biome-groups-explained">Biome groups explained</a>: why you see names like <code className="mono">#cobblemon:is_temperate</code>.</li>
           <li>Legendaries spawn at random on Bakumon, so they have their own section on each page instead of a spawn table.</li>
         </ul>
+      </section>
+
+      <section className="hub-help" id="reading-spawn-rows">
+        <h3>Reading spawn rows</h3>
+        <p>
+          Every species page lists the spawn rules this server actually runs, grouped by form
+          and aspect. A row means one rule, and a species can carry several that disagree.
+        </p>
+        <dl className="definition-list">
+          <dt>Bucket</dt>
+          <dd>How rare the roll is: common, uncommon, rare, ultra-rare, or legendary. A species
+            can sit in more than one, depending on where and when it spawns.</dd>
+          <dt>Weight</dt>
+          <dd>The relative chance of this rule winning against the others eligible at the same
+            moment. It is a weight, not a percentage.</dd>
+          <dt>Level</dt>
+          <dd>The range the Pokemon can appear at when this rule fires.</dd>
+          <dt>Context</dt>
+          <dd>What you have to be doing for the rule to apply: walking on the surface, fishing,
+            underground, and so on.</dd>
+          <dt>Biomes</dt>
+          <dd>Where it applies. See below.</dd>
+          <dt>Conditions</dt>
+          <dd>Anything else the rule requires: time of day, moon phase, or a location detail
+            such as being inside a slime chunk.</dd>
+        </dl>
+      </section>
+
+      <section className="hub-help" id="biome-groups-explained">
+        <h3>Biome groups explained</h3>
+        <p>
+          A spawn rule usually names a <strong>group</strong> of biomes rather than one biome.
+          A group is written with a leading <code className="mono">#</code>, so
+          {' '}<code className="mono">#cobblemon:is_temperate</code> means every biome the game
+          counts as temperate, not a biome called "temperate".
+        </p>
+        <p>
+          Single biomes have no <code className="mono">#</code> and mean exactly one place, as
+          with <code className="mono">minecraft:cherry_grove</code>. The Pokemon filter keeps
+          the two apart for that reason, and every biome label on the site shows its raw token
+          underneath so you can match it against the game.
+        </p>
       </section>
     </div>
   );

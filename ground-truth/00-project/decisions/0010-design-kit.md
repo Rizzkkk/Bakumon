@@ -111,3 +111,23 @@ The legal routes stay at `/privacy-policy` and `/terms-of-service`. The artboard
 The mobile site-level drawer has no artboard - every mobile header shows an "Open site menu"
 button and the kit designs only the wiki drawer. It is built to mirror the wiki drawer's
 shell. If a later artboard disagrees, that is a defect to fix, not a decision to reverse.
+
+## Update, on the spawn table shape
+
+ADR 0009 measured a real choice and this ADR said the kit agreed with it. On implementation
+that turned out to be half true, and the difference is worth stating rather than leaving as
+a silent divergence.
+
+ADR 0009 rejected "a table per form" because Magikarp's 32 forms produced 32 repeated
+column headers and a 5,684px page against 4,473px for one table with a `<tbody>` per form.
+The kit's `pokemon-detail-d-light.html` does give each form its own `<table>` with its own
+`<thead>` - but inside a `<details>` that is closed by default.
+
+The measurement ADR 0009 took was of a page where every form was always rendered. Collapsed,
+the repeated headers are not on the page at all until a reader opens the group they belong
+to, and the header is then adjacent to the rows it labels rather than scrolled far above
+them. The implementation follows the kit.
+
+What ADR 0009 was actually protecting - that a 32-form species must not become a wall of
+repeated headers - holds. The mechanism is different. If `<details>` is ever changed to
+render open by default, this reverses and ADR 0009's measurement applies again unchanged.

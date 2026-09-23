@@ -151,7 +151,7 @@ function ItemDetailPage({ itemId }) {
 
           {hasPlaceholder(data.name) ? (
             <div className="panel">
-              <p style={{ margin: 0, color: 'var(--text-muted)' }}>
+              <p style={{ margin: 0, color: 'var(--muted)' }}>
                 The <code>%s</code> in this name is a placeholder. The game substitutes the
                 flavour when the item is created, so the name the server's workbook stores is
                 a template rather than a finished string. It is shown here exactly as recorded.

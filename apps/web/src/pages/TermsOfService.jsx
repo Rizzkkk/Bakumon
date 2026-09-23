@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../hooks/usePageTitle.js';
 import { DISCORD_INVITE } from '../lib/serverFacts.js';
-import { LegalArticle, LegalSection } from '../components/landing/LegalArticle.jsx';
+import { LegalArticle, LegalSection } from '../components/common/LegalArticle.jsx';
 
 export default function TermsOfService() {
   usePageTitle('Terms of use');

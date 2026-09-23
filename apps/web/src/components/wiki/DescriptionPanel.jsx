@@ -10,7 +10,7 @@ export function DescriptionPanel({ description, descriptionSource, itemName }) {
     // rather than a blank panel. known-gaps.md entry 3.
     return (
       <div className="panel">
-        <p style={{ margin: 0, color: 'var(--text-muted)' }}>
+        <p style={{ margin: 0, color: 'var(--muted)' }}>
           No description recorded. Most items in this wiki have no description in the
           server's workbook and none on the Cobblemon Wiki.
         </p>

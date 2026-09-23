@@ -32,26 +32,19 @@ export const CATEGORY_LABELS = {
   other: 'Other',
 };
 
-// ultra-rare is a Bakumon-specific tier sitting above rare, not a footnote to it, and
-// server-notes.md requires it to read as prominently. It shares the accent colour.
+// The five API bucket slugs in the order they are shown, which is ascending rarity rather
+// than alphabetical. Colour lives in BUCKET_CHIP_META below, not here.
 export const BUCKETS = [
-  { slug: 'common', label: 'Common', token: 'var(--bucket-common)' },
-  { slug: 'uncommon', label: 'Uncommon', token: 'var(--bucket-uncommon)' },
-  { slug: 'rare', label: 'Rare', token: 'var(--bucket-rare)' },
-  { slug: 'ultra-rare', label: 'Ultra-rare', token: 'var(--bucket-ultra-rare)' },
-  { slug: 'legendary event', label: 'Legendary event', token: 'var(--bucket-event)' },
+  { slug: 'common', label: 'Common' },
+  { slug: 'uncommon', label: 'Uncommon' },
+  { slug: 'rare', label: 'Rare' },
+  { slug: 'ultra-rare', label: 'Ultra-rare' },
+  { slug: 'legendary event', label: 'Legendary event' },
 ];
-
-const BUCKET_MAP = new Map(BUCKETS.map((entry) => [entry.slug, entry]));
-
-export const bucketMeta = (slug) =>
-  BUCKET_MAP.get(slug) ?? { slug, label: slug ?? 'Unknown', token: 'var(--text-muted)' };
 
 // The kit's own vocabulary for the five buckets: a CSS-custom-property-safe slug (a bucket
 // name with a space cannot be a --t-legendary-event-bg token), a PixelIcon glyph name, and
-// the display label the kit uses ("Legendary", not the API's "legendary event"). Additive
-// to BUCKETS/bucketMeta above rather than replacing them - BucketBadge and CategoryNav
-// still read those.
+// the display label the kit uses ("Legendary", not the API's "legendary event").
 export const BUCKET_CHIP_META = {
   common: { tokenSlug: 'common', icon: 'bucket-common', label: 'Common' },
   uncommon: { tokenSlug: 'uncommon', icon: 'bucket-uncommon', label: 'Uncommon' },

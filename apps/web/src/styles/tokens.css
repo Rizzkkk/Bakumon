@@ -170,26 +170,3 @@
     --type-body-lg: 400 17px/27px var(--font-body);
   }
 }
-
-/*
- * Compatibility shim, Phase 1 only. Existing components (pre-Phase 2/4-6) reference the
- * old dark-only token names below. Without this block the site renders unstyled until every
- * component is rewritten to the kit's tokens. Delete this whole block at the end of Phase 6,
- * once no source file references a name on the left.
- */
-:root {
-  --field: var(--bg);
-  --surface-raised: var(--surface2);
-  --border: var(--line);
-  --text-muted: var(--muted);
-  --font-ui: var(--font-body);
-  --accent: var(--cta);
-  --accent-deep: var(--link);
-  --accent-shadow: var(--cta-shadow);
-  --on-accent: var(--cta-text);
-  --bucket-common: var(--t-common-fg);
-  --bucket-uncommon: var(--t-uncommon-fg);
-  --bucket-rare: var(--t-rare-bg);
-  --bucket-ultra-rare: var(--t-ultra-bg);
-  --bucket-event: var(--t-legendary-bg);
-}

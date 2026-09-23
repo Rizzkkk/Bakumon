@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { usePageTitle } from '../hooks/usePageTitle.js';
 import { DISCORD_INVITE } from '../lib/serverFacts.js';
-import { LegalArticle, LegalSection } from '../components/landing/LegalArticle.jsx';
+import { LegalArticle, LegalSection } from '../components/common/LegalArticle.jsx';
 
 // Every claim on this page is a fact about the deployed system, not boilerplate. ADR 0007
 // is what makes it this short: no analytics, no tracking pixels, no third-party embeds and

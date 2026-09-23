@@ -13,8 +13,10 @@ function useWikiTotals() {
 }
 
 const HELP_LINKS = [
-  { label: 'Reading spawn rows', href: '#reading-spawn-rows' },
-  { label: 'Biome groups explained', href: '#biome-groups-explained' },
+  // Absolute, not bare fragments: these render in the sidebar on every wiki page, and a
+  // bare "#reading-spawn-rows" on an item page scrolls to nothing.
+  { label: 'Reading spawn rows', href: '/wiki#reading-spawn-rows' },
+  { label: 'Biome groups explained', href: '/wiki#biome-groups-explained' },
 ];
 
 // Rendered into both WikiSidebar (desktop) and WikiDrawer (mobile) - one nav, two shells,

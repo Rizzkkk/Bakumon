@@ -32,10 +32,18 @@ const ICONS = {
     viewBox: '0 0 10 10',
     rects: [[0,0,4,1],[6,0,4,1],[0,1,1,1],[3,1,2,1],[6,1,1,1],[9,1,1,1],[0,2,1,1],[4,2,2,1],[9,2,1,1],[0,3,1,1],[4,3,2,1],[9,3,1,1],[0,4,1,1],[4,4,2,1],[9,4,1,1],[0,5,1,1],[4,5,2,1],[9,5,1,1],[0,6,1,1],[4,6,2,1],[9,6,1,1],[0,7,4,1],[6,7,4,1]],
   },
-  // Not present in any of the 56 artboards: Pokemon panels reuse the generic image-frame
-  // placeholder glyph instead of a dedicated pokeball. Renders nothing rather than a
-  // guess - see PHASE1-REPORT for the search that established this.
-  pokeball: null,
+  // There is no pokeball glyph in any of the 56 artboards. The kit's own Pokemon panels
+  // use this image-frame placeholder, lifted from wiki-home-d-light.html, so the name
+  // points at what the kit actually draws rather than at a glyph nobody designed.
+  pokemon: {
+    viewBox: '0 0 12 9',
+    rects: [[0,0,12,1],[0,1,1,1],[11,1,1,1],[0,2,1,1],[8,2,2,1],[11,2,1,1],[0,3,1,1],[8,3,2,1],[11,3,1,1],[0,4,1,1],[11,4,1,1],[0,5,1,1],[4,5,1,1],[11,5,1,1],[0,6,1,1],[3,6,3,1],[8,6,1,1],[11,6,1,1],[0,7,1,1],[2,7,5,1],[8,7,3,1],[0,8,12,1]],
+  },
+  // The "a safe place to play" feature card on landing-d-light.html.
+  shield: {
+    viewBox: '0 0 10 10',
+    rects: [[0,0,10,1],[0,1,1,1],[9,1,1,1],[0,2,1,1],[2,2,6,1],[9,2,1,1],[0,3,1,1],[2,3,6,1],[9,3,1,1],[0,4,1,1],[2,4,6,1],[9,4,1,1],[1,5,1,1],[3,5,4,1],[8,5,1,1],[1,6,1,1],[3,6,4,1],[8,6,1,1],[2,7,1,1],[4,7,2,1],[7,7,1,1],[3,8,1,1],[6,8,1,1],[4,9,2,1]],
+  },
   item: {
     viewBox: '0 0 10 8',
     rects: [[2,0,6,1],[1,1,1,1],[4,1,2,1],[8,1,1,1],[0,2,10,1],[1,3,1,1],[4,3,2,1],[8,3,1,1],[2,4,1,1],[4,4,2,1],[7,4,1,1],[3,5,4,1],[4,6,2,1]],

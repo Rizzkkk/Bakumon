@@ -1,4 +1,4 @@
-import { BucketBadge } from './BucketBadge.jsx';
+import { BucketChip } from './BucketChip.jsx';
 import { BiomeLabel } from './BiomeLabel.jsx';
 import { EMPTY, levelRange, numberOrEmpty } from '../../lib/labels.js';
 
@@ -10,7 +10,7 @@ export function SpawnRowCard({ row }) {
   return (
     <div className="spawn-row-card">
       <div className="spawn-row-card__head">
-        {row.bucket ? <BucketBadge bucket={row.bucket} /> : EMPTY}
+        {row.bucket ? <BucketChip slug={row.bucket} /> : EMPTY}
         <span className="spawn-row-card__meta">
           weight <strong>{numberOrEmpty(row.weight)}</strong> &middot; Lv <strong>{levelRange(row.levelMin, row.levelMax)}</strong>
         </span>
