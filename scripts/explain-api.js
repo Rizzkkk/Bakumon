@@ -22,12 +22,27 @@ const queries = [
   {
     name: 'pokemon list, bucket=common',
     note: 'Decides whether pokemon_spawns_bucket_idx earns its place.',
-    ...pick(listPokemonSql({ ...PAGE, bucket: 'common' })),
+    ...pick(listPokemonSql({ ...PAGE, buckets: ['common'] })),
+  },
+  {
+    name: 'pokemon list, bucket=common,rare',
+    note: 'Two-member bucket list. = ANY(...) rather than a single equality.',
+    ...pick(listPokemonSql({ ...PAGE, buckets: ['common', 'rare'] })),
   },
   {
     name: 'pokemon list, biome=#cobblemon:is_overworld',
-    note: 'Array containment. Should reach pokemon_spawns_biomes_idx, the GIN index.',
-    ...pick(listPokemonSql({ ...PAGE, biome: '#cobblemon:is_overworld' })),
+    note: 'Array overlap. Should reach pokemon_spawns_biomes_idx, the GIN index.',
+    ...pick(listPokemonSql({ ...PAGE, biomes: ['#cobblemon:is_overworld'] })),
+  },
+  {
+    name: 'pokemon list, biome=#cobblemon:is_overworld,#minecraft:is_nether',
+    note: 'Two-member biome list, still one GIN-served array-overlap predicate.',
+    ...pick(listPokemonSql({ ...PAGE, biomes: ['#cobblemon:is_overworld', '#minecraft:is_nether'] })),
+  },
+  {
+    name: 'pokemon list, bucket=common and biome=#cobblemon:is_overworld',
+    note: 'Both dimensions at once - two separate EXISTS subqueries, ANDed.',
+    ...pick(listPokemonSql({ ...PAGE, buckets: ['common'], biomes: ['#cobblemon:is_overworld'] })),
   },
   {
     name: 'pokemon list, search=abra',

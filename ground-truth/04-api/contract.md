@@ -1,7 +1,7 @@
 # API contract
 
 **Built.** The API lives in `apps/api/src/` and is verified by `npm run smoke`
-(`scripts/smoke-api.js`, 58 assertions against real data - see
+(`scripts/smoke-api.js`, 70 assertions against real data - see
 `ground-truth/reports/api-smoke.md`). This file remains the contract, and corrects
 `00-project/architecture.md` section 5 where the audit invalidated it.
 
@@ -22,6 +22,9 @@ Run it with `npm run api`; it listens on `PORT`, default 3001.
 ```
 GET /api/pokemon
   query: search?, bucket?, biome?, page? (1), pageSize? (24)
+  bucket and biome each accept a comma-separated list (bucket capped at 5 members, biome
+  at 20): OR'd within a dimension, AND'd across dimensions. A single value behaves exactly
+  as before. ADR 0010.
   200 -> { data: [ { id, slug, displayName, imageUrl, thumbUrl,
                      spawnSummary: { buckets: [...], biomeCount: n, formCount: n } } ],
            page, pageSize, total }
@@ -53,13 +56,16 @@ GET /api/biomes
 
 112 distinct tokens, most of them `#cobblemon:` tags rather than concrete biomes. A
 free-text biome filter matches almost nothing. `GET /api/biomes` exists so the UI can
-offer the real closed list; the filter is then array containment:
+offer the real closed list; the filter is then array overlap, one member or several:
 
 ```sql
-WHERE biomes @> ARRAY[$1]
+WHERE biomes && $1::text[]
 ```
 
-which is what `pokemon_spawns_biomes_idx` (GIN) serves.
+which is what `pokemon_spawns_biomes_idx` (GIN) serves for a single member. A list wide
+enough to overlap roughly half the table seq-scans instead - measured with
+`EXPLAIN ANALYZE`, see `ground-truth/reports/query-plans.md` - which is the planner's
+correct call at 3,268 spawn rows, not a regression.
 
 ### `descriptionSource` is part of the contract, not an implementation detail
 
@@ -144,6 +150,10 @@ places where the data forced a decision the shapes alone do not express.
   a berries page (35%), on a screen that also loads ~33 KB of item art; `category` costs
   485 B. Trimming them means a second row-shaping function next to `toCard`, so they stay.
   The pokemon list row carries `imageUrl` (995 B, 19.5%) for the same reason.
+- **Every endpoint sends `Cache-Control`, not only `/api/biomes`.** The four list/detail
+  routes send `public, max-age=60` (`LIST_MAX_AGE_SECONDS` in `apps/api/src/lib/cache.js`);
+  `GET /api/biomes` alone sends `public, max-age=3600`, because its 112-token vocabulary
+  changes with the schema, not with the data.
 - **`GET /api/pokemon/:slug` no longer returns `thumbUrl`.** It did until 2026-09-23, on
   the stated grounds that "the detail page needs both" - the detail page renders `imageUrl`
   only, and nothing ever read it. Unlike the fields above, this one was mapped by hand in
@@ -170,9 +180,11 @@ places where the data forced a decision the shapes alone do not express.
 
 ### Validation
 
-- An **unknown query parameter is a 400** naming it, rather than being ignored. A mistyped
-  `pagesize=100` that silently returns 24 rows is a bug that costs half an hour to find.
-  The only client is our own SPA, shipped from this repo, so the strictness is affordable.
+- An **unknown query parameter is a 400** naming it, rather than being ignored, on all
+  five endpoints: `GET /api/pokemon`, `GET /api/items`, `GET /api/pokemon/:slug`,
+  `GET /api/items/:itemId` and `GET /api/biomes`. A mistyped `pagesize=100` that silently
+  returns 24 rows is a bug that costs half an hour to find. The only client is our own
+  SPA, shipped from this repo, so the strictness is affordable.
 - A repeated parameter such as two `page` values is a 400. Express 5 parses those into an
   array, and coercing one would pick a value the client did not ask for.
 - `bucket`, `category` and `biome` are **closed vocabularies, and a miss is a 400** rather
@@ -220,7 +232,9 @@ The other three canonical categories are unaffected: evolution 74, held 45, othe
 Note that `validate-import.js` asserts a *third* population: 217/74/**43**/598 = 932, over
 the workbook rows only (`WHERE wiki_category NOT LIKE 'backfilled%'`), which excludes the
 two backfilled held items. Three numbers, three populations, all correct — do not
-reconcile them by changing one.
+reconcile them by changing one. (The 45 above and the 43 in `01-data/items.md` are this
+same pair, held over the listable-API population versus the workbook-only population;
+that file cross-references back here.)
 
 ### Errors
 

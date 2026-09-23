@@ -1,27 +1,23 @@
+@import './fonts.css';
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: var(--field);
+  font: var(--type-body);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
-  font-size: 16px;
-  line-height: 1.55;
   -webkit-text-size-adjust: 100%;
 }
 
 a { color: var(--text); text-decoration-color: var(--border); }
 a:hover { text-decoration-color: var(--accent); }
 
-/* Visible on every interactive element. The default UA ring disappears against a dark
-   surface, and keyboard navigation is the whole of this site's accessibility story - there
-   are no forms to speak of and no auth. */
-:focus-visible {
-  outline: 2px solid var(--accent);
+/* Kit's global rule (design/artboards, identical byte-for-byte in all 56 files). */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible, select:focus-visible {
+  outline: 3px solid var(--focus);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
@@ -71,11 +67,17 @@ code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
 .art--missing {
   display: grid;
   place-items: center;
-  color: var(--text-muted);
+  color: var(--muted);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1px dashed var(--border);
+  border: 1px dashed var(--line);
+  /* The kit puts this checkerboard on .art, but there it is mockup filler standing in for an
+     image the artboard cannot show. In the running app a real image fills that slot, so it
+     belongs on the missing state - which is what a checkerboard actually means. */
+  background-image: linear-gradient(45deg, var(--checker) 25%, transparent 25%, transparent 75%, var(--checker) 75%), linear-gradient(45deg, var(--checker) 25%, transparent 25%, transparent 75%, var(--checker) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
 }
 
 /* Item icons are 16x16 game textures. Any smooth resampling kernel turns crisp pixel art
@@ -184,7 +186,7 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transf
 }
 .pager button:disabled { opacity: 0.4; cursor: default; }
 
-@media (max-width: 560px) {
+@media (max-width: 767px) {
   .grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
   .page { padding-top: 16px; }
 }
@@ -247,7 +249,7 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transf
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
 
-.cta { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.panel--cta { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 
 .grid--wide { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 .shot { margin: 0; }
@@ -260,7 +262,7 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transf
 
 .footer-nav { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 12px; padding: 0; list-style: none; }
 
-@media (max-width: 560px) {
+@media (max-width: 767px) {
   .hero__tagline { font-size: 1.1rem; }
   .button { display: block; text-align: center; }
   .hero__actions { display: grid; gap: 10px; }
@@ -272,4 +274,15 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.78rem; text-transf
   width: 32px;
   height: 32px;
   image-rendering: pixelated;
+}
+
+/* Kit utility classes, lifted from any artboard's <style> block (identical in all 56). */
+.gridbg {
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.cta:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--cta-shadow);
 }

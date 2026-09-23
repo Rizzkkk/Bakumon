@@ -1,47 +1,195 @@
 /*
- * The only file in the application that defines a colour. Every value below is a cluster
- * centroid from ground-truth/reports/brand-palette.md, produced by `npm run palette` from
- * assets/brand/Logo.png - not eyedropped per component. When that report changes, this
- * file changes with it. ADR 0009.
- *
- * Dark-first is not a style preference. The logo is a 1254x1254 PNG with no alpha channel
- * (colour type 2, measured in 05-frontend/brand.md), so it renders as a solid rectangle on
- * any surface but its own near-black field. A light theme needs the transparent re-export
- * first; pre-production.md item 5.
+ * The only file in the application that defines a colour. Copied from design/tokens.css
+ * per ADR 0010, which supersedes ADR 0009 on colour, typography and theme. When the design
+ * kit's tokens.css changes, this file changes with it.
  */
 :root {
-  --field: #141414;          /* 85.4% coverage - the field the mark sits on */
-  --surface: #1c1c1c;        /* between field and raised, for page chrome */
-  --surface-raised: #2c2c2c; /* 6.6% - cards, table headers */
-  --border: #595146;         /* 3.2% - warm, 2.37:1, borders and rules only */
-  --text-muted: #8d816e;     /* 4.84:1 on the field: legal for body text */
-  --text: #d3c7ba;           /* 11.10:1 - primary text */
-  --accent: #cd3524;         /* the Poke Ball red. 3.64:1: large text and fills, not body */
-  --accent-deep: #a6261c;
-  --accent-shadow: #671916;
+  /* brand source colors (sampled from Logo.png and the wordmark) */
+  --brand-ink: #0C0E14;  /* Outline black (logo stroke) */
+  --brand-charcoal: #3D3E43;  /* Dragon scale */
+  --brand-bone: #D5B890;  /* Dragon horn */
+  --brand-ember: #FB1717;  /* Ball red (logo) */
+  --brand-eye: #8F78D9;  /* Dragon eye violet */
+  --brand-lime: #AEF605;  /* SMP lettering */
+  --brand-leaf: #0A9603;  /* Wordmark green */
+  --brand-moss: #002E01;  /* Wordmark outline */
 
-  /* Not from the logo, and the only token here that is not. The accent is a mid-red: the
-     field colour on it measures 3.62:1 and --text 3.06:1, both of which fail AA for a
-     16px bold button label (16px bold is not "large text" - that starts at 18.66px bold).
-     White measures 5.08:1 on --accent and 7.20:1 on --accent-deep, so it is the only
-     label colour that passes on both the resting and hover states. */
-  --on-accent: #ffffff;
+  /* typography */
+  --font-display: 'Pixelify Sans', 'Courier New', monospace;
+  --font-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 
-  /* Buckets. ultra-rare takes the accent because server-notes.md requires it to read as
-     prominently as rare - it is a Bakumon-specific tier, not a lesser one. */
-  --bucket-common: #8d816e;
-  --bucket-uncommon: #d3c7ba;
-  --bucket-rare: #cd3524;
-  --bucket-ultra-rare: #cd3524;
-  --bucket-event: #d3c7ba;
+  color-scheme: light dark;
+
+  /* light theme (default) */
+  --bg: #F5EFE3;
+  --surface: #FFFCF6;
+  --surface2: #EAE2D2;
+  --line: #D6C9B1;
+  --line-strong: #16171C;
+  --text: #16171C;
+  --muted: #4F5058;
+  --faint: #6A665C;
+  --link: #0A6B04;
+  --link-hover: #064A02;
+  --cta: #AEF605;
+  --cta-text: #0E2A02;
+  --cta-edge: #0E2A02;
+  --cta-shadow: #0E2A02;
+  --focus: #5B3FC4;
+  --danger: #B3141A;
+  --danger-bg: #FBE3E1;
+  --hero: #EFE6D3;
+  --grid: rgba(22,23,28,0.06);
+  --checker: rgba(22,23,28,0.04);
+  --scrim: rgba(22,23,28,0.55);
+  --t-common-bg: #E6DFD0;
+  --t-common-fg: #34353A;
+  --t-common-edge: #B3A891;
+  --t-uncommon-bg: #D7F0C4;
+  --t-uncommon-fg: #0B5206;
+  --t-uncommon-edge: #0A9603;
+  --t-rare-bg: #C8161B;
+  --t-rare-fg: #FFFFFF;
+  --t-rare-edge: #7A0A0E;
+  --t-ultra-bg: #5B3FC4;
+  --t-ultra-fg: #FFFFFF;
+  --t-ultra-edge: #E7DFFF;
+  --t-legendary-bg: #16171C;
+  --t-legendary-fg: #E9D6B6;
+  --t-legendary-edge: #D5B890;
 
   --radius: 6px;
-  --gutter: 16px;            /* the phone-width side gutter */
+  --gutter: 16px;
   --measure: 68ch;
+}
 
-  /* No webfont is loaded. Two system stacks instead: one for prose, one for the strings
-     that are literally identifiers - cobblemon:ability_capsule, #cobblemon:is_overworld,
-     snake_pattern=attack. Rendering those proportionally is how they get read as prose. */
-  --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #101115;
+    --surface: #191A1F;
+    --surface2: #24252B;
+    --line: #34353D;
+    --line-strong: #EFE8DA;
+    --text: #EFE8DA;
+    --muted: #B3AD9F;
+    --faint: #948F83;
+    --link: #B7F52A;
+    --link-hover: #D6FF7A;
+    --cta: #AEF605;
+    --cta-text: #0E2A02;
+    --cta-edge: #0E2A02;
+    --cta-shadow: #4F7A02;
+    --focus: #A996F0;
+    --danger: #FF6B6E;
+    --danger-bg: #3A1416;
+    --hero: #0C0E14;
+    --grid: rgba(239,232,218,0.05);
+    --checker: rgba(239,232,218,0.03);
+    --scrim: rgba(0,0,0,0.65);
+    --t-common-bg: #2A2B32;
+    --t-common-fg: #D4CEC0;
+    --t-common-edge: #4A4B53;
+    --t-uncommon-bg: #15321A;
+    --t-uncommon-fg: #A6E978;
+    --t-uncommon-edge: #2F7A1E;
+    --t-rare-bg: #C8161B;
+    --t-rare-fg: #FFFFFF;
+    --t-rare-edge: #FF8A8C;
+    --t-ultra-bg: #8F78D9;
+    --t-ultra-fg: #0C0E14;
+    --t-ultra-edge: #1B1440;
+    --t-legendary-bg: #D5B890;
+    --t-legendary-fg: #16171C;
+    --t-legendary-edge: #F1E2C6;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101115;
+  --surface: #191A1F;
+  --surface2: #24252B;
+  --line: #34353D;
+  --line-strong: #EFE8DA;
+  --text: #EFE8DA;
+  --muted: #B3AD9F;
+  --faint: #948F83;
+  --link: #B7F52A;
+  --link-hover: #D6FF7A;
+  --cta: #AEF605;
+  --cta-text: #0E2A02;
+  --cta-edge: #0E2A02;
+  --cta-shadow: #4F7A02;
+  --focus: #A996F0;
+  --danger: #FF6B6E;
+  --danger-bg: #3A1416;
+  --hero: #0C0E14;
+  --grid: rgba(239,232,218,0.05);
+  --checker: rgba(239,232,218,0.03);
+  --scrim: rgba(0,0,0,0.65);
+  --t-common-bg: #2A2B32;
+  --t-common-fg: #D4CEC0;
+  --t-common-edge: #4A4B53;
+  --t-uncommon-bg: #15321A;
+  --t-uncommon-fg: #A6E978;
+  --t-uncommon-edge: #2F7A1E;
+  --t-rare-bg: #C8161B;
+  --t-rare-fg: #FFFFFF;
+  --t-rare-edge: #FF8A8C;
+  --t-ultra-bg: #8F78D9;
+  --t-ultra-fg: #0C0E14;
+  --t-ultra-edge: #1B1440;
+  --t-legendary-bg: #D5B890;
+  --t-legendary-fg: #16171C;
+  --t-legendary-edge: #F1E2C6;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* type scale (size / line-height). Mobile values apply below 768px. */
+:root {
+  --type-display: 700 56px/60px var(--font-display);
+  --type-h1: 700 48px/52px var(--font-display);
+  --type-h2: 700 30px/36px var(--font-display);
+  --type-h3: 600 21px/27px var(--font-display);
+  --type-label: 600 14px/16px var(--font-display); /* uppercase, letter-spacing 0.06em */
+  --type-body-lg: 400 18px/29px var(--font-body);
+  --type-body: 400 16px/26px var(--font-body);
+  --type-small: 400 14px/21px var(--font-body);
+  --type-mono: 400 14px/20px var(--font-mono);
+}
+@media (max-width: 767px) {
+  :root {
+    --type-display: 700 36px/40px var(--font-display);
+    --type-h1: 700 34px/38px var(--font-display);
+    --type-h2: 700 24px/30px var(--font-display);
+    --type-h3: 600 20px/26px var(--font-display);
+    --type-label: 600 13px/16px var(--font-display);
+    --type-body-lg: 400 17px/27px var(--font-body);
+  }
+}
+
+/*
+ * Compatibility shim, Phase 1 only. Existing components (pre-Phase 2/4-6) reference the
+ * old dark-only token names below. Without this block the site renders unstyled until every
+ * component is rewritten to the kit's tokens. Delete this whole block at the end of Phase 6,
+ * once no source file references a name on the left.
+ */
+:root {
+  --field: var(--bg);
+  --surface-raised: var(--surface2);
+  --border: var(--line);
+  --text-muted: var(--muted);
+  --font-ui: var(--font-body);
+  --accent: var(--cta);
+  --accent-deep: var(--link);
+  --accent-shadow: var(--cta-shadow);
+  --on-accent: var(--cta-text);
+  --bucket-common: var(--t-common-fg);
+  --bucket-uncommon: var(--t-uncommon-fg);
+  --bucket-rare: var(--t-rare-bg);
+  --bucket-ultra-rare: var(--t-ultra-bg);
+  --bucket-event: var(--t-legendary-bg);
 }

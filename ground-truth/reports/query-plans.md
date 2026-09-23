@@ -12,7 +12,10 @@ index is added or dropped.
 |---|---|---|
 | pokemon list, no filter, page 1 | 63 | Seq Scan on pokemon |
 | pokemon list, bucket=common | 81 | Seq Scan on pokemon, Seq Scan on pokemon_spawns |
+| pokemon list, bucket=common,rare | 61 | Seq Scan on pokemon, Seq Scan on pokemon_spawns |
 | pokemon list, biome=#cobblemon:is_overworld | 76 | Seq Scan on pokemon, Bitmap Index Scan on pokemon_spawns_biomes_idx |
+| pokemon list, biome=#cobblemon:is_overworld,#minecraft:is_nether | 76 | Seq Scan on pokemon, Seq Scan on pokemon_spawns |
+| pokemon list, bucket=common and biome=#cobblemon:is_overworld | 86 | Seq Scan on pokemon, Seq Scan on pokemon_spawns, Bitmap Index Scan on pokemon_spawns_biomes_idx |
 | pokemon list, search=abra | 3 | Bitmap Index Scan on pokemon_search_idx |
 | pokemon detail, abra | 1 | none named |
 | items list, search=potion | 1 | Bitmap Index Scan on items_search_idx |
@@ -56,41 +59,41 @@ WITH matched AS MATERIALIZED (
 ```
 
 ```
-Sort  (cost=351.74..351.80 rows=24 width=188) (actual time=2.049..2.052 rows=24 loops=1)
+Sort  (cost=351.74..351.80 rows=24 width=188) (actual time=2.725..2.728 rows=24 loops=1)
   Sort Key: m.display_name, m.id
   Sort Method: quicksort  Memory: 29kB
   Buffers: shared hit=120
   CTE matched
-    ->  Limit  (cost=82.58..82.64 rows=24 width=92) (actual time=0.607..0.612 rows=24 loops=1)
+    ->  Limit  (cost=82.58..82.64 rows=24 width=92) (actual time=1.257..1.263 rows=24 loops=1)
           Buffers: shared hit=37
-          ->  Sort  (cost=82.58..84.84 rows=904 width=92) (actual time=0.606..0.609 rows=24 loops=1)
+          ->  Sort  (cost=82.58..84.84 rows=904 width=92) (actual time=1.256..1.260 rows=24 loops=1)
                 Sort Key: p.display_name, p.id
                 Sort Method: top-N heapsort  Memory: 28kB
                 Buffers: shared hit=37
-                ->  WindowAgg  (cost=0.00..57.34 rows=904 width=92) (actual time=0.349..0.438 rows=904 loops=1)
+                ->  WindowAgg  (cost=0.00..57.34 rows=904 width=92) (actual time=0.990..1.081 rows=904 loops=1)
                       Buffers: shared hit=37
-                      ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.006..0.138 rows=904 loops=1)
+                      ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.025..0.750 rows=904 loops=1)
                             Buffers: shared hit=37
-  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=0.744..2.002 rows=24 loops=1)
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=1.481..2.681 rows=24 loops=1)
         Buffers: shared hit=114
-        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=0.608..0.617 rows=24 loops=1)
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.259..1.268 rows=24 loops=1)
               Buffers: shared hit=37
-        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.057..0.057 rows=1 loops=24)
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.058..0.058 rows=1 loops=24)
               Buffers: shared hit=77
-              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.031..0.031 rows=7 loops=24)
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.032..0.032 rows=7 loops=24)
                     Sort Key: s.bucket
                     Sort Method: quicksort  Memory: 25kB
                     Buffers: shared hit=72
-                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.011..0.025 rows=7 loops=24)
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.012..0.026 rows=7 loops=24)
                           Buffers: shared hit=72
-                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.002..0.003 rows=3 loops=24)
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.003..0.004 rows=3 loops=24)
                                 Index Cond: (pokemon_id = m.id)
                                 Buffers: shared hit=72
                           ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.004..0.004 rows=3 loops=63)
 Planning:
   Buffers: shared hit=358
-Planning Time: 2.249 ms
-Execution Time: 2.336 ms
+Planning Time: 2.170 ms
+Execution Time: 3.395 ms
 ```
 
 ## pokemon list, bucket=common
@@ -102,7 +105,7 @@ WITH matched AS MATERIALIZED (
        SELECT p.id, p.species_slug, p.display_name, p.image_url, p.thumb_url,
               count(*) OVER () AS total_count
          FROM pokemon p
-        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = $1)
+        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = ANY($1::text[]))
         -- id is not decoration: seven species are spelled two ways and three pairs share an
         -- identical display_name - Mime Jr., Mr. Mime and Mr. Rime - so without it a row
         -- can land on two pages or on neither. ADR 0006. Relevance tiers sort above it,
@@ -130,67 +133,67 @@ WITH matched AS MATERIALIZED (
 ```
 
 ```
-Sort  (cost=712.22..712.28 rows=24 width=188) (actual time=3.230..3.234 rows=24 loops=1)
+Sort  (cost=708.14..708.20 rows=24 width=188) (actual time=2.280..2.283 rows=24 loops=1)
   Sort Key: m.display_name, m.id
   Sort Method: quicksort  Memory: 29kB
   Buffers: shared hit=396
   CTE matched
-    ->  Limit  (cost=443.07..443.13 rows=24 width=92) (actual time=1.977..1.984 rows=24 loops=1)
+    ->  Limit  (cost=438.98..439.04 rows=24 width=92) (actual time=1.149..1.154 rows=24 loops=1)
           Buffers: shared hit=323
-          ->  Sort  (cost=443.07..445.33 rows=904 width=92) (actual time=1.974..1.978 rows=24 loops=1)
+          ->  Sort  (cost=438.98..441.24 rows=904 width=92) (actual time=1.148..1.152 rows=24 loops=1)
                 Sort Key: p.display_name, p.id
                 Sort Method: top-N heapsort  Memory: 28kB
                 Buffers: shared hit=323
-                ->  WindowAgg  (cost=348.06..417.82 rows=904 width=92) (actual time=1.762..1.856 rows=545 loops=1)
+                ->  WindowAgg  (cost=343.97..413.74 rows=904 width=92) (actual time=0.984..1.041 rows=545 loops=1)
                       Buffers: shared hit=323
-                      ->  Hash Join  (cost=348.06..406.52 rows=904 width=84) (actual time=1.453..1.618 rows=545 loops=1)
+                      ->  Hash Join  (cost=343.97..402.44 rows=904 width=84) (actual time=0.705..0.854 rows=545 loops=1)
                             Hash Cond: (p.id = s_1.pokemon_id)
                             Buffers: shared hit=323
-                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.003..0.059 rows=904 loops=1)
+                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.002..0.045 rows=904 loops=1)
                                   Buffers: shared hit=37
-                            ->  Hash  (cost=338.23..338.23 rows=786 width=4) (actual time=1.434..1.435 rows=545 loops=1)
+                            ->  Hash  (cost=334.14..334.14 rows=786 width=4) (actual time=0.689..0.689 rows=545 loops=1)
                                   Buckets: 1024  Batches: 1  Memory Usage: 28kB
                                   Buffers: shared hit=286
-                                  ->  HashAggregate  (cost=330.37..338.23 rows=786 width=4) (actual time=1.352..1.385 rows=545 loops=1)
+                                  ->  HashAggregate  (cost=326.28..334.14 rows=786 width=4) (actual time=0.619..0.649 rows=545 loops=1)
                                         Group Key: s_1.pokemon_id
                                         Batches: 1  Memory Usage: 73kB
                                         Buffers: shared hit=286
-                                        ->  Seq Scan on pokemon_spawns s_1  (cost=0.00..326.85 rows=1408 width=4) (actual time=0.003..1.193 rows=1408 loops=1)
-                                              Filter: (bucket = 'common'::text)
+                                        ->  Seq Scan on pokemon_spawns s_1  (cost=0.00..322.76 rows=1408 width=4) (actual time=0.003..0.497 rows=1408 loops=1)
+                                              Filter: (bucket = ANY ('{common}'::text[]))
                                               Rows Removed by Filter: 1860
                                               Buffers: shared hit=286
-  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=2.185..3.213 rows=24 loops=1)
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=1.239..2.265 rows=24 loops=1)
         Buffers: shared hit=396
-        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.979..1.988 rows=24 loops=1)
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.150..1.157 rows=24 loops=1)
               Buffers: shared hit=323
-        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.050..0.050 rows=1 loops=24)
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.046..0.046 rows=1 loops=24)
               Buffers: shared hit=73
-              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.029..0.030 rows=11 loops=24)
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.026..0.026 rows=11 loops=24)
                     Sort Key: s.bucket
                     Sort Method: quicksort  Memory: 25kB
                     Buffers: shared hit=73
-                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.008..0.023 rows=11 loops=24)
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.007..0.019 rows=11 loops=24)
                           Buffers: shared hit=73
-                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.002..0.003 rows=3 loops=24)
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.001..0.002 rows=3 loops=24)
                                 Index Cond: (pokemon_id = m.id)
                                 Buffers: shared hit=73
-                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.003..0.003 rows=3 loops=81)
+                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.002..0.003 rows=3 loops=81)
 Planning:
   Buffers: shared hit=26
-Planning Time: 0.365 ms
-Execution Time: 3.380 ms
+Planning Time: 0.391 ms
+Execution Time: 2.413 ms
 ```
 
-## pokemon list, biome=#cobblemon:is_overworld
+## pokemon list, bucket=common,rare
 
-Array containment. Should reach pokemon_spawns_biomes_idx, the GIN index.
+Two-member bucket list. = ANY(...) rather than a single equality.
 
 ```sql
 WITH matched AS MATERIALIZED (
        SELECT p.id, p.species_slug, p.display_name, p.image_url, p.thumb_url,
               count(*) OVER () AS total_count
          FROM pokemon p
-        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes @> ARRAY[$1::text])
+        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = ANY($1::text[]))
         -- id is not decoration: seven species are spelled two ways and three pairs share an
         -- identical display_name - Mime Jr., Mr. Mime and Mr. Rime - so without it a row
         -- can land on two pages or on neither. ADR 0006. Relevance tiers sort above it,
@@ -218,45 +221,221 @@ WITH matched AS MATERIALIZED (
 ```
 
 ```
-Sort  (cost=709.85..709.91 rows=24 width=188) (actual time=1.710..1.714 rows=24 loops=1)
+Sort  (cost=715.56..715.62 rows=24 width=188) (actual time=2.976..2.981 rows=24 loops=1)
+  Sort Key: m.display_name, m.id
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=395
+  CTE matched
+    ->  Limit  (cost=446.41..446.47 rows=24 width=92) (actual time=1.291..1.302 rows=24 loops=1)
+          Buffers: shared hit=323
+          ->  Sort  (cost=446.41..448.67 rows=904 width=92) (actual time=1.289..1.297 rows=24 loops=1)
+                Sort Key: p.display_name, p.id
+                Sort Method: top-N heapsort  Memory: 28kB
+                Buffers: shared hit=323
+                ->  WindowAgg  (cost=351.40..421.17 rows=904 width=92) (actual time=1.074..1.153 rows=733 loops=1)
+                      Buffers: shared hit=323
+                      ->  Hash Join  (cost=351.40..409.87 rows=904 width=84) (actual time=0.724..0.893 rows=733 loops=1)
+                            Hash Cond: (p.id = s_1.pokemon_id)
+                            Buffers: shared hit=323
+                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.004..0.050 rows=904 loops=1)
+                                  Buffers: shared hit=37
+                            ->  Hash  (cost=340.50..340.50 rows=872 width=4) (actual time=0.709..0.711 rows=733 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 34kB
+                                  Buffers: shared hit=286
+                                  ->  HashAggregate  (cost=331.78..340.50 rows=872 width=4) (actual time=0.610..0.648 rows=733 loops=1)
+                                        Group Key: s_1.pokemon_id
+                                        Batches: 1  Memory Usage: 73kB
+                                        Buffers: shared hit=286
+                                        ->  Seq Scan on pokemon_spawns s_1  (cost=0.00..326.85 rows=1970 width=4) (actual time=0.003..0.430 rows=1970 loops=1)
+                                              Filter: (bucket = ANY ('{common,rare}'::text[]))
+                                              Rows Removed by Filter: 1298
+                                              Buffers: shared hit=286
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=1.380..2.957 rows=24 loops=1)
+        Buffers: shared hit=395
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.292..1.307 rows=24 loops=1)
+              Buffers: shared hit=323
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.066..0.066 rows=1 loops=24)
+              Buffers: shared hit=72
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.036..0.037 rows=6 loops=24)
+                    Sort Key: s.bucket
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=72
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.029..0.033 rows=6 loops=24)
+                          Buffers: shared hit=72
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.013..0.014 rows=3 loops=24)
+                                Index Cond: (pokemon_id = m.id)
+                                Buffers: shared hit=72
+                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.001..0.001 rows=3 loops=61)
+Planning:
+  Buffers: shared hit=12
+Planning Time: 0.318 ms
+Execution Time: 3.161 ms
+```
+
+## pokemon list, biome=#cobblemon:is_overworld
+
+Array overlap. Should reach pokemon_spawns_biomes_idx, the GIN index.
+
+```sql
+WITH matched AS MATERIALIZED (
+       SELECT p.id, p.species_slug, p.display_name, p.image_url, p.thumb_url,
+              count(*) OVER () AS total_count
+         FROM pokemon p
+        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes && $1::text[])
+        -- id is not decoration: seven species are spelled two ways and three pairs share an
+        -- identical display_name - Mime Jr., Mr. Mime and Mr. Rime - so without it a row
+        -- can land on two pages or on neither. ADR 0006. Relevance tiers sort above it,
+        -- never instead of it.
+        ORDER BY p.display_name, p.id
+        LIMIT $2 OFFSET $3
+     )
+     SELECT m.id, m.species_slug, m.display_name, m.image_url, m.thumb_url, m.total_count,
+            summary.buckets,
+            coalesce(summary.biome_count, 0) AS biome_count,
+            coalesce(summary.form_count, 0)  AS form_count
+       FROM matched m
+       -- One lateral, three aggregates, bounded by the page. unnest fans each spawn row
+       -- out per biome token, which is only safe because every aggregate here is DISTINCT.
+       LEFT JOIN LATERAL (
+         SELECT array_agg(DISTINCT s.bucket ORDER BY s.bucket)
+                  FILTER (WHERE s.bucket IS NOT NULL) AS buckets,
+                count(DISTINCT b.token)               AS biome_count,
+                count(DISTINCT s.aspects)             AS form_count
+           FROM pokemon_spawns s
+           LEFT JOIN LATERAL unnest(s.biomes) AS b(token) ON TRUE
+          WHERE s.pokemon_id = m.id
+       ) summary ON TRUE
+      ORDER BY m.display_name, m.id
+```
+
+```
+Sort  (cost=709.85..709.91 rows=24 width=188) (actual time=1.633..1.638 rows=24 loops=1)
   Sort Key: m.display_name, m.id
   Sort Method: quicksort  Memory: 29kB
   Buffers: shared hit=255
   CTE matched
-    ->  Limit  (cost=440.70..440.76 rows=24 width=92) (actual time=0.911..0.917 rows=24 loops=1)
+    ->  Limit  (cost=440.70..440.76 rows=24 width=92) (actual time=0.833..0.840 rows=24 loops=1)
           Buffers: shared hit=182
-          ->  Sort  (cost=440.70..442.96 rows=904 width=92) (actual time=0.910..0.914 rows=24 loops=1)
+          ->  Sort  (cost=440.70..442.96 rows=904 width=92) (actual time=0.832..0.836 rows=24 loops=1)
                 Sort Key: p.display_name, p.id
                 Sort Method: top-N heapsort  Memory: 28kB
                 Buffers: shared hit=182
-                ->  WindowAgg  (cost=345.68..415.45 rows=904 width=92) (actual time=0.814..0.845 rows=304 loops=1)
+                ->  WindowAgg  (cost=345.68..415.45 rows=904 width=92) (actual time=0.737..0.767 rows=304 loops=1)
                       Buffers: shared hit=182
-                      ->  Hash Join  (cost=345.68..404.15 rows=904 width=84) (actual time=0.594..0.723 rows=304 loops=1)
+                      ->  Hash Join  (cost=345.68..404.15 rows=904 width=84) (actual time=0.511..0.638 rows=304 loops=1)
                             Hash Cond: (p.id = s_1.pokemon_id)
                             Buffers: shared hit=182
-                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.003..0.053 rows=904 loops=1)
+                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.003..0.051 rows=904 loops=1)
                                   Buffers: shared hit=37
-                            ->  Hash  (cost=335.36..335.36 rows=826 width=4) (actual time=0.582..0.583 rows=304 loops=1)
+                            ->  Hash  (cost=335.36..335.36 rows=826 width=4) (actual time=0.496..0.497 rows=304 loops=1)
                                   Buckets: 1024  Batches: 1  Memory Usage: 19kB
                                   Buffers: shared hit=145
-                                  ->  HashAggregate  (cost=327.10..335.36 rows=826 width=4) (actual time=0.537..0.557 rows=304 loops=1)
+                                  ->  HashAggregate  (cost=327.10..335.36 rows=826 width=4) (actual time=0.447..0.468 rows=304 loops=1)
                                         Group Key: s_1.pokemon_id
                                         Batches: 1  Memory Usage: 57kB
                                         Buffers: shared hit=145
-                                        ->  Bitmap Heap Scan on pokemon_spawns s_1  (cost=16.98..323.08 rows=1608 width=4) (actual time=0.206..0.418 rows=1608 loops=1)
-                                              Recheck Cond: (biomes @> '{#cobblemon:is_overworld}'::text[])
+                                        ->  Bitmap Heap Scan on pokemon_spawns s_1  (cost=16.98..323.08 rows=1608 width=4) (actual time=0.118..0.327 rows=1608 loops=1)
+                                              Recheck Cond: (biomes && '{#cobblemon:is_overworld}'::text[])
                                               Heap Blocks: exact=141
                                               Buffers: shared hit=145
-                                              ->  Bitmap Index Scan on pokemon_spawns_biomes_idx  (cost=0.00..16.58 rows=1608 width=0) (actual time=0.191..0.191 rows=1608 loops=1)
-                                                    Index Cond: (biomes @> '{#cobblemon:is_overworld}'::text[])
+                                              ->  Bitmap Index Scan on pokemon_spawns_biomes_idx  (cost=0.00..16.58 rows=1608 width=0) (actual time=0.102..0.102 rows=1608 loops=1)
+                                                    Index Cond: (biomes && '{#cobblemon:is_overworld}'::text[])
                                                     Buffers: shared hit=4
-  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=0.984..1.696 rows=24 loops=1)
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=0.931..1.617 rows=24 loops=1)
         Buffers: shared hit=255
-        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=0.912..0.920 rows=24 loops=1)
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=0.835..0.844 rows=24 loops=1)
               Buffers: shared hit=182
-        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.032..0.032 rows=1 loops=24)
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.031..0.032 rows=1 loops=24)
               Buffers: shared hit=73
-              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.008..0.009 rows=11 loops=24)
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.009..0.009 rows=11 loops=24)
+                    Sort Key: s.bucket
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=73
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.004..0.007 rows=11 loops=24)
+                          Buffers: shared hit=73
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.002..0.003 rows=3 loops=24)
+                                Index Cond: (pokemon_id = m.id)
+                                Buffers: shared hit=73
+                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.001..0.001 rows=4 loops=76)
+Planning:
+  Buffers: shared hit=19
+Planning Time: 0.604 ms
+Execution Time: 1.810 ms
+```
+
+## pokemon list, biome=#cobblemon:is_overworld,#minecraft:is_nether
+
+Two-member biome list, still one GIN-served array-overlap predicate.
+
+```sql
+WITH matched AS MATERIALIZED (
+       SELECT p.id, p.species_slug, p.display_name, p.image_url, p.thumb_url,
+              count(*) OVER () AS total_count
+         FROM pokemon p
+        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes && $1::text[])
+        -- id is not decoration: seven species are spelled two ways and three pairs share an
+        -- identical display_name - Mime Jr., Mr. Mime and Mr. Rime - so without it a row
+        -- can land on two pages or on neither. ADR 0006. Relevance tiers sort above it,
+        -- never instead of it.
+        ORDER BY p.display_name, p.id
+        LIMIT $2 OFFSET $3
+     )
+     SELECT m.id, m.species_slug, m.display_name, m.image_url, m.thumb_url, m.total_count,
+            summary.buckets,
+            coalesce(summary.biome_count, 0) AS biome_count,
+            coalesce(summary.form_count, 0)  AS form_count
+       FROM matched m
+       -- One lateral, three aggregates, bounded by the page. unnest fans each spawn row
+       -- out per biome token, which is only safe because every aggregate here is DISTINCT.
+       LEFT JOIN LATERAL (
+         SELECT array_agg(DISTINCT s.bucket ORDER BY s.bucket)
+                  FILTER (WHERE s.bucket IS NOT NULL) AS buckets,
+                count(DISTINCT b.token)               AS biome_count,
+                count(DISTINCT s.aspects)             AS form_count
+           FROM pokemon_spawns s
+           LEFT JOIN LATERAL unnest(s.biomes) AS b(token) ON TRUE
+          WHERE s.pokemon_id = m.id
+       ) summary ON TRUE
+      ORDER BY m.display_name, m.id
+```
+
+```
+Sort  (cost=713.81..713.87 rows=24 width=188) (actual time=2.039..2.042 rows=24 loops=1)
+  Sort Key: m.display_name, m.id
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=396
+  CTE matched
+    ->  Limit  (cost=444.66..444.72 rows=24 width=92) (actual time=1.413..1.465 rows=24 loops=1)
+          Buffers: shared hit=323
+          ->  Sort  (cost=444.66..446.92 rows=904 width=92) (actual time=1.412..1.416 rows=24 loops=1)
+                Sort Key: p.display_name, p.id
+                Sort Method: top-N heapsort  Memory: 28kB
+                Buffers: shared hit=323
+                ->  WindowAgg  (cost=349.65..419.42 rows=904 width=92) (actual time=1.318..1.348 rows=309 loops=1)
+                      Buffers: shared hit=323
+                      ->  Hash Join  (cost=349.65..408.12 rows=904 width=84) (actual time=1.124..1.242 rows=309 loops=1)
+                            Hash Cond: (p.id = s_1.pokemon_id)
+                            Buffers: shared hit=323
+                            ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.003..0.046 rows=904 loops=1)
+                                  Buffers: shared hit=37
+                            ->  Hash  (cost=339.26..339.26 rows=831 width=4) (actual time=1.113..1.114 rows=309 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 19kB
+                                  Buffers: shared hit=286
+                                  ->  HashAggregate  (cost=330.95..339.26 rows=831 width=4) (actual time=1.062..1.082 rows=309 loops=1)
+                                        Group Key: s_1.pokemon_id
+                                        Batches: 1  Memory Usage: 57kB
+                                        Buffers: shared hit=286
+                                        ->  Seq Scan on pokemon_spawns s_1  (cost=0.00..326.85 rows=1639 width=4) (actual time=0.004..0.932 rows=1622 loops=1)
+                                              Filter: (biomes && '{#cobblemon:is_overworld,#minecraft:is_nether}'::text[])
+                                              Rows Removed by Filter: 1646
+                                              Buffers: shared hit=286
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=1.473..2.024 rows=24 loops=1)
+        Buffers: shared hit=396
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.414..1.468 rows=24 loops=1)
+              Buffers: shared hit=323
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.023..0.023 rows=1 loops=24)
+              Buffers: shared hit=73
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.008..0.008 rows=11 loops=24)
                     Sort Key: s.bucket
                     Sort Method: quicksort  Memory: 25kB
                     Buffers: shared hit=73
@@ -267,9 +446,114 @@ Sort  (cost=709.85..709.91 rows=24 width=188) (actual time=1.710..1.714 rows=24 
                                 Buffers: shared hit=73
                           ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.001..0.001 rows=4 loops=76)
 Planning:
-  Buffers: shared hit=19
-Planning Time: 0.341 ms
-Execution Time: 1.843 ms
+  Buffers: shared hit=13
+Planning Time: 0.299 ms
+Execution Time: 2.143 ms
+```
+
+## pokemon list, bucket=common and biome=#cobblemon:is_overworld
+
+Both dimensions at once - two separate EXISTS subqueries, ANDed.
+
+```sql
+WITH matched AS MATERIALIZED (
+       SELECT p.id, p.species_slug, p.display_name, p.image_url, p.thumb_url,
+              count(*) OVER () AS total_count
+         FROM pokemon p
+        WHERE EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = ANY($1::text[])) AND EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes && $2::text[])
+        -- id is not decoration: seven species are spelled two ways and three pairs share an
+        -- identical display_name - Mime Jr., Mr. Mime and Mr. Rime - so without it a row
+        -- can land on two pages or on neither. ADR 0006. Relevance tiers sort above it,
+        -- never instead of it.
+        ORDER BY p.display_name, p.id
+        LIMIT $3 OFFSET $4
+     )
+     SELECT m.id, m.species_slug, m.display_name, m.image_url, m.thumb_url, m.total_count,
+            summary.buckets,
+            coalesce(summary.biome_count, 0) AS biome_count,
+            coalesce(summary.form_count, 0)  AS form_count
+       FROM matched m
+       -- One lateral, three aggregates, bounded by the page. unnest fans each spawn row
+       -- out per biome token, which is only safe because every aggregate here is DISTINCT.
+       LEFT JOIN LATERAL (
+         SELECT array_agg(DISTINCT s.bucket ORDER BY s.bucket)
+                  FILTER (WHERE s.bucket IS NOT NULL) AS buckets,
+                count(DISTINCT b.token)               AS biome_count,
+                count(DISTINCT s.aspects)             AS form_count
+           FROM pokemon_spawns s
+           LEFT JOIN LATERAL unnest(s.biomes) AS b(token) ON TRUE
+          WHERE s.pokemon_id = m.id
+       ) summary ON TRUE
+      ORDER BY m.display_name, m.id
+```
+
+```
+Sort  (cost=1066.25..1066.31 rows=24 width=188) (actual time=1.678..1.681 rows=24 loops=1)
+  Sort Key: m.display_name, m.id
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=541
+  CTE matched
+    ->  Limit  (cost=797.10..797.16 rows=24 width=92) (actual time=1.294..1.298 rows=24 loops=1)
+          Buffers: shared hit=468
+          ->  Sort  (cost=797.10..799.36 rows=904 width=92) (actual time=1.293..1.296 rows=24 loops=1)
+                Sort Key: p.display_name, p.id
+                Sort Method: top-N heapsort  Memory: 28kB
+                Buffers: shared hit=468
+                ->  WindowAgg  (cost=689.65..771.85 rows=904 width=92) (actual time=1.218..1.242 rows=235 loops=1)
+                      Buffers: shared hit=468
+                      ->  Hash Join  (cost=689.65..760.55 rows=904 width=84) (actual time=0.995..1.162 rows=235 loops=1)
+                            Hash Cond: (s_1.pokemon_id = s_2.pokemon_id)
+                            Buffers: shared hit=468
+                            ->  Hash Join  (cost=343.97..402.44 rows=904 width=88) (actual time=0.541..0.668 rows=545 loops=1)
+                                  Hash Cond: (p.id = s_1.pokemon_id)
+                                  Buffers: shared hit=323
+                                  ->  Seq Scan on pokemon p  (cost=0.00..46.04 rows=904 width=84) (actual time=0.002..0.044 rows=904 loops=1)
+                                        Buffers: shared hit=37
+                                  ->  Hash  (cost=334.14..334.14 rows=786 width=4) (actual time=0.524..0.524 rows=545 loops=1)
+                                        Buckets: 1024  Batches: 1  Memory Usage: 28kB
+                                        Buffers: shared hit=286
+                                        ->  HashAggregate  (cost=326.28..334.14 rows=786 width=4) (actual time=0.451..0.482 rows=545 loops=1)
+                                              Group Key: s_1.pokemon_id
+                                              Batches: 1  Memory Usage: 73kB
+                                              Buffers: shared hit=286
+                                              ->  Seq Scan on pokemon_spawns s_1  (cost=0.00..322.76 rows=1408 width=4) (actual time=0.003..0.329 rows=1408 loops=1)
+                                                    Filter: (bucket = ANY ('{common}'::text[]))
+                                                    Rows Removed by Filter: 1860
+                                                    Buffers: shared hit=286
+                            ->  Hash  (cost=335.36..335.36 rows=826 width=4) (actual time=0.444..0.444 rows=304 loops=1)
+                                  Buckets: 1024  Batches: 1  Memory Usage: 19kB
+                                  Buffers: shared hit=145
+                                  ->  HashAggregate  (cost=327.10..335.36 rows=826 width=4) (actual time=0.399..0.419 rows=304 loops=1)
+                                        Group Key: s_2.pokemon_id
+                                        Batches: 1  Memory Usage: 57kB
+                                        Buffers: shared hit=145
+                                        ->  Bitmap Heap Scan on pokemon_spawns s_2  (cost=16.98..323.08 rows=1608 width=4) (actual time=0.095..0.281 rows=1608 loops=1)
+                                              Recheck Cond: (biomes && '{#cobblemon:is_overworld}'::text[])
+                                              Heap Blocks: exact=141
+                                              Buffers: shared hit=145
+                                              ->  Bitmap Index Scan on pokemon_spawns_biomes_idx  (cost=0.00..16.58 rows=1608 width=0) (actual time=0.079..0.079 rows=1608 loops=1)
+                                                    Index Cond: (biomes && '{#cobblemon:is_overworld}'::text[])
+                                                    Buffers: shared hit=4
+  ->  Nested Loop Left Join  (cost=11.15..268.54 rows=24 width=188) (actual time=1.358..1.666 rows=24 loops=1)
+        Buffers: shared hit=541
+        ->  CTE Scan on matched m  (cost=0.00..0.48 rows=24 width=140) (actual time=1.295..1.300 rows=24 loops=1)
+              Buffers: shared hit=468
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.015..0.015 rows=1 loops=24)
+              Buffers: shared hit=73
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.007..0.008 rows=13 loops=24)
+                    Sort Key: s.bucket
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=73
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.002..0.005 rows=13 loops=24)
+                          Buffers: shared hit=73
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.001..0.001 rows=4 loops=24)
+                                Index Cond: (pokemon_id = m.id)
+                                Buffers: shared hit=73
+                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.000..0.001 rows=4 loops=86)
+Planning:
+  Buffers: shared hit=37
+Planning Time: 0.552 ms
+Execution Time: 1.844 ms
 ```
 
 ## pokemon list, search=abra
@@ -311,46 +595,46 @@ WITH matched AS MATERIALIZED (
 ```
 
 ```
-Sort  (cost=23.81..23.81 rows=1 width=194) (actual time=0.116..0.117 rows=1 loops=1)
+Sort  (cost=23.81..23.81 rows=1 width=194) (actual time=0.254..0.256 rows=1 loops=1)
   Sort Key: m.rank_exact DESC, m.rank_prefix DESC, m.rank_ts DESC, m.display_name, m.id
   Sort Method: quicksort  Memory: 25kB
   Buffers: shared hit=15
   CTE matched
-    ->  Limit  (cost=12.60..12.61 rows=1 width=98) (actual time=0.025..0.026 rows=1 loops=1)
+    ->  Limit  (cost=12.60..12.61 rows=1 width=98) (actual time=0.142..0.143 rows=1 loops=1)
           Buffers: shared hit=4
-          ->  Sort  (cost=12.60..12.61 rows=1 width=98) (actual time=0.025..0.025 rows=1 loops=1)
+          ->  Sort  (cost=12.60..12.61 rows=1 width=98) (actual time=0.141..0.141 rows=1 loops=1)
                 Sort Key: ((lower(p.display_name) = 'abra'::text)) DESC, ((p.display_name ~~* 'abra%'::text)) DESC, (ts_rank(p.search_vector, '''abra'''::tsquery)) DESC, p.display_name, p.id
                 Sort Method: quicksort  Memory: 25kB
                 Buffers: shared hit=4
-                ->  WindowAgg  (cost=8.56..12.59 rows=1 width=98) (actual time=0.022..0.023 rows=1 loops=1)
+                ->  WindowAgg  (cost=8.56..12.59 rows=1 width=98) (actual time=0.137..0.138 rows=1 loops=1)
                       Buffers: shared hit=4
-                      ->  Bitmap Heap Scan on pokemon p  (cost=8.56..12.57 rows=1 width=107) (actual time=0.011..0.012 rows=1 loops=1)
+                      ->  Bitmap Heap Scan on pokemon p  (cost=8.56..12.57 rows=1 width=107) (actual time=0.112..0.113 rows=1 loops=1)
                             Recheck Cond: (search_vector @@ '''abra'''::tsquery)
                             Heap Blocks: exact=1
                             Buffers: shared hit=4
-                            ->  Bitmap Index Scan on pokemon_search_idx  (cost=0.00..8.56 rows=1 width=0) (actual time=0.006..0.006 rows=1 loops=1)
+                            ->  Bitmap Index Scan on pokemon_search_idx  (cost=0.00..8.56 rows=1 width=0) (actual time=0.103..0.103 rows=1 loops=1)
                                   Index Cond: (search_vector @@ '''abra'''::tsquery)
                                   Buffers: shared hit=3
-  ->  Nested Loop Left Join  (cost=11.15..11.19 rows=1 width=194) (actual time=0.063..0.064 rows=1 loops=1)
+  ->  Nested Loop Left Join  (cost=11.15..11.19 rows=1 width=194) (actual time=0.193..0.194 rows=1 loops=1)
         Buffers: shared hit=7
-        ->  CTE Scan on matched m  (cost=0.00..0.02 rows=1 width=146) (actual time=0.026..0.026 rows=1 loops=1)
+        ->  CTE Scan on matched m  (cost=0.00..0.02 rows=1 width=146) (actual time=0.142..0.143 rows=1 loops=1)
               Buffers: shared hit=4
-        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.035..0.035 rows=1 loops=1)
+        ->  Aggregate  (cost=11.15..11.16 rows=1 width=48) (actual time=0.048..0.048 rows=1 loops=1)
               Buffers: shared hit=3
-              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.021..0.021 rows=12 loops=1)
+              ->  Sort  (cost=10.75..10.85 rows=40 width=47) (actual time=0.028..0.029 rows=12 loops=1)
                     Sort Key: s.bucket
                     Sort Method: quicksort  Memory: 25kB
                     Buffers: shared hit=3
-                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.011..0.015 rows=12 loops=1)
+                    ->  Nested Loop Left Join  (cost=0.28..9.68 rows=40 width=47) (actual time=0.016..0.020 rows=12 loops=1)
                           Buffers: shared hit=3
-                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.007..0.008 rows=3 loops=1)
+                          ->  Index Scan using pokemon_spawns_pokemon_idx on pokemon_spawns s  (cost=0.28..8.88 rows=4 width=176) (actual time=0.010..0.011 rows=3 loops=1)
                                 Index Cond: (pokemon_id = m.id)
                                 Buffers: shared hit=3
-                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.001..0.001 rows=4 loops=3)
+                          ->  Function Scan on unnest b  (cost=0.00..0.10 rows=10 width=32) (actual time=0.002..0.002 rows=4 loops=3)
 Planning:
   Buffers: shared hit=53
-Planning Time: 1.188 ms
-Execution Time: 0.204 ms
+Planning Time: 7.270 ms
+Execution Time: 0.355 ms
 ```
 
 ## pokemon detail, abra
@@ -387,14 +671,14 @@ SELECT p.id, p.species_slug, p.display_name, p.national_dex_id,
 ```
 
 ```
-Nested Loop Left Join  (cost=9.27..17.30 rows=1 width=84) (actual time=0.095..0.096 rows=1 loops=1)
+Nested Loop Left Join  (cost=9.27..17.30 rows=1 width=84) (actual time=0.198..0.200 rows=1 loops=1)
   Buffers: shared hit=6
-  ->  Index Scan using pokemon_species_slug_key on pokemon p  (cost=0.28..8.29 rows=1 width=52) (actual time=0.011..0.011 rows=1 loops=1)
+  ->  Index Scan using pokemon_species_slug_key on pokemon p  (cost=0.28..8.29 rows=1 width=52) (actual time=0.047..0.047 rows=1 loops=1)
         Index Cond: (species_slug = 'abra'::text)
         Buffers: shared hit=3
-  ->  Aggregate  (cost=8.99..9.00 rows=1 width=32) (actual time=0.082..0.083 rows=1 loops=1)
+  ->  Aggregate  (cost=8.99..9.00 rows=1 width=32) (actual time=0.149..0.149 rows=1 loops=1)
         Buffers: shared hit=3
-        ->  Sort  (cost=8.92..8.93 rows=4 width=279) (actual time=0.021..0.022 rows=3 loops=1)
+        ->  Sort  (cost=8.92..8.93 rows=4 width=279) (actual time=0.025..0.026 rows=3 loops=1)
               Sort Key: ((s.aspects <> '{}'::jsonb)), (COALESCE(s.form_label, ''::text)), ((s.aspects)::text), s.raw_row_index
               Sort Method: quicksort  Memory: 25kB
               Buffers: shared hit=3
@@ -403,8 +687,8 @@ Nested Loop Left Join  (cost=9.27..17.30 rows=1 width=84) (actual time=0.095..0.
                     Buffers: shared hit=3
 Planning:
   Buffers: shared hit=41
-Planning Time: 0.291 ms
-Execution Time: 0.131 ms
+Planning Time: 0.366 ms
+Execution Time: 0.238 ms
 ```
 
 ## items list, search=potion
@@ -430,26 +714,26 @@ SELECT i.id, i.item_id, i.name, i.category, i.source_category,
 ```
 
 ```
-Limit  (cost=22.13..22.14 rows=4 width=195) (actual time=0.079..0.080 rows=4 loops=1)
+Limit  (cost=22.13..22.14 rows=4 width=195) (actual time=0.208..0.209 rows=4 loops=1)
   Buffers: shared hit=7
-  ->  Sort  (cost=22.13..22.14 rows=4 width=195) (actual time=0.078..0.078 rows=4 loops=1)
+  ->  Sort  (cost=22.13..22.14 rows=4 width=195) (actual time=0.207..0.208 rows=4 loops=1)
         Sort Key: ((lower(name) = 'potion'::text)) DESC, ((name ~~* 'potion%'::text)) DESC, (ts_rank(search_vector, '''potion'''::tsquery)) DESC, name, item_id
         Sort Method: quicksort  Memory: 26kB
         Buffers: shared hit=7
-        ->  WindowAgg  (cost=8.58..22.09 rows=4 width=195) (actual time=0.065..0.070 rows=4 loops=1)
+        ->  WindowAgg  (cost=8.58..22.09 rows=4 width=195) (actual time=0.190..0.196 rows=4 loops=1)
               Buffers: shared hit=7
-              ->  Bitmap Heap Scan on items i  (cost=8.58..21.92 rows=4 width=403) (actual time=0.038..0.050 rows=4 loops=1)
+              ->  Bitmap Heap Scan on items i  (cost=8.58..21.92 rows=4 width=403) (actual time=0.083..0.163 rows=4 loops=1)
                     Recheck Cond: (search_vector @@ '''potion'''::tsquery)
                     Filter: (name !~ '%[0-9]+[$][sdf]'::text)
                     Heap Blocks: exact=4
                     Buffers: shared hit=7
-                    ->  Bitmap Index Scan on items_search_idx  (cost=0.00..8.58 rows=4 width=0) (actual time=0.028..0.028 rows=4 loops=1)
+                    ->  Bitmap Index Scan on items_search_idx  (cost=0.00..8.58 rows=4 width=0) (actual time=0.060..0.060 rows=4 loops=1)
                           Index Cond: (search_vector @@ '''potion'''::tsquery)
                           Buffers: shared hit=3
 Planning:
   Buffers: shared hit=103
-Planning Time: 0.867 ms
-Execution Time: 0.158 ms
+Planning Time: 1.083 ms
+Execution Time: 0.263 ms
 ```
 
 ## items list, sourceCategory=berries-berry-items
@@ -473,24 +757,24 @@ SELECT i.id, i.item_id, i.name, i.category, i.source_category,
 ```
 
 ```
-Limit  (cost=92.71..92.77 rows=24 width=189) (actual time=0.248..0.250 rows=24 loops=1)
+Limit  (cost=92.71..92.77 rows=24 width=189) (actual time=0.902..0.904 rows=24 loops=1)
   Buffers: shared hit=37
-  ->  Sort  (cost=92.71..92.92 rows=84 width=189) (actual time=0.247..0.248 rows=24 loops=1)
+  ->  Sort  (cost=92.71..92.92 rows=84 width=189) (actual time=0.901..0.902 rows=24 loops=1)
         Sort Key: name, item_id
         Sort Method: top-N heapsort  Memory: 31kB
         Buffers: shared hit=37
-        ->  WindowAgg  (cost=4.93..90.36 rows=84 width=189) (actual time=0.172..0.212 rows=84 loops=1)
+        ->  WindowAgg  (cost=4.93..90.36 rows=84 width=189) (actual time=0.824..0.865 rows=84 loops=1)
               Buffers: shared hit=37
-              ->  Bitmap Heap Scan on items i  (cost=4.93..87.63 rows=84 width=310) (actual time=0.060..0.138 rows=84 loops=1)
+              ->  Bitmap Heap Scan on items i  (cost=4.93..87.63 rows=84 width=310) (actual time=0.140..0.780 rows=84 loops=1)
                     Recheck Cond: (source_category = 'berries-berry-items'::text)
                     Filter: (name !~ '%[0-9]+[$][sdf]'::text)
                     Heap Blocks: exact=35
                     Buffers: shared hit=37
-                    ->  Bitmap Index Scan on items_source_category_idx  (cost=0.00..4.91 rows=84 width=0) (actual time=0.047..0.048 rows=84 loops=1)
+                    ->  Bitmap Index Scan on items_source_category_idx  (cost=0.00..4.91 rows=84 width=0) (actual time=0.107..0.107 rows=84 loops=1)
                           Index Cond: (source_category = 'berries-berry-items'::text)
                           Buffers: shared hit=2
-Planning Time: 0.086 ms
-Execution Time: 0.296 ms
+Planning Time: 0.077 ms
+Execution Time: 0.951 ms
 ```
 
 ## item detail, cobblemon:ability_capsule
@@ -511,12 +795,12 @@ SELECT i.id, i.item_id, i.name, i.category, i.source_category,
 ```
 
 ```
-Index Scan using items_item_id_key on items i  (cost=0.28..8.31 rows=1 width=308) (actual time=0.015..0.015 rows=1 loops=1)
+Index Scan using items_item_id_key on items i  (cost=0.28..8.31 rows=1 width=308) (actual time=0.081..0.082 rows=1 loops=1)
   Index Cond: (item_id = 'cobblemon:ability_capsule'::text)
   Buffers: shared hit=3
 Planning:
   Buffers: shared hit=8
-Planning Time: 0.092 ms
-Execution Time: 0.029 ms
+Planning Time: 0.082 ms
+Execution Time: 0.095 ms
 ```
 

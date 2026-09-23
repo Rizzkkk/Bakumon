@@ -21,6 +21,7 @@ export async function getItemList(req, res) {
 }
 
 export async function getItemById(req, res) {
+  assertKnownParams(req.query, []);
   const item = await findItemById(req.params.itemId);
   if (!item) throw new ApiError(404, 'Item not found');
   cacheable(res);

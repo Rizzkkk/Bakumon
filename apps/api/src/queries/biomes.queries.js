@@ -1,4 +1,4 @@
-import { all, one } from '../db/pool.js';
+import { all } from '../db/pool.js';
 
 // 112 rows, and the contract gives this response no page fields - it is the closed list
 // the biome filter is built from, so it is returned whole.
@@ -16,6 +16,9 @@ export async function listBiomes() {
   }));
 }
 
-export async function biomeTokenExists(token) {
-  return Boolean(await one('SELECT 1 FROM biome_tokens WHERE token = $1', [token]));
+// One round trip for the whole list rather than one query per member, returning a Set so
+// the caller can find which specific member is missing for the 400 message.
+export async function biomeTokensExist(tokens) {
+  const rows = await all('SELECT token FROM biome_tokens WHERE token = ANY($1::text[])', [tokens]);
+  return new Set(rows.map((row) => row.token));
 }

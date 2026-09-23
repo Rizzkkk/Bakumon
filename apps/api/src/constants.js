@@ -5,6 +5,12 @@ export const SPAWN_BUCKETS = ['common', 'legendary event', 'rare', 'ultra-rare',
 
 export const ITEM_CATEGORIES = ['consumable', 'held', 'evolution', 'other'];
 
+// There are only five buckets, so a list longer than that is already nonsense. 112 biome
+// tokens exist; 20 is well past what the multi-select artboard shows selected at once and
+// caps an otherwise-unbounded array literal in the query string.
+export const MAX_BUCKET_FILTERS = SPAWN_BUCKETS.length;
+export const MAX_BIOME_FILTERS = 20;
+
 export const DEFAULT_PAGE_SIZE = 24;
 
 // Above this a request stops being a page and becomes an export, and the export of this

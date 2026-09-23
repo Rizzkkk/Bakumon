@@ -19,7 +19,10 @@ throws.
 | `held` | 43 |
 
 These reconcile exactly against the `Item Categories` sheet, which states the same four
-totals independently, and sum to 932.
+totals independently, and sum to 932. This is the workbook-only population; the API's
+listable population is two wider (the backfilled held items) and `held` is 45 there -
+see `04-api/contract.md`'s "934 rows exist, 933 are listable" section for that
+reconciliation. Both 43 and 45 are correct, over different populations.
 
 **`source_category`** - 13 slugified values. This is the only axis on which berries,
 fossils and Poke Balls are distinguishable: `berries-berry-items` 84,

@@ -43,6 +43,44 @@ export function readEnum(query, name, allowed, label) {
   return value;
 }
 
+// Trims members, drops empties and de-duplicates, matching readSearch's rule that an empty
+// string is "no filter" rather than a 400. Cap is enforced here, before any per-member check,
+// so an oversized list is rejected on shape alone rather than paying for a DB round trip.
+function parseList(raw, cap, label) {
+  if (raw === undefined) return undefined;
+  const seen = new Set();
+  const members = [];
+  for (const part of raw.split(',')) {
+    const member = part.trim();
+    if (!member || seen.has(member)) continue;
+    seen.add(member);
+    members.push(member);
+  }
+  if (members.length === 0) return undefined;
+  if (members.length > cap) {
+    throw new ApiError(400, `Too many ${label} values: max ${cap}`);
+  }
+  return members;
+}
+
+// A repeated `?bucket=a&bucket=b` still goes through single() first, so it is rejected the
+// same way a repeated single-value bucket always was, rather than being read as a second
+// way to write a list.
+export function readEnumList(query, name, allowed, cap, label = name) {
+  const members = parseList(single(query, name), cap, label);
+  if (members === undefined) return undefined;
+  for (const member of members) {
+    if (!allowed.includes(member)) {
+      throw new ApiError(400, `Unknown ${label}: ${echo(member)}`);
+    }
+  }
+  return members;
+}
+
+export function readStringList(query, name, cap) {
+  return parseList(single(query, name), cap, name);
+}
+
 // Well beyond 904 pokemon or 934 items at any page size, and small enough that
 // (page - 1) * pageSize can never leave the safe-integer range.
 const MAX_PAGE = 1_000_000;

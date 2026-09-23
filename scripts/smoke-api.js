@@ -151,6 +151,57 @@ async function runChecks() {
     { status: badBiome.status, body: badBiome.body },
     { status: 400, body: { error: 'Unknown biome: minecraft:not_a_biome' } });
 
+  // 545 common + 220 rare - 32 species carrying both, measured directly against the
+  // database: SELECT count(distinct pokemon_id) FROM pokemon_spawns WHERE bucket IN
+  // ('common','rare'), and the INTERSECT of the two single-bucket sets for the overlap.
+  const twoBucketUnion = await get('/api/pokemon?bucket=common,rare');
+  check('a two-value bucket list returns the union of species, not the species with both',
+    twoBucketUnion.body.total, 733);
+
+  // Bucket alone matches 545 species, biome alone 304; requiring both drops to 235 -
+  // proof the two dimensions AND rather than OR. Measured with the same two EXISTS
+  // predicates the query issues, run directly against the database.
+  const bucketBiomeIntersect = await get(`/api/pokemon?bucket=common&biome=${encodeURIComponent('#cobblemon:is_overworld')}`);
+  check('a bucket and a biome filter intersect across dimensions rather than union',
+    bucketBiomeIntersect.body.total, 235);
+
+  const badBucketMember = await get('/api/pokemon?bucket=common,mythic');
+  check('an unknown member of a bucket list is named specifically, not the whole list',
+    { status: badBucketMember.status, body: badBucketMember.body },
+    { status: 400, body: { error: 'Unknown bucket: mythic' } });
+
+  const tooManyBiomes = await get(`/api/pokemon?biome=${Array.from({ length: 21 }, (_, i) => `token${i}`).join(',')}`);
+  check('a biome list past the 20-member cap is rejected before any member is checked',
+    { status: tooManyBiomes.status, body: tooManyBiomes.body },
+    { status: 400, body: { error: 'Too many biome values: max 20' } });
+
+  // Regression guard: a single bucket value must still behave exactly as it did before
+  // the list reader existed - same total as the pre-existing per-bucket smoke check above.
+  const singleBucketRegression = await get('/api/pokemon?bucket=common');
+  check('a single bucket value still returns exactly the total it always did',
+    singleBucketRegression.body.total, 545);
+
+  // A repeated key (?bucket=a&bucket=b) is Express 5 parsing two values into an array, not
+  // a client writing a list - it must still be a 400, the same one a repeated page= is.
+  const repeatedBucket = await get('/api/pokemon?bucket=common&bucket=rare');
+  check('a repeated bucket parameter is rejected exactly as before, not read as a list',
+    { status: repeatedBucket.status, body: repeatedBucket.body },
+    { status: 400, body: { error: 'bucket must be given once' } });
+
+  // Verified against the database: magikarp carries common and uncommon spawns, not rare.
+  // search narrows to one row so membership doesn't depend on which page it lands on.
+  const magikarpHasBucket = await get('/api/pokemon?search=magikarp&bucket=uncommon');
+  check('magikarp appears when filtered on a bucket it actually has (uncommon)',
+    slugs(magikarpHasBucket.body), ['magikarp']);
+
+  const magikarpLacksBucket = await get('/api/pokemon?search=magikarp&bucket=rare');
+  check('and disappears when filtered on a bucket it lacks (rare), so the filter really filters',
+    slugs(magikarpLacksBucket.body), []);
+
+  const magikarpViaUnion = await get('/api/pokemon?search=magikarp&bucket=rare,uncommon');
+  check('magikarp appears via a bucket list when it has any one member (uncommon), despite lacking rare',
+    slugs(magikarpViaUnion.body), ['magikarp']);
+
   const biomes = await get('/api/biomes');
   check('the biome list is the closed set the filter is built from',
     {
@@ -321,6 +372,23 @@ async function runChecks() {
   check('a mistyped parameter is named rather than silently ignored',
     { status: typo.status, body: typo.body },
     { status: 400, body: { error: 'Unknown query parameter: pagesize' } });
+
+  // These three endpoints took no query parameters and silently ignored anything sent,
+  // unlike the two list endpoints. Contract now requires all five to reject the same way.
+  const unknownOnDetail = await get('/api/pokemon/abra?foo=1');
+  check('an unknown query parameter on the pokemon detail route is a 400, matching the lists',
+    { status: unknownOnDetail.status, body: unknownOnDetail.body },
+    { status: 400, body: { error: 'Unknown query parameter: foo' } });
+
+  const unknownOnItemDetail = await get('/api/items/cobblemon:ability_capsule?foo=1');
+  check('an unknown query parameter on the item detail route is a 400, matching the lists',
+    { status: unknownOnItemDetail.status, body: unknownOnItemDetail.body },
+    { status: 400, body: { error: 'Unknown query parameter: foo' } });
+
+  const unknownOnBiomes = await get('/api/biomes?foo=1');
+  check('an unknown query parameter on /api/biomes is a 400, matching the lists',
+    { status: unknownOnBiomes.status, body: unknownOnBiomes.body },
+    { status: 400, body: { error: 'Unknown query parameter: foo' } });
 
   const oversize = await get('/api/pokemon?pageSize=500');
   check('pageSize is bounded',

@@ -2,28 +2,34 @@ import { all, one } from '../db/pool.js';
 import { conditions } from '../lib/sql.js';
 import { searchOn, rankFor, rankSelect, rankOrderByAlias } from '../lib/search.js';
 
-function pokemonConditions({ search, bucket, biome }) {
+function pokemonConditions({ search, buckets, biomes }) {
   const c = conditions();
 
   const matchedSearch = search
     ? searchOn(c, { vector: 'p.search_vector', name: 'p.display_name' }, search)
     : null;
 
-  if (bucket) {
+  if (buckets?.length) {
     c.add(
       (value) =>
-        `EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = ${value})`,
-      bucket,
+        `EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.bucket = ANY(${value}::text[]))`,
+      buckets,
     );
   }
 
-  if (biome) {
-    // Array containment, which is what the GIN index on biomes serves. Most spawns carry
-    // a #cobblemon: tag rather than a concrete biome name.
+  // Deliberately a second, separate EXISTS rather than one predicate merged with the bucket
+  // check above. Merging would ask "does one spawn row satisfy both the bucket list and the
+  // biome list", which is a different (and narrower) question than "does this species have
+  // a row in one of the allowed buckets AND a row in one of the allowed biomes" - the OR
+  // -within-a-dimension, AND-across-dimensions rule the design asks for.
+  if (biomes?.length) {
+    // && is array overlap: true if the spawn's biomes and the requested list share any
+    // token, which is what the GIN index on biomes serves. Most spawns carry a #cobblemon:
+    // tag rather than a concrete biome name.
     c.add(
       (value) =>
-        `EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes @> ARRAY[${value}::text])`,
-      biome,
+        `EXISTS (SELECT 1 FROM pokemon_spawns s WHERE s.pokemon_id = p.id AND s.biomes && ${value}::text[])`,
+      biomes,
     );
   }
 
@@ -32,8 +38,8 @@ function pokemonConditions({ search, bucket, biome }) {
 
 // Returns the statement rather than running it, so scripts/explain-api.js plans exactly
 // the query the API issues instead of a second copy that can drift away from it.
-export function listPokemonSql({ search, bucket, biome, limit, offset }) {
-  const { c, search: matched } = pokemonConditions({ search, bucket, biome });
+export function listPokemonSql({ search, buckets, biomes, limit, offset }) {
+  const { c, search: matched } = pokemonConditions({ search, buckets, biomes });
   const { rank, rankParams } = rankFor(matched, c);
   // countText is run with c.params alone, so anything bound only for the ORDER BY has to
   // sit after them - see the note in lib/search.js.
