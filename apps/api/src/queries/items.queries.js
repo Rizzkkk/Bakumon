@@ -49,6 +49,7 @@ export function listItemsSql({ search, category, sourceCategory, limit, offset }
 
   const text = `SELECT i.id, i.item_id, i.name, i.category, i.source_category,
             ${DESCRIPTION_SQL},
+            i.evolution_use_count,
             i.image_url,
             count(*) OVER () AS total_count
        FROM items i
@@ -83,6 +84,10 @@ const toCard = (row) => ({
   sourceCategory: row.source_category,
   description: row.description,
   descriptionSource: row.description_source ?? null,
+  // The items index has an "Evolution uses" column, so the count is a list field. The free
+  // text beside it is not: evolution_uses runs to a sentence per item and is only ever read
+  // on the detail page, which is why findItemById adds it rather than this mapper.
+  evolutionUseCount: row.evolution_use_count ?? 0,
   imageUrl: row.image_url,
 });
 
@@ -103,7 +108,6 @@ export async function findItemById(itemId) {
 
   return {
     ...toCard(row),
-    evolutionUseCount: row.evolution_use_count,
     evolutionUses: row.evolution_uses,
   };
 }

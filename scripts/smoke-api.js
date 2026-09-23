@@ -351,6 +351,24 @@ async function runChecks() {
   check('descriptionSource names the column the text actually came from',
     [workbookItem.body.descriptionSource, wikiItem.body.descriptionSource], ['workbook', 'wiki']);
 
+  // The items index renders an "Evolution uses" column, so the count has to survive the
+  // list mapper, not just the detail one. It was detail-only until 2026-09-23 and the
+  // column could then only ever render an em dash.
+  const leafStone = await get('/api/items?search=leaf%20stone&pageSize=2');
+  check('the items list carries the evolution-use count the index column renders',
+    leafStone.body.data.map((r) => [r.itemId, r.evolutionUseCount]),
+    [['cobblemon:leaf_stone', 10], ['cobblemon:leaf_stone_block', 0]]);
+
+  check('the free-text evolution uses stay off the list row, where nothing reads them',
+    Object.keys(leafStone.body.data[0]).sort(),
+    ['category', 'description', 'descriptionSource', 'evolutionUseCount', 'id',
+      'imageUrl', 'itemId', 'name', 'sourceCategory']);
+
+  const leafStoneDetail = await get('/api/items/cobblemon:leaf_stone');
+  check('the detail row still carries both the count and the free text',
+    { count: leafStoneDetail.body.evolutionUseCount, hasText: typeof leafStoneDetail.body.evolutionUses === 'string' },
+    { count: 10, hasText: true });
+
   const missingItem = await get('/api/items/cobblemon:nope');
   check('a missing item returns the 404 body the contract specifies',
     { status: missingItem.status, body: missingItem.body },

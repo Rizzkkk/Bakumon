@@ -38,7 +38,7 @@ GET /api/pokemon/:slug
 GET /api/items
   query: search?, category?, sourceCategory?, page?, pageSize?
   200 -> { data: [ { id, itemId, name, category, sourceCategory,
-                     description, descriptionSource, imageUrl } ],
+                     description, descriptionSource, evolutionUseCount, imageUrl } ],
            page, pageSize, total }
 
 GET /api/items/:itemId
@@ -150,6 +150,13 @@ places where the data forced a decision the shapes alone do not express.
   a berries page (35%), on a screen that also loads ~33 KB of item art; `category` costs
   485 B. Trimming them means a second row-shaping function next to `toCard`, so they stay.
   The pokemon list row carries `imageUrl` (995 B, 19.5%) for the same reason.
+- **`evolutionUseCount` is a list field; `evolutionUses` is not.** The items index renders
+  an "Evolution uses" column, so the count has to survive the list mapper. It was
+  detail-only until 2026-09-23, which meant that column could only ever render an em dash.
+  The free text beside it stays on the detail row: it runs to a sentence per item, nothing
+  on the index reads it, and 147 of the 934 items have a non-zero count at all. Two smoke
+  assertions hold the split - one on the list row's exact key set, one on the detail row
+  carrying both.
 - **Every endpoint sends `Cache-Control`, not only `/api/biomes`.** The four list/detail
   routes send `public, max-age=60` (`LIST_MAX_AGE_SECONDS` in `apps/api/src/lib/cache.js`);
   `GET /api/biomes` alone sends `public, max-age=3600`, because its 112-token vocabulary
