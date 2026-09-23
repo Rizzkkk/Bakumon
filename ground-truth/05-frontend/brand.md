@@ -77,48 +77,72 @@ header mark and a favicon without a separate crop.
 
 ## Palette
 
-Extracted 2026-09-23 by `npm run palette` (`scripts/extract-palette.js`) from
-`assets/brand/Logo.png`, downsampled to 256x256 and clustered into eight groups by k-means
-in CIE Lab. Full table with coverage and contrast: `ground-truth/reports/brand-palette.md`.
-Mirrored in `apps/web/src/styles/tokens.css`, which is the only file in the application
-that defines a colour.
+**Superseded by ADR 0010.** The table that stood here was extracted from `Logo.png` by
+`npm run palette` and is kept in `ground-truth/reports/brand-palette.md` as the record of
+how it was derived. It is no longer what the site renders.
 
-| Token | Hex | Coverage | Contrast vs field | Role |
-|---|---|---|---|---|
-| `--field` | `#141414` | 85.4% | 1.00:1 | the page, and the field the mark sits on |
-| `--surface-raised` | `#2c2c2c` | 6.6% | 1.32:1 | cards, panels, table group rows |
-| `--border` | `#595146` | 3.2% | 2.37:1 | borders and rules only - fails text contrast |
-| `--text-muted` | `#8d816e` | 1.8% | 4.84:1 | secondary text; passes AA for body |
-| `--text` | `#d3c7ba` | 1.1% | 11.10:1 | primary text |
-| `--accent` | `#cd3524` | 0.7% | 3.64:1 | the Poke Ball red; large text, badges and fills |
-| `--accent-deep` | `#a6261c` | 0.6% | 2.56:1 | pressed and hover states |
-| `--accent-shadow` | `#671916` | 0.5% | 1.51:1 | shadow only, never text |
+The palette now comes from the design kit, `design/tokens.css`, copied to
+`apps/web/src/styles/tokens.css` - still the only file in the application that defines a
+colour, and still a rule that re-eyedropping inside a component breaks.
 
-Clustering is done in Lab rather than RGB deliberately: the field is 85% of the image and
-RGB distance collapses every dark pixel into one cluster. The first run in RGB returned
-five indistinguishable charcoals and found no accent at all.
+Two themes, not one. Light is the `:root` default, dark applies under
+`prefers-color-scheme` unless `data-theme="light"` overrides it, and `data-theme="dark"`
+forces it. The toggle writes that attribute and persists the choice in `localStorage`.
 
-**`--accent` does not pass AA for body text** at 3.64:1. It is legal for large text, badge
-borders and fills, and that is all it is used for. `--text-muted` at 4.84:1 is the lowest
-token that may carry body copy.
+Contrast is measured, not asserted: `npm run contrast` (`scripts/check-contrast.js`) reads
+the token file and recomputes WCAG 2.1 for every pair the application actually renders,
+writing `ground-truth/reports/token-contrast.md`. **38 pairs across both themes, 0
+failing.** It exits non-zero on any failure, so a token edit that breaks contrast is loud.
 
-The accent is spent on the `ultra-rare` bucket as well as `rare`, because
-`01-data/server-notes.md` requires `ultra-rare` to read as prominently - it is a
-Bakumon-specific tier sitting above rare, not a footnote to it.
+Load-bearing values, light theme, from that report:
+
+| Pair | Measured | Carries |
+|---|---|---|
+| `--text` on `--bg` | 15.63:1 | body text |
+| `--muted` on `--bg` | 7.00:1 | secondary text |
+| `--faint` on `--surface` | 5.59:1 | raw tokens in mono |
+| `--link` on `--bg` | 5.88:1 | inline links |
+| `--cta-text` on `--cta` | 11.83:1 | the Discord button label |
+
+The kit states its own ratios on `design/artboards/tokens-board.html`. They were recomputed
+rather than transcribed, and they agree.
+
+Each of the five spawn buckets has its own glyph as well as its own colour, so the buckets
+are distinguishable without colour at all. `ultra-rare` keeps the prominence
+`01-data/server-notes.md` requires - it is a Bakumon-specific tier above rare, not a
+footnote to it - and the kit gives it a double frame rather than borrowing the rare red.
 
 ## Typography
 
-**No webfont is loaded**, and that is a decision rather than an omission. The banner is
-already 2.23 MB and a webfont would be a second blocking download for a site with no
-design-system requirement. Recorded here so a future contributor does not read the
-absence as an oversight. Two system stacks:
+**Superseded by ADR 0010.** ADR 0009 declined webfonts, and that decision was sound for a
+site with no design system. The kit supplies one, so three faces are now loaded - and
+**self-hosted**, never from Google Fonts:
 
-- `--font-ui` - a system sans for all prose and UI.
-- `--font-mono` - a system mono for strings that are literally identifiers:
-  `cobblemon:ability_capsule`, `#cobblemon:is_overworld`, `snake_pattern=attack`, species
-  slugs, and the raw `%s Poke Puff` where it appears. These are code and must look like
-  code; rendering `#cobblemon:is_overworld` proportionally is how it gets read as prose.
+| Face | Role | Weights |
+|---|---|---|
+| Pixelify Sans | display: headings, labels, chips | 400-700 variable |
+| Atkinson Hyperlegible | body: all prose and UI | 400, 700, 400 italic |
+| IBM Plex Mono | identifiers | 400, 500 |
 
-The wordmark is set as text, not as `Logo.png`, for the alpha-channel reason above.
+Latin subset only, six woff2 files in `apps/web/public/fonts/`, **94,636 bytes total**,
+declared in `apps/web/src/styles/fonts.css` with `font-display: swap`. All three are OFL.
 
-Decided in **ADR 0009**.
+Self-hosting is not a preference. A Google Fonts request is a third-party request on every
+page load, which ADR 0007 rules out and which would falsify the privacy page's claim that
+nothing is collected. `grep -rn "fonts.googleapis\|fonts.gstatic"` over `apps/web/src`,
+`index.html` and the built `dist/` returns nothing, and that grep is part of the launch
+check rather than a one-off.
+
+ADR 0009's reason for a mono face survives the change intact: `cobblemon:ability_capsule`,
+`#cobblemon:is_overworld`, `snake_pattern=attack`, species slugs and the raw `%s Poke Puff`
+are code and must look like code. Rendering them proportionally is how they get read as
+prose.
+
+**One place still falls back to a system sans**: the tagline on the Open Graph share card,
+`npm run sharecard`. sharp resolves SVG fonts through the system font stack and the kit
+faces are woff2, which is not installed. The wordmark image carries the display face as
+artwork, so the card still reads correctly. Recorded here rather than left as a silent
+substitution.
+
+The wordmark is now an image, `assets/brand/wordmark.png`, not text - the kit supplies one
+and the alpha-channel reason for setting it as text no longer applies.

@@ -25,7 +25,8 @@
     "brand": "node scripts/compress-brand.js",
     "skin": "node scripts/render-skin.js",
     "sharecard": "node scripts/make-share-card.js",
-    "sitemap": "node scripts/make-sitemap.js"
+    "sitemap": "node scripts/make-sitemap.js",
+    "contrast": "node scripts/check-contrast.js"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
