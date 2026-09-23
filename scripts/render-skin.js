@@ -178,7 +178,20 @@ async function main() {
   };
   const s = Number(arg('--scale', 8));
   const slim = args.includes('--slim');
+
+  // --out is joined into a path, so it is a name and not a path. Without this a --out of
+  // ../../elsewhere writes outside assets/brand entirely. Same containment reasoning as
+  // the dev asset middleware in apps/web/vite.config.js, which checks the resolved path.
   const outName = arg('--out', 'character');
+  if (!/^[A-Za-z0-9_-]+$/.test(outName)) {
+    console.error(`[fail] --out must be a plain file name, got ${JSON.stringify(outName)}`);
+    process.exit(2);
+  }
+
+  if (!Number.isFinite(s) || s < 1 || s > 64) {
+    console.error(`[fail] --scale must be between 1 and 64, got ${JSON.stringify(arg('--scale', 8))}`);
+    process.exit(2);
+  }
 
   const img = sharp(input).ensureAlpha();
   const raw = await img.raw().toBuffer({ resolveWithObject: true });

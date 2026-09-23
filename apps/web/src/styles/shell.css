@@ -224,14 +224,22 @@
 
 /* ---- Wiki layout ---- */
 
+/* The nav is flush against the viewport's left edge rather than inset as a card: at 1440px
+   the centred container left a 100px dead gutter beside it. It is the page's primary
+   control, so it gets the edge and the content keeps the centred measure. */
 .wiki-sidebar {
   width: 232px;
   flex-shrink: 0;
   padding: 16px 8px;
   background: var(--surface);
-  border: 2px solid var(--line);
+  border-right: 2px solid var(--line);
   box-sizing: border-box;
   display: none;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .wiki-sidebar__title {
   display: flex;
@@ -247,7 +255,14 @@
 
 .wiki-layout {
   width: 100%;
-  max-width: 1440px;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+.wiki-layout__content {
+  flex: 1;
+  min-width: 0;
+  max-width: 1208px;
   margin: 0 auto;
   padding: 20px 16px 40px;
   box-sizing: border-box;
@@ -260,8 +275,11 @@
 
 @media (min-width: 768px) {
   .wiki-sidebar { display: block; }
-  .wiki-layout { padding: 32px; gap: 32px; }
+  .wiki-layout__content { padding: 32px; gap: 32px; }
   .wiki-layout__rail { display: block; width: 260px; flex-shrink: 0; }
+}
+@media (min-width: 1280px) {
+  .wiki-sidebar { width: 264px; }
 }
 
 /* ---- Footer ---- */

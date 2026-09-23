@@ -345,6 +345,15 @@ it was acted on. Fixed in the same pass:
     decoded by a vulnerable decoder. The trigger is a developer running `npm run mine`,
     not a request path, which is why this is not a launch blocker - but it is a one-line
     fix (`sharp@^0.35.4`) plus a `npm run mine` run to confirm thumbnails regenerate.
+
+    **Widened 2026-09-23.** The design-kit work gave sharp two more decode paths:
+    `scripts/render-skin.js` parses a skin PNG and `scripts/make-share-card.js` composites
+    the Open Graph card. Both are maintainer-run over files the maintainer chose, so the
+    reachability argument above is unchanged. It would change the moment a skin arrives
+    from anywhere but the maintainer's own disk - a "submit your skin" feature would turn
+    this into a live memory-corruption surface, so upgrade before building one.
+    Re-confirmed by `npm audit` on 2026-09-23: `sharp <=0.35.4-rc.0`, high, CVE-2026-33327,
+    CVE-2026-33328, CVE-2026-35590, CVE-2026-35591.
 36. **nginx has no security headers, no `gzip` for `application/json`, no `limit_req` and
     no explicit `root`.** All four belong in the nginx config file that item 31 already
     says does not exist. The `root` one matters most: if it points at the checkout rather
@@ -379,6 +388,35 @@ Every index suggestion against `pokemon` and `pokemon_spawns` was also declined:
 database is 11 MB and entirely resident in shared buffers, the unfiltered list is a 19-page
 sequential scan in 0.089 ms, and `bucket=common` selects 43% of rows, which no btree would
 serve. Measured, not assumed - `reports/query-plans.md`.
+
+42. **Three more dependency advisories, all needing a breaking upgrade.** From a real
+    `npm audit` on 2026-09-23, not version pattern-matching. None is reachable through this
+    application's own code paths today, which is why none blocks launch - but each is
+    recorded with what would make it reachable, so the judgement can be re-made rather than
+    re-derived.
+
+    - **`react-router` 6.0.0 - 7.17.0**, moderate, GHSA-wrjc-x8rr-h8h6: open redirect via a
+      backslash in `<Link>` and `useNavigate`. Every `to=` and `navigate()` target in this
+      app is a literal route, or `encodeURIComponent()` of a workbook-derived slug appended
+      to one. No call site passes a raw query-string value as a whole target, so no payload
+      could be constructed against this codebase. It becomes reachable the moment any route
+      navigates to a destination read from the URL - a "return to" parameter, for instance.
+      The companion advisory GHSA-337j-9hxr-rhxg is SSR-hydration only and cannot apply:
+      ADR 0008 makes this a client-rendered SPA with no SSR.
+    - **`esbuild` <=0.24.2 via `vite` <=6.4.2**, moderate, GHSA-67mh-4wv8-2f99: any website
+      can make the **dev server** answer its requests. This never ships - `vite` is a
+      devDependency and `apps/web/dist` is static files behind nginx - but it is real on a
+      developer's machine while `npm run web` is running, on a laptop that also has the
+      production `.env`. Worth not browsing untrusted sites with the dev server up.
+    - **`uuid` <11.1.1 via `exceljs`**, moderate, GHSA-w5hq-g745-h8pq: a missing buffer
+      bounds check in v3/v5/v6 when a `buf` is supplied. `exceljs` is used only by
+      `npm run audit` and `npm run import` against the one workbook in this repository, and
+      nothing in either path passes a `buf`.
+
+    All three fixes are breaking (`react-router-dom@7`, `vite@8`, `exceljs@3.4.0`). They are
+    deliberately not bundled into the design-kit change: a breaking upgrade needs its own
+    pass with its own verification, and mixing it in would make a bisect unable to say which
+    change broke something.
 
 ## What is already done
 

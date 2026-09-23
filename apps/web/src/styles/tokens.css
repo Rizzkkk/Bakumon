@@ -15,7 +15,7 @@
   --brand-moss: #002E01;  /* Wordmark outline */
 
   /* typography */
-  --font-display: 'Pixelify Sans', 'Courier New', monospace;
+  --font-display: 'Baloo 2', 'Trebuchet MS', system-ui, sans-serif;
   --font-body: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 

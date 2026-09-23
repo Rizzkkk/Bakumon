@@ -6,8 +6,12 @@ export function WikiLayout({ children, rail }) {
   return (
     <div className="wiki-layout">
       <WikiSidebar />
-      <main className="wiki-layout__main">{children}</main>
-      {rail ? <div className="wiki-layout__rail">{rail}</div> : null}
+      {/* The sidebar sits flush against the viewport's left edge, so the page's centred
+          measure belongs to this wrapper rather than to the row that contains both. */}
+      <div className="wiki-layout__content">
+        <main className="wiki-layout__main">{children}</main>
+        {rail ? <div className="wiki-layout__rail">{rail}</div> : null}
+      </div>
     </div>
   );
 }

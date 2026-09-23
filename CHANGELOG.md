@@ -147,6 +147,14 @@ records what it supersedes.
 
 ### Fixed
 
+- `scripts/render-skin.js` validates `--out` and `--scale`. `--out` is joined into a path,
+  so a value of `../../elsewhere` wrote outside `assets/brand` entirely; it is now required
+  to be a plain file name, the same containment reasoning as the dev asset middleware in
+  `apps/web/vite.config.js`. `--scale` multiplies the render buffer in both dimensions, so
+  an unbounded value asked for an enormous allocation - `--scale 9999` on a 400x790 figure
+  is hundreds of gigabytes. Found independently by two review agents; verified by running
+  both payloads and watching them exit 2.
+
 - Three documentation claims that went stale the moment `git init` ran:
   `ground-truth/README.md` ("`git init` has still never been run"),
   `05-frontend/brand.md` ("Nothing is literally tracked yet"), and
