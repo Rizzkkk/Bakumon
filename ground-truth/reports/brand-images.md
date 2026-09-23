@@ -11,6 +11,8 @@ The originals stay in the repository untouched. These are the files the site ser
 | `assets/brand/banner-1280.webp` | 1280px | 184 KB |
 | `assets/brand/banner-1672.webp` | 1672px | 258 KB |
 | `assets/brand/logo.webp` | 256px | 16 KB |
+| `assets/brand/character-wall-320.webp` | 320px | 27 KB |
+| `assets/brand/character-wall-480.webp` | 480px | 40 KB |
 
 Banner: **2278 KB PNG to 258 KB WebP** at full width
 (11.3% of the original), and a 768px phone

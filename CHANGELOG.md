@@ -13,7 +13,22 @@ records what it supersedes.
 
 ### Added
 
-- `components/common/WavingCharacter.jsx` - one static render, absolutely
+- **`GET /api/pokemon/:slug` carries `imageSource` and `imageVariant`; the Pokemon detail
+  page names the variant next to the artwork.** ADR 0012: the Cobblemon wiki turned out to
+  hold `(model)` renders for 66 of 904 species (measured via `list=allimages` per species,
+  confirmed in the database), and the miner now prefers a wiki render over PokeAPI where
+  one exists. 65 of those 66 are a regional form or a costume, not a plain portrait -
+  Hisuian Cyndaquil, Ink Arbok, a messenger-bag Dragonite - so `image_variant`
+  (`apps/api/src/db/migrations/0003_artwork_provenance.sql`) exists to say so, and
+  `PokemonDetail.jsx` renders it as a caption under the infobox artwork rather than only in
+  a tooltip. `altText.js`'s `pokemonAlt` now takes the image source and stops calling every
+  image "official artwork" - 66 of them are a Cobblemon model render, not Pokemon Company
+  art. `Attribution.jsx` and `02-assets/attribution.md` are updated to credit the wiki for
+  those 66 images under CC BY 4.0 alongside PokeAPI for the other 838. List rows (the
+  Pokedex index, search results) do not carry either field - nothing on the index renders a
+  provenance note, so per `04-api/contract.md`'s stated principle the fields stay
+  detail-only.
+- `components/common/WallBreakCharacter.jsx` - one static image, absolutely
   positioned into the page margin to the right of the feature cards, which is why the grid
   keeps the width it would have without it, and it appears only from 1470px - the width at
   which `(100vw - 1100)/2` holds a 160px character and its 24px gap (ADR 0011).
@@ -38,11 +53,20 @@ records what it supersedes.
 - `assets/brand/logo-1267.png` (1267x1241, RGBA, real alpha) and `assets/brand/wordmark.png`
   (2172x724, RGBA) from the kit. Measured with `sharp().metadata()`. The repo had no
   wordmark at all, and the logo is 3.2x the linear resolution of `logo-transparent.png`.
-- `assets/brand/character-wave.png` (488x887) plus its 320px and 480px WebPs, rendered from
-  `assets/brand/skin.png` by `npm run skin -- --pose wave --scale 26`. Classic
-  4px arms, detected from the skin's back-arm columns rather than asked for. Committed as
-  static images, so the landing page gains a character without gaining a request or a
-  dependency. The standing render that shipped first is removed below.
+- `assets/brand/character-wall.png` - the landing page's character, bursting through a
+  smashed wall. Generated art, not a render: `render-skin.js` knows the six boxes of a skin
+  and has no concept of a wall or rubble. Made with Gemini's image model from
+  `assets/brand/character-wave.png` as input, so the figure is this skin and not an invented
+  one; that file stays in the repository as the provenance of this one.
+- `assets/brand/character-wave.png` (488x887), rendered from `assets/brand/skin.png` by
+  `npm run skin -- --pose wave --scale 26`. Classic 4px arms, detected from the skin's
+  back-arm columns rather than asked for. It is the input to the generated image above and
+  is no longer served. The standing render that shipped first is removed below.
+- `character-wall-320.webp` (27 KB) and `-480.webp` (40 KB) from `npm run brand`, which
+  hardens the generated file's alpha to binary and trims it first. The model painted a soft
+  glow around the silhouette and every pixel of it sits under half alpha; on the cream page
+  it reads as a yellow halo. Doing it in the pipeline rather than by hand means re-running
+  cannot restore it.
 
 - `scripts/render-skin.js` / `npm run skin` - renders a Minecraft skin PNG as a static
   character for the landing page. No browser and no WebGL: the landing page has
@@ -228,6 +252,12 @@ records what it supersedes.
   its pixel grid, so it keeps that job while the 1267px file takes the hero and share card.
 
 ### Fixed
+
+- `pokemonAlt` no longer claims a source it does not know. Only the detail response carries
+  `imageSource`, so every index thumbnail reaches it with the source undefined - and 66 of
+  those 904 are wiki renders, which the old default described aloud as "official artwork".
+  Alt text is asserted as fact to someone who cannot see the image, so the unknown case now
+  says less rather than something untrue.
 
 - **Artwork no longer renders in a visibly wrong-coloured box.** `.art` painted
   `background: var(--bg)` behind every image; every Pokemon render and item texture is a

@@ -89,16 +89,27 @@ better under it: the arm swings in the plane of the image instead of away from t
 The waving arm is the character's left, which a front-on render mirrors onto the viewer's
 right - away from the cards, rather than across the 24px gap into them.
 
-The pose: `scripts/render-skin.js` gained a `--pose wave` mode that rotates the left arm at
-the shoulder, and one committed render of it, for the reason the renderer exists at all -
-the landing page must render with the API down and must not pull a third-party render at
-page load.
+**The image the page serves is generated art, not a render.** It shows the character
+bursting through a smashed wall, which `render-skin.js` cannot draw: it knows the six boxes
+of a Minecraft skin and can pose them, and has no concept of a wall, a hole or rubble. The
+image was produced with Gemini's image model from the renderer's own front-on wave frame as
+input, so the character in it is this skin rather than an invented one. `character-wave.png`
+stays in `assets/brand/` as that input, which is the provenance of the generated file beside
+it.
 
-**Static, not animated.** It was briefly two frames alternated by CSS. A figure standing at
-the edge of the page holding a wave reads as a character; the same figure flapping reads as
-a banner ad, and the motion was the first thing the eye went to on a page whose actual
-subject is three cards. The renderer emits one frame per pose accordingly - the two-frame
-machinery and its shared-canvas crop are gone rather than left dormant.
+It arrived with a soft glow painted around the silhouette, which composited on the cream
+page reads as a yellow halo. Every pixel of it is under half alpha, so `npm run brand`
+hardens the mask to binary before trimming and encoding - a build step rather than a
+one-off edit, so re-running the pipeline cannot quietly restore the halo.
+
+**Static, not animated.** It was briefly two frames alternated by CSS. A figure holding a
+pose at the edge of the page reads as a character; the same figure flapping reads as a
+banner ad, and the motion was the first thing the eye went to on a page whose actual subject
+is three cards. The renderer emits one frame per pose accordingly - the two-frame machinery
+and its shared-canvas crop are gone rather than left dormant.
+
+`render-skin.js` therefore no longer produces anything the site serves. It is kept, because
+it made the input to what the site does serve and is the only way to make another.
 
 The standing render is deleted with the placement it served - `character.png` and its two
 WebPs. `npm run skin` still produces a standing pose by default, but under the new camera it

@@ -26,6 +26,25 @@ const FAVICON_SIZES = [32, 180, 512];
 const { width: SOURCE_WIDTH, height: SOURCE_HEIGHT } =
   await sharp(path.join(BRAND, LOGO_SOURCE)).metadata();
 
+/*
+ * The wall-break character is generated art rather than a render, and it arrived with a
+ * soft glow painted around its silhouette. Every pixel under half alpha is that glow, so
+ * the mask is hardened to binary before anything else: composited on the cream page the
+ * fringe reads as a yellow halo around the rubble. The trim only means anything once it
+ * has gone, since the glow reaches most of the way to the canvas edge.
+ */
+const WALL_SOURCE = 'character-wall.png';
+const WALL_WIDTHS = [320, 480];
+
+async function hardEdges(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  for (let i = 3; i < data.length; i += 4) data[i] = data[i] >= 128 ? 255 : 0;
+  return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } })
+    .trim({ threshold: 0 })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
+
 const kb = (bytes) => `${(bytes / 1024).toFixed(0)} KB`;
 
 const PUBLIC = path.join(ROOT, 'apps/web/public');
@@ -48,6 +67,24 @@ async function encode(source, outputName, width) {
 console.log('[brand] encoding WebP derivatives');
 for (const width of BANNER_WIDTHS) await encode('Banner.png', `banner-${width}.webp`, width);
 await encode(LOGO_SOURCE, 'logo.webp', LOGO_WIDTH);
+
+// A smooth kernel here, unlike the favicon set below. The character is painted at roughly
+// 20px blocks rather than on a 1:1 pixel grid, so nearest-neighbour does not preserve a
+// grid that is not there - it just drops every other row of a block edge and aliases.
+console.log('[brand] wall-break character');
+{
+  const source = path.join(BRAND, WALL_SOURCE);
+  const before = (await fs.stat(source)).size;
+  const hardened = await hardEdges(source);
+  for (const width of WALL_WIDTHS) {
+    const outputName = `character-wall-${width}.webp`;
+    const output = path.join(BRAND, outputName);
+    await sharp(hardened).resize({ width }).webp({ quality: 82 }).toFile(output);
+    const after = (await fs.stat(output)).size;
+    console.log(`  ${outputName.padEnd(22)} ${String(width).padStart(4)}px  ${kb(after).padStart(8)}`);
+    rows.push({ source: WALL_SOURCE, outputName, width, before, after });
+  }
+}
 
 // Nearest-neighbour, not the default Lanczos. The mark is pixel art: any smooth
 // resampling kernel turns crisp square pixels into mush, which is the same reason

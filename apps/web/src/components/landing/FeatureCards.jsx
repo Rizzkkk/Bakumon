@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PixelIcon } from '../common/PixelIcon.jsx';
-import { WavingCharacter } from '../common/WavingCharacter.jsx';
+import { WallBreakCharacter } from '../common/WallBreakCharacter.jsx';
 import { DISCORD_INVITE } from '../../lib/serverFacts.js';
 
 const FEATURES = [
@@ -58,7 +58,7 @@ export function FeatureCards() {
       </div>
       {/* Last child, and absolutely positioned into the page margin beside the cards, so
           the grid keeps the width it would have without it. */}
-      <WavingCharacter className="feature-section__aside" />
+      <WallBreakCharacter className="feature-section__aside" />
     </section>
   );
 }

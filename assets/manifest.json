@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-16T11:48:38.892Z",
+  "generatedAt": "2026-09-23T18:31:57.287Z",
   "entries": {
     "items/cobblemon:ability_capsule": {
       "status": "ok",
@@ -8662,13 +8662,13 @@
     },
     "pokemon/alakazam": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/e5/Alakazam_%28model%2C_ancient%29.png",
       "file": "pokemon/alakazam.png",
       "thumb": "thumbs/pokemon/alakazam.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 162890,
-      "sha256": "8f1dfebe7855bf0838dc4110629b01a8862370373cabe527adf3f979bc4fa1e0",
-      "fetchedAt": "2026-09-11T17:36:18.341Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 83591,
+      "sha256": "c15eb7dff14a83f413e1342c556487fe9468f1e0d8757321aa7bfd498f649894",
+      "fetchedAt": "2026-09-23T18:24:18.200Z"
     },
     "pokemon/amoonguss": {
       "status": "ok",
@@ -8762,13 +8762,13 @@
     },
     "pokemon/arbok": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/8/8f/Arbok_Ink_%28Model%29.png",
       "file": "pokemon/arbok.png",
       "thumb": "thumbs/pokemon/arbok.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 181492,
-      "sha256": "f1e38593fba1de6e6db3d5db819f1b851307f342abb819f9c2ebfbbea9b93d42",
-      "fetchedAt": "2026-09-11T17:36:18.859Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 118968,
+      "sha256": "bb54b00e27175c549d4bc62d3ff8fb1e3d5277aa46c12667b242fffca226ff28",
+      "fetchedAt": "2026-09-23T18:24:21.586Z"
     },
     "pokemon/archaludon": {
       "status": "ok",
@@ -9102,13 +9102,13 @@
     },
     "pokemon/bellossom": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/182.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/b/b0/Bellossom_Valencia_%28Model%29.png",
       "file": "pokemon/bellossom.png",
       "thumb": "thumbs/pokemon/bellossom.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 152855,
-      "sha256": "f0c32f31a131a376957b78fb9c5eba45a5bc19e889584bd852b6caea1bb4dbb5",
-      "fetchedAt": "2026-09-11T17:36:20.967Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 35559,
+      "sha256": "685468aff76f002b6e77702f0dbcdeb1211336bec491a53a54328eb9af9ef0ec",
+      "fetchedAt": "2026-09-23T18:24:29.878Z"
     },
     "pokemon/bellibolt": {
       "status": "ok",
@@ -9142,13 +9142,13 @@
     },
     "pokemon/bergmite": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/712.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/40/Bergmite_Hisuian_%28Model%29.png",
       "file": "pokemon/bergmite.png",
       "thumb": "thumbs/pokemon/bergmite.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 138134,
-      "sha256": "90b6c0b87260cce87e359938c3c481ee5799347aba57b21e3b04ce2d6d3b3d0e",
-      "fetchedAt": "2026-09-11T17:36:21.191Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 52755,
+      "sha256": "0d852dc65db4e1dc8913961d8f25e36b8ba3c91653124e56438795b99fb34da0",
+      "fetchedAt": "2026-09-23T18:24:30.282Z"
     },
     "pokemon/blaziken": {
       "status": "ok",
@@ -9212,13 +9212,13 @@
     },
     "pokemon/blastoise": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/a/a2/Blastoise_%28model%2C_wise_glasses%29.png",
       "file": "pokemon/blastoise.png",
       "thumb": "thumbs/pokemon/blastoise.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 197853,
-      "sha256": "ba0a6b633e7a5d5a8c52498b0556518005fd4c63ef4564a8b06b79a73905a635",
-      "fetchedAt": "2026-09-11T17:36:21.456Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 107221,
+      "sha256": "533448d23dd91311cb572a31cb9c00c42edcfb1ba0082ac14f652d1fdff33576",
+      "fetchedAt": "2026-09-23T18:24:31.989Z"
     },
     "pokemon/blipbug": {
       "status": "ok",
@@ -9312,13 +9312,13 @@
     },
     "pokemon/braixen": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/654.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/3d/Braixen_%28model%2C_ribbon%29.png",
       "file": "pokemon/braixen.png",
       "thumb": "thumbs/pokemon/braixen.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 112926,
-      "sha256": "d3c4de1e4ccef749f7ad29b7c855af62b8911ec35a122e1763fbef6d2afba888",
-      "fetchedAt": "2026-09-11T17:36:22.076Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 77936,
+      "sha256": "13c9ed3d781b867a9d08c15eb91e04fcc41055c4de1a6a3a1283e68442ccc61e",
+      "fetchedAt": "2026-09-23T18:24:34.757Z"
     },
     "pokemon/brambleghast": {
       "status": "ok",
@@ -9412,13 +9412,13 @@
     },
     "pokemon/bulbasaur": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/33/Bulbasaur_%28model%29.png",
       "file": "pokemon/bulbasaur.png",
       "thumb": "thumbs/pokemon/bulbasaur.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 203385,
-      "sha256": "7233d8d8b03b5fa91d835a3069d25769155db93c9ef91b6066e215ed3895e9d8",
-      "fetchedAt": "2026-09-11T17:36:22.671Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 64440,
+      "sha256": "7a8c3b27b9bb7c4d428c9942ea92b67dc6392e749b9c34cfe376431369ae145e",
+      "fetchedAt": "2026-09-23T18:24:37.352Z"
     },
     "pokemon/buizel": {
       "status": "ok",
@@ -9462,13 +9462,13 @@
     },
     "pokemon/butterfree": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/0/04/Butterfree_Valencia_Male_%28Model%29.png",
       "file": "pokemon/butterfree.png",
       "thumb": "thumbs/pokemon/butterfree.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 183600,
-      "sha256": "0d412d9b32b8064f19b414b5f919b2af1ff04f8e2d07bf88e091562ca3583db7",
-      "fetchedAt": "2026-09-11T17:36:22.880Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 27288,
+      "sha256": "7151a30a238741ead6f83347b275909d10ca5cefcbd3106b5f934ed1c450072c",
+      "fetchedAt": "2026-09-23T18:24:38.369Z"
     },
     "pokemon/cacnea": {
       "status": "ok",
@@ -9582,13 +9582,13 @@
     },
     "pokemon/caterpie": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/7/76/Caterpie_Valencia_%28Model%29.png",
       "file": "pokemon/caterpie.png",
       "thumb": "thumbs/pokemon/caterpie.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 174430,
-      "sha256": "49eb7f6c88d65d65e938d42df61d5cf47dd46f01c08603b6df620eb003a37457",
-      "fetchedAt": "2026-09-11T17:36:23.500Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 22319,
+      "sha256": "c900d985a4d7f442d03bcfc99ffc798b63088ba30dc899989abba7930aae3030",
+      "fetchedAt": "2026-09-23T18:24:42.055Z"
     },
     "pokemon/centiskorch": {
       "status": "ok",
@@ -9992,13 +9992,13 @@
     },
     "pokemon/conkeldurr": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/534.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/a/a0/Conkeldurr_%28model%2C_red_pillars%29.png",
       "file": "pokemon/conkeldurr.png",
       "thumb": "thumbs/pokemon/conkeldurr.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 164524,
-      "sha256": "73d17912f1514274ceec7a41bcb4dd279ee8550201037b69b49caf9984b58188",
-      "fetchedAt": "2026-09-11T17:36:26.102Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 101038,
+      "sha256": "7eb23abdb2d0dd7d1115ee1ca2e0e8bb7b460d4479fd2ff659b848503d37b3f5",
+      "fetchedAt": "2026-09-23T18:24:51.213Z"
     },
     "pokemon/comfey": {
       "status": "ok",
@@ -10182,13 +10182,13 @@
     },
     "pokemon/cubone": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/104.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/8/89/Cubone_Alolan_%28model%29.png",
       "file": "pokemon/cubone.png",
       "thumb": "thumbs/pokemon/cubone.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 156699,
-      "sha256": "88ead79f1c78f8dec797b7441ea81cfb736ec75faa3aa239d9990fdd908dffb9",
-      "fetchedAt": "2026-09-11T17:36:27.117Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 21120,
+      "sha256": "882923c1da7902b6e66cfbd003653a44e70f45cd771543e587215d1a5d49af56",
+      "fetchedAt": "2026-09-23T18:24:55.519Z"
     },
     "pokemon/cryogonal": {
       "status": "ok",
@@ -10262,23 +10262,23 @@
     },
     "pokemon/dartrix": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/723.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/b/b1/Dartrix_Hisuian_%28Model%29.png",
       "file": "pokemon/dartrix.png",
       "thumb": "thumbs/pokemon/dartrix.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 97762,
-      "sha256": "9ca8d3c4f025c921bd46cdfca2a2bc79e4c79af44c1c3c9b78545132b8ed31d9",
-      "fetchedAt": "2026-09-11T17:36:27.632Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 50325,
+      "sha256": "5b12b81c07a64eea92b380a6caec88079e8624f30e7e522e3e06e67c1aed07ed",
+      "fetchedAt": "2026-09-23T18:24:57.695Z"
     },
     "pokemon/cyndaquil": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/e8/Cyndaquil_Hisuian_%28Model%29.png",
       "file": "pokemon/cyndaquil.png",
       "thumb": "thumbs/pokemon/cyndaquil.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 116113,
-      "sha256": "fa3633c757f9b7e1dfa898377fb20e6dbb91474025b753fae52645b22356db5d",
-      "fetchedAt": "2026-09-11T17:36:27.732Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 73292,
+      "sha256": "9a31ddac218be2bb807fe4bfe6dcc6780cb67aa05301a90d04ecbd87706d5b70",
+      "fetchedAt": "2026-09-23T18:24:57.227Z"
     },
     "pokemon/decidueye": {
       "status": "ok",
@@ -10332,13 +10332,13 @@
     },
     "pokemon/delphox": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/655.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/b/b9/Delphox_%28model%2C_ribbon%29.png",
       "file": "pokemon/delphox.png",
       "thumb": "thumbs/pokemon/delphox.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 127262,
-      "sha256": "6c96ec531064017b5efc94ac84bedc85eac54cb814a31e48a2116017670d08b4",
-      "fetchedAt": "2026-09-11T17:36:28.193Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 113376,
+      "sha256": "8d8b65891edf8a6c5150edf9035d8e04d29f9c98513cbc19614226232f01cd06",
+      "fetchedAt": "2026-09-23T18:25:00.065Z"
     },
     "pokemon/dewgong": {
       "status": "ok",
@@ -10362,13 +10362,13 @@
     },
     "pokemon/dewott": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/502.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/43/Dewott_Hisuian_%28Model%29.png",
       "file": "pokemon/dewott.png",
       "thumb": "thumbs/pokemon/dewott.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 106402,
-      "sha256": "a908653e1304e8bb2ed37b2977803f03f0593bb8a06c343dc57689f41629099c",
-      "fetchedAt": "2026-09-11T17:36:28.336Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 49956,
+      "sha256": "8c12b715373a6d5cfb49f6ea2c4c192053a1bfc523daf9d441068f7f4ad8e3a3",
+      "fetchedAt": "2026-09-23T18:25:00.432Z"
     },
     "pokemon/delcatty": {
       "status": "ok",
@@ -10552,13 +10552,13 @@
     },
     "pokemon/dragonite": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/d1/Dragonite_%28model%2C_messenger%29.png",
       "file": "pokemon/dragonite.png",
       "thumb": "thumbs/pokemon/dragonite.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 132064,
-      "sha256": "4bd7549caa15eac43a8197ba53e843a95f2b56c71b1121829ea76764fbf26f9c",
-      "fetchedAt": "2026-09-11T17:36:29.458Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 94459,
+      "sha256": "5853ea64d286ef43c70284c6e165dc14977eafc94f25b87b578309d6a7978d99",
+      "fetchedAt": "2026-09-23T18:25:04.892Z"
     },
     "pokemon/dratini": {
       "status": "ok",
@@ -10892,13 +10892,13 @@
     },
     "pokemon/electrode": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/101.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/dd/Electrode_%28model%2C_melon%29.png",
       "file": "pokemon/electrode.png",
       "thumb": "thumbs/pokemon/electrode.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 190651,
-      "sha256": "53ba2223c23ef051a83f7ee4849754be796dc88835036f853e3949bac28ef5d0",
-      "fetchedAt": "2026-09-11T17:36:31.348Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 57163,
+      "sha256": "62387f80dc96a95f7efc096f95f92db93451c7376be74ce39a0466f79b2c3000",
+      "fetchedAt": "2026-09-23T18:25:12.638Z"
     },
     "pokemon/elgyem": {
       "status": "ok",
@@ -10982,13 +10982,13 @@
     },
     "pokemon/exeggcute": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/102.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/5/5b/Exeggcute_Alolan_%28Model%29.png",
       "file": "pokemon/exeggcute.png",
       "thumb": "thumbs/pokemon/exeggcute.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 155189,
-      "sha256": "20e609dac93de2c42b1ce347939e92abb96c3b12ae52eff6c5c46bc7aca942c7",
-      "fetchedAt": "2026-09-11T17:36:31.953Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 55118,
+      "sha256": "20f7e2333863afc82aebd0a5b7ffd2f6c619d5ad95f11712bc6568fb0f38506f",
+      "fetchedAt": "2026-09-23T18:25:15.900Z"
     },
     "pokemon/espurr": {
       "status": "ok",
@@ -11222,13 +11222,13 @@
     },
     "pokemon/flabebe": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/669.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/7/7d/Flabebe_Pink_Flower_%28Model%29.png",
       "file": "pokemon/flabebe.png",
       "thumb": "thumbs/pokemon/flabebe.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 155535,
-      "sha256": "b68b2b4a51551f0b926e7106252bd885ee387a15282578de606ed8723a0c599a",
-      "fetchedAt": "2026-09-11T17:36:33.192Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 59379,
+      "sha256": "8999a4da1e4d5e014f24afcd64f2f86a3f5126229a389bd2e13053da24055f1a",
+      "fetchedAt": "2026-09-23T18:25:19.614Z"
     },
     "pokemon/floatzel": {
       "status": "ok",
@@ -11242,13 +11242,13 @@
     },
     "pokemon/floette": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/670.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/9/98/Floette_Pink_Flower_%28Model%29.png",
       "file": "pokemon/floette.png",
       "thumb": "thumbs/pokemon/floette.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 121582,
-      "sha256": "f1ffc7a93334c4d2a10c00b3ea2069b41db938485087b64973bc9db032379dae",
-      "fetchedAt": "2026-09-11T17:36:33.415Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 51993,
+      "sha256": "793dcbb7012dd9c2037348cd7fe286da1a5351d44421d1965b52aeddee96b422",
+      "fetchedAt": "2026-09-23T18:25:21.510Z"
     },
     "pokemon/floragato": {
       "status": "ok",
@@ -11282,13 +11282,13 @@
     },
     "pokemon/florges": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/671.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/b/b7/Florges_Pink_Flower_%28Model%29.png",
       "file": "pokemon/florges.png",
       "thumb": "thumbs/pokemon/florges.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 144919,
-      "sha256": "b6b4346ffb5b500b241ef6e27c9bb65d410e0c2ce32fe513eba58eb6d46eb127",
-      "fetchedAt": "2026-09-11T17:36:33.617Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 93715,
+      "sha256": "e00e55acdc0e130b427a4102c40104a6b8848867cf48a87b983d2e39e2a6d013",
+      "fetchedAt": "2026-09-23T18:25:21.898Z"
     },
     "pokemon/foongus": {
       "status": "ok",
@@ -11392,13 +11392,13 @@
     },
     "pokemon/furfrou": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/676.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/1b/Furfrou_%28model%2C_star_trim%29.png",
       "file": "pokemon/furfrou.png",
       "thumb": "thumbs/pokemon/furfrou.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 146628,
-      "sha256": "2400c013fc62421162ee97d6d6a711f2c69cf42102e4f4b49181e590aaafbfc5",
-      "fetchedAt": "2026-09-11T17:36:34.131Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 81004,
+      "sha256": "904d239db89eb4599f7812b4ded09ce81f0790f91d18b83cb585a499309fb429",
+      "fetchedAt": "2026-09-23T18:25:26.026Z"
     },
     "pokemon/furret": {
       "status": "ok",
@@ -11492,13 +11492,13 @@
     },
     "pokemon/gengar": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/7/7f/Gengar_%28model%2C_ancient%29.png",
       "file": "pokemon/gengar.png",
       "thumb": "thumbs/pokemon/gengar.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 144713,
-      "sha256": "b6549b80537676fcf4a589c8853b38cce42f42b5f707bbe2e63797666175cf06",
-      "fetchedAt": "2026-09-11T17:36:34.847Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 73025,
+      "sha256": "ebf40e80623b1b0ed9962e04646d586a9b468ec8e87e2112880f1c5f3627a52b",
+      "fetchedAt": "2026-09-23T18:25:28.393Z"
     },
     "pokemon/geodude": {
       "status": "ok",
@@ -11542,13 +11542,13 @@
     },
     "pokemon/gholdengo": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1000.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/21/Gholdengo_Netherite_1_%28Model%29.png",
       "file": "pokemon/gholdengo.png",
       "thumb": "thumbs/pokemon/gholdengo.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 99130,
-      "sha256": "0711a486bf76284aac7317736275cf43085883db2c8868a8ea6d09a090b9b70b",
-      "fetchedAt": "2026-09-11T17:36:35.304Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 100173,
+      "sha256": "2f67ff5eee67f3a316c087c501578ad0cdaa60ad3f34df884776b7d41c5e4133",
+      "fetchedAt": "2026-09-23T18:25:28.831Z"
     },
     "pokemon/gigalith": {
       "status": "ok",
@@ -11562,13 +11562,13 @@
     },
     "pokemon/gimmighoul": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/999.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/6/6d/Gimmighoul_%28model%2C_gilded_chest%29.png",
       "file": "pokemon/gimmighoul.png",
       "thumb": "thumbs/pokemon/gimmighoul.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 145714,
-      "sha256": "72281b98760eea5d1fc6f3a5d2d35b2b440fc21df4926b3c177401bc51cf965a",
-      "fetchedAt": "2026-09-11T17:36:35.333Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 80022,
+      "sha256": "4eba5b64c4a924ae41b6cc023440e2301ccd2996a8e80b72b1d8eea7f53f0d97",
+      "fetchedAt": "2026-09-23T18:25:29.622Z"
     },
     "pokemon/glalie": {
       "status": "ok",
@@ -11642,13 +11642,13 @@
     },
     "pokemon/gloom": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/4f/Gloom_Valencia_Male_%28Model%29.png",
       "file": "pokemon/gloom.png",
       "thumb": "thumbs/pokemon/gloom.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 155247,
-      "sha256": "bc4fdbeac96c93a0c71db866853492e251e81daedf328ed5f4f9aa1d175abb3a",
-      "fetchedAt": "2026-09-11T17:36:35.761Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 24844,
+      "sha256": "8179de3cacccaeb77dac5920221f70e939d6325b4e0a4c7a5f4c3dc77fc8f34a",
+      "fetchedAt": "2026-09-23T18:25:33.352Z"
     },
     "pokemon/golbat": {
       "status": "ok",
@@ -11742,13 +11742,13 @@
     },
     "pokemon/goomy": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/704.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/f/f1/Goomy_Hisuian_%28Model%29.png",
       "file": "pokemon/goomy.png",
       "thumb": "thumbs/pokemon/goomy.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 139911,
-      "sha256": "c8cd709162e84b7a705d59692aa4ebfe374131ee63d445c0fd889380bdb0c658",
-      "fetchedAt": "2026-09-11T17:36:36.259Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 50267,
+      "sha256": "aa515c7992f714eafd7fc0ec085b4d28e5c6f35cd6cdc040f2b2b14da9a69cb8",
+      "fetchedAt": "2026-09-23T18:25:35.390Z"
     },
     "pokemon/gorebyss": {
       "status": "ok",
@@ -11912,13 +11912,13 @@
     },
     "pokemon/grovyle": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/253.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/17/Grovyle_%28model%2C_twig%29.png",
       "file": "pokemon/grovyle.png",
       "thumb": "thumbs/pokemon/grovyle.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 137688,
-      "sha256": "743a3fbf0bdaeac46d08f035de3e46d6616c5a157a7e765db373bd089d7c201c",
-      "fetchedAt": "2026-09-11T17:36:37.217Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 63977,
+      "sha256": "e683319edda35e8f96cf82d9b60fefe662ba7b85ed07c24125d50efe26ea7d73",
+      "fetchedAt": "2026-09-23T18:25:40.272Z"
     },
     "pokemon/hakamo_o": {
       "status": "ok",
@@ -12002,13 +12002,13 @@
     },
     "pokemon/gyarados": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/9/9c/Gyarados_Pink_Orca_%28Model%29.png",
       "file": "pokemon/gyarados.png",
       "thumb": "thumbs/pokemon/gyarados.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 146784,
-      "sha256": "41d17760b81321cc7a3fb2cb1568d3c33010e892b687eeacb3738ba307071f8b",
-      "fetchedAt": "2026-09-11T17:36:37.593Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 98215,
+      "sha256": "8d9bca1f0615acae72130979dfb5458aa0948187c6d6d20a9193eb6de52adf54",
+      "fetchedAt": "2026-09-23T18:25:41.919Z"
     },
     "pokemon/hariyama": {
       "status": "ok",
@@ -12072,23 +12072,23 @@
     },
     "pokemon/hawlucha": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/701.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/da/Hawlucha_%28model%2C_masked%29.png",
       "file": "pokemon/hawlucha.png",
       "thumb": "thumbs/pokemon/hawlucha.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 124806,
-      "sha256": "041072a1c2ef2b141295050f97a51132370e4db24da7f45286d9f96a1210543e",
-      "fetchedAt": "2026-09-11T17:36:38.021Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 74804,
+      "sha256": "c80296b5c8e09ec0e70ecf2ace0a7e759865dec5ffcaab4189dba4c19b8325c2",
+      "fetchedAt": "2026-09-23T18:25:45.261Z"
     },
     "pokemon/gurdurr": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/533.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/e1/Gurdurr_%28model%2C_gold%29.png",
       "file": "pokemon/gurdurr.png",
       "thumb": "thumbs/pokemon/gurdurr.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 139332,
-      "sha256": "91834c12531f18082b1aef89e74fd0267aca1926e85024faec5e97aa334c4e3b",
-      "fetchedAt": "2026-09-11T17:36:38.035Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 89362,
+      "sha256": "0034fe0ef8ffb44acb7d5944582de4c008e4035a24c18bf3cde593a4cbb27a9d",
+      "fetchedAt": "2026-09-23T18:25:41.087Z"
     },
     "pokemon/heatmor": {
       "status": "ok",
@@ -12442,13 +12442,13 @@
     },
     "pokemon/jigglypuff": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/d2/Jigglypuff_%28model%2C_ancient%29.png",
       "file": "pokemon/jigglypuff.png",
       "thumb": "thumbs/pokemon/jigglypuff.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 147602,
-      "sha256": "2d8fa64258727708417495b5ca4d28a148628d962709f58235b9e0837eb41365",
-      "fetchedAt": "2026-09-11T17:36:40.125Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 68197,
+      "sha256": "7ae13a858bbc3ecabd12fd4e946a69f7bd7669f3efd809503573147cf56106b5",
+      "fetchedAt": "2026-09-23T18:25:54.335Z"
     },
     "pokemon/jolteon": {
       "status": "ok",
@@ -12682,13 +12682,13 @@
     },
     "pokemon/koffing": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/e6/Koffing_Galarian_%28Model%29.png",
       "file": "pokemon/koffing.png",
       "thumb": "thumbs/pokemon/koffing.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 153356,
-      "sha256": "fafb96d013ab7b44989cd86501e3ea78c43c42e0baec37a3c1da826859ec7cac",
-      "fetchedAt": "2026-09-11T17:36:41.749Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 53359,
+      "sha256": "7e68043f308e8f4f66cef5d6214f1bb571ee77e627705488e5c01fc286b12f9d",
+      "fetchedAt": "2026-09-23T18:25:59.902Z"
     },
     "pokemon/krabby": {
       "status": "ok",
@@ -12702,13 +12702,13 @@
     },
     "pokemon/komala": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/775.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/f/f1/Komala_%28model%2C_oak_log%29.png",
       "file": "pokemon/komala.png",
       "thumb": "thumbs/pokemon/komala.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 135322,
-      "sha256": "ac0ea5568b67c5f0bb7dd6d47bad37a6fa111588c6e5c14730c92a0b81a3ec75",
-      "fetchedAt": "2026-09-11T17:36:41.761Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 70680,
+      "sha256": "cc06ff35cb15873a4339bff63773bde8f97126cfc96b4ed89385f3ecc55c107b",
+      "fetchedAt": "2026-09-23T18:25:59.916Z"
     },
     "pokemon/klink": {
       "status": "ok",
@@ -12742,23 +12742,23 @@
     },
     "pokemon/krokorok": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/552.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/1c/Krokorok_%28model%2C_sunglasses%29.png",
       "file": "pokemon/krokorok.png",
       "thumb": "thumbs/pokemon/krokorok.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 134337,
-      "sha256": "5e5475ddeea4d780f4bc566023546756b0ec2a4518f94e9d5baaa90f0d0000bb",
-      "fetchedAt": "2026-09-11T17:36:41.940Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 80605,
+      "sha256": "abc15e8ebc18f8057357433eb8011e5694bea775920512de95a5ccdf68c28654",
+      "fetchedAt": "2026-09-23T18:26:01.134Z"
     },
     "pokemon/krookodile": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/553.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/32/Krookodile_%28model%2C_sunglasses%29.png",
       "file": "pokemon/krookodile.png",
       "thumb": "thumbs/pokemon/krookodile.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 176677,
-      "sha256": "f9bea552e4bab77af86079a73b314c7598a3efc184dd36f37ddcc9e3fa154df0",
-      "fetchedAt": "2026-09-11T17:36:42.130Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 84477,
+      "sha256": "d5d6a5abceb8b5cd9a7c66c38801b93543431c5e478663dfb3de5db56528469c",
+      "fetchedAt": "2026-09-23T18:26:01.967Z"
     },
     "pokemon/lanturn": {
       "status": "ok",
@@ -13162,13 +13162,13 @@
     },
     "pokemon/magikarp": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/9/92/Magikarp_Pink_Orca_%28Model%29.png",
       "file": "pokemon/magikarp.png",
       "thumb": "thumbs/pokemon/magikarp.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 136990,
-      "sha256": "df8fc8a1d11083f25afa148484737b9d70dd2912a9f9f68913116612353ccf75",
-      "fetchedAt": "2026-09-11T17:36:44.926Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 29960,
+      "sha256": "d15712466e14bd1e7dea4c6d6973d5f6b444b7f9f24d1201843b4089ab9e714d",
+      "fetchedAt": "2026-09-23T18:26:12.241Z"
     },
     "pokemon/magcargo": {
       "status": "ok",
@@ -13482,13 +13482,13 @@
     },
     "pokemon/metapod": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/3b/Metapod_Valencia_%28Model%29.png",
       "file": "pokemon/metapod.png",
       "thumb": "thumbs/pokemon/metapod.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 118885,
-      "sha256": "945f2aca4d6ae55a77a93d132fee41f3f334cf2b91611d3da6e76715f27e778c",
-      "fetchedAt": "2026-09-11T17:36:46.785Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 17507,
+      "sha256": "65f4e544a3c5ff2d5a5339fd51ece3977804c22ade02ce93c3fbda295341e316",
+      "fetchedAt": "2026-09-23T18:26:19.782Z"
     },
     "pokemon/mime_jr": {
       "status": "ok",
@@ -13562,13 +13562,13 @@
     },
     "pokemon/mimikyu": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/24/Mimikyu_Female_%28Model%29.png",
       "file": "pokemon/mimikyu.png",
       "thumb": "thumbs/pokemon/mimikyu.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 79510,
-      "sha256": "3f368b3fb05af171b6ac0ce893ee065aea6e608be45e04087af1902fc43ab708",
-      "fetchedAt": "2026-09-11T17:36:47.261Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 30336,
+      "sha256": "876ce1144f683baa9a30046d2f88aecdb9640158a6df35313f65ddba2ce67a47",
+      "fetchedAt": "2026-09-23T18:26:21.812Z"
     },
     "pokemon/miltank": {
       "status": "ok",
@@ -14022,13 +14022,13 @@
     },
     "pokemon/oddish": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/41/Oddish_Valencia_%28Model%29.png",
       "file": "pokemon/oddish.png",
       "thumb": "thumbs/pokemon/oddish.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 134223,
-      "sha256": "035edf8e0e79148c86ac89fada5b4b6ccd01f6dcbaf7a73b4f086e83d4502b7b",
-      "fetchedAt": "2026-09-11T17:36:49.434Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 18809,
+      "sha256": "eecb12f583f5dc735419bbe0a8a5eeb111c02596764576e988ef0c6313648ed8",
+      "fetchedAt": "2026-09-23T18:26:31.517Z"
     },
     "pokemon/oinkologne": {
       "status": "ok",
@@ -14052,13 +14052,13 @@
     },
     "pokemon/omanyte": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/138.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/d2/Omanyte_%28model%2C_absorb_bulb%29.png",
       "file": "pokemon/omanyte.png",
       "thumb": "thumbs/pokemon/omanyte.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 173927,
-      "sha256": "dd3980113e3ba2e0e562bfecf91a2b03b829e3d3059460851fe2a332e0126aed",
-      "fetchedAt": "2026-09-11T17:36:49.629Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 19942,
+      "sha256": "bfe7236d18054a2929a785fcec99ab5e3ba57d344f12872b14ba245b015a02eb",
+      "fetchedAt": "2026-09-23T18:26:31.923Z"
     },
     "pokemon/onix": {
       "status": "ok",
@@ -14092,13 +14092,13 @@
     },
     "pokemon/oshawott": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/9/97/Oshawott_Hisuian_%28Model%29.png",
       "file": "pokemon/oshawott.png",
       "thumb": "thumbs/pokemon/oshawott.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 135290,
-      "sha256": "986a6dbcf939b25dd8842a1e970cfa0456c9cfa8111f51ea7a3d851d4ebba6ea",
-      "fetchedAt": "2026-09-11T17:36:49.810Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 51039,
+      "sha256": "b553903c8def888e30f0e4424d89a32378a247ab1bbbe5380cd842e39da4074a",
+      "fetchedAt": "2026-09-23T18:26:33.141Z"
     },
     "pokemon/overqwil": {
       "status": "ok",
@@ -14302,13 +14302,13 @@
     },
     "pokemon/petilil": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/548.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/7/77/Petilil_Hisuian_%28Model%29.png",
       "file": "pokemon/petilil.png",
       "thumb": "thumbs/pokemon/petilil.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 109698,
-      "sha256": "86c828fdd1d172c17e4ab6a0c8ea922f0ef47415c319b9a665d255b3ffd7e71f",
-      "fetchedAt": "2026-09-11T17:36:51.144Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 41219,
+      "sha256": "2f909a253c8f3002119d8e13489f6e9fdf673be4ece1cbadcb6300aa0b27b7aa",
+      "fetchedAt": "2026-09-23T18:26:38.381Z"
     },
     "pokemon/pidgeot": {
       "status": "ok",
@@ -14342,13 +14342,13 @@
     },
     "pokemon/pikachu": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/c/c2/Pikachu_%28model%2C_hair_cut%29.png",
       "file": "pokemon/pikachu.png",
       "thumb": "thumbs/pokemon/pikachu.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 118057,
-      "sha256": "759ceafdb4b8d637dfcfe673cf672bc3c472354a3b2e7e0835d9cdcacd8d195d",
-      "fetchedAt": "2026-09-11T17:36:51.338Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 55131,
+      "sha256": "495e4afcbd26aec19f9d26fec7cc84c4de2ca0a475ae5bcdaa3e873f167afcce",
+      "fetchedAt": "2026-09-23T18:26:40.455Z"
     },
     "pokemon/pidgeotto": {
       "status": "ok",
@@ -14442,13 +14442,13 @@
     },
     "pokemon/pichu": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/1d/Pichu_Alolan_%28Model%29.png",
       "file": "pokemon/pichu.png",
       "thumb": "thumbs/pokemon/pichu.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 122831,
-      "sha256": "39eb139858374ae648455bcd7c8f4d6ccfd42355cd5e6abff3a14d1f6bd16314",
-      "fetchedAt": "2026-09-11T17:36:52.164Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 39000,
+      "sha256": "b0920db60089d46936bc6289a41e163fa16a0bf523618cb4a50f8968b331e787",
+      "fetchedAt": "2026-09-23T18:26:39.193Z"
     },
     "pokemon/pinsir": {
       "status": "ok",
@@ -14752,13 +14752,13 @@
     },
     "pokemon/quilava": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/156.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/20/Quilava_Hisuian_%28Model%29.png",
       "file": "pokemon/quilava.png",
       "thumb": "thumbs/pokemon/quilava.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 92124,
-      "sha256": "6020f7f5dc72b18ba4e195feadf87ffe53efe9d375a59f3a47daca050ce92339",
-      "fetchedAt": "2026-09-11T17:36:53.773Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 71870,
+      "sha256": "aa34f0f38efe70548b4afec4b120aa2bd10e520f6605cd4ec1516214147a540f",
+      "fetchedAt": "2026-09-23T18:26:48.992Z"
     },
     "pokemon/qwilfish": {
       "status": "ok",
@@ -14782,13 +14782,13 @@
     },
     "pokemon/raichu": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/f/f5/Raichu_%28model%2C_hair_cut%29.png",
       "file": "pokemon/raichu.png",
       "thumb": "thumbs/pokemon/raichu.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 94288,
-      "sha256": "e5671c5f00695fa6f6a3fc08a70d0b53a34e14f5dafcccc66316bdee90d076ac",
-      "fetchedAt": "2026-09-11T17:36:53.829Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 44898,
+      "sha256": "b8e10ed7b20b6288a6d9d54085470ac06a6bfb662eca2c8eccd5f128dc7b76c3",
+      "fetchedAt": "2026-09-23T18:26:49.750Z"
     },
     "pokemon/rabsca": {
       "status": "ok",
@@ -15032,13 +15032,13 @@
     },
     "pokemon/rowlet": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/722.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/d/d6/Rowlet_Hisuian_%28Model%29.png",
       "file": "pokemon/rowlet.png",
       "thumb": "thumbs/pokemon/rowlet.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 137280,
-      "sha256": "3f01bf45b33f9455a556d79d7e9c8ed11b8979d770fea6bf8b0a76da53c7cf23",
-      "fetchedAt": "2026-09-11T17:36:55.523Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 25982,
+      "sha256": "b5ea0d5a7840c7744b1debf257f14048d067bc903974dcba02cf08070d182d3b",
+      "fetchedAt": "2026-09-23T18:26:55.463Z"
     },
     "pokemon/roserade": {
       "status": "ok",
@@ -15092,13 +15092,13 @@
     },
     "pokemon/rufflet": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/627.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/7/7f/Rufflet_Hisuian_%28Model%29.png",
       "file": "pokemon/rufflet.png",
       "thumb": "thumbs/pokemon/rufflet.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 157216,
-      "sha256": "70086622448222902bb24d993a2009fc7baa953cda4357fa263c2c677b4a52eb",
-      "fetchedAt": "2026-09-11T17:36:55.695Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 68086,
+      "sha256": "61a5030902c54c040a04927b699a7eb0502e264597007463e9e8b9ff26db4863",
+      "fetchedAt": "2026-09-23T18:26:55.856Z"
     },
     "pokemon/salandit": {
       "status": "ok",
@@ -15132,13 +15132,13 @@
     },
     "pokemon/sandile": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/551.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/33/Sandile_%28model%2C_sunglasses%29.png",
       "file": "pokemon/sandile.png",
       "thumb": "thumbs/pokemon/sandile.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 110898,
-      "sha256": "ccfa95b950fd954cfc40cced876648f5d8e5f75107e35a21be816080d59e74c8",
-      "fetchedAt": "2026-09-11T17:36:55.946Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 62489,
+      "sha256": "4dc5737466d0d66095ee5f1b76aa49075fa7ad73955d7a72c1065eadc03714a7",
+      "fetchedAt": "2026-09-23T18:26:57.905Z"
     },
     "pokemon/sandshrew": {
       "status": "ok",
@@ -15222,13 +15222,13 @@
     },
     "pokemon/sceptile": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/1f/Sceptile_%28model%2C_twig%29.png",
       "file": "pokemon/sceptile.png",
       "thumb": "thumbs/pokemon/sceptile.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 151728,
-      "sha256": "f0d143504a9da150a51c88c0a8c5deb2fc7a0c95717b003fd45de27ad95f43ed",
-      "fetchedAt": "2026-09-11T17:36:56.381Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 97577,
+      "sha256": "48c2ba5bb81935b0c4bd6df1cf3cd362ff10f132be22fcf606ad87c1eed87277",
+      "fetchedAt": "2026-09-23T18:26:59.931Z"
     },
     "pokemon/scolipede": {
       "status": "ok",
@@ -15802,13 +15802,13 @@
     },
     "pokemon/smeargle": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/235.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/23/Smeargle_%28model%2C_red_tail%29.png",
       "file": "pokemon/smeargle.png",
       "thumb": "thumbs/pokemon/smeargle.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 129190,
-      "sha256": "a94fb226e37842508e92fe696312ee313be799ba2529f0c99f0bed6d00480750",
-      "fetchedAt": "2026-09-11T17:36:59.716Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 61591,
+      "sha256": "f31ecd7e22a3f4c4949985c3b10db2a4083c4faaaf192208a89640de4dd9a300",
+      "fetchedAt": "2026-09-23T18:27:12.481Z"
     },
     "pokemon/slakoth": {
       "status": "ok",
@@ -15872,13 +15872,13 @@
     },
     "pokemon/sneasler": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/903.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/44/Sneasler_%28model%2C_basket%29.png",
       "file": "pokemon/sneasler.png",
       "thumb": "thumbs/pokemon/sneasler.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 107384,
-      "sha256": "5668b45d33b097e8caef5f6bd53dec924486095d63a8f63f349c2b86bc39cf84",
-      "fetchedAt": "2026-09-11T17:36:59.989Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 73664,
+      "sha256": "5e5481d16cdfb1889b9d77b3a3de64a70da2a24fc894e4276888fd3e0d148b88",
+      "fetchedAt": "2026-09-23T18:27:13.252Z"
     },
     "pokemon/snorunt": {
       "status": "ok",
@@ -16002,13 +16002,13 @@
     },
     "pokemon/spoink": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/325.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/2b/Spoink_%28model%2C_ender_pearl%29.png",
       "file": "pokemon/spoink.png",
       "thumb": "thumbs/pokemon/spoink.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 97846,
-      "sha256": "42f09ac3dd3e0ca1a1ffe846290a7e65c09521faee7b83242d03e5762697501f",
-      "fetchedAt": "2026-09-11T17:37:00.905Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 45613,
+      "sha256": "f139122a86c6045bbe00f3897ae26575c703d23725a107e2c97b2ce0d5badb95",
+      "fetchedAt": "2026-09-23T18:27:17.921Z"
     },
     "pokemon/spiritomb": {
       "status": "ok",
@@ -16042,13 +16042,13 @@
     },
     "pokemon/squirtle": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/f/fb/Squirtle_%28model%2C_wise_glasses%29.png",
       "file": "pokemon/squirtle.png",
       "thumb": "thumbs/pokemon/squirtle.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 155045,
-      "sha256": "37cda7bf8ad6f4252d539aed3bd989a85c8cb0f8e9d815be12bad08c16f31fe9",
-      "fetchedAt": "2026-09-11T17:37:00.969Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 49788,
+      "sha256": "b86f0b454260889acf9848a9362d8c87043aae8d5088a002d401bcfc11cd1728",
+      "fetchedAt": "2026-09-23T18:27:18.745Z"
     },
     "pokemon/spritzee": {
       "status": "ok",
@@ -16172,13 +16172,13 @@
     },
     "pokemon/sudowoodo": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/185.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/ec/Sudowoodo_%28model%2C_golden%29.png",
       "file": "pokemon/sudowoodo.png",
       "thumb": "thumbs/pokemon/sudowoodo.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 108273,
-      "sha256": "fa70608fde7e526cd2624f053b0ff65bdcb0d63eda7831a74936465046f75982",
-      "fetchedAt": "2026-09-11T17:37:01.765Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 63303,
+      "sha256": "4eaf6357cdfc16e30f9b9617b033937da32ff41288c2a9a015544362a4241794",
+      "fetchedAt": "2026-09-23T18:27:22.369Z"
     },
     "pokemon/sunkern": {
       "status": "ok",
@@ -16502,33 +16502,33 @@
     },
     "pokemon/timburr": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/532.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/48/Timburr_%28model%2C_oak_log%29.png",
       "file": "pokemon/timburr.png",
       "thumb": "thumbs/pokemon/timburr.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 110059,
-      "sha256": "1e7bcd32d0d2d25df2a1d4067836ff3dcc7ef831d504113c9a3eedd924d116f2",
-      "fetchedAt": "2026-09-11T17:37:03.735Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 70917,
+      "sha256": "d6b4e97dbe0176c0c2297348a0381fb30cc2984c9d83f1cb9fd93c6c00233b76",
+      "fetchedAt": "2026-09-23T18:27:29.357Z"
     },
     "pokemon/tinkaton": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/959.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/8/8d/Tinkaton_%28model%2C_microphone%29.png",
       "file": "pokemon/tinkaton.png",
       "thumb": "thumbs/pokemon/tinkaton.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 200748,
-      "sha256": "b7825d0857e446d7622b104c82c41c38cf4d69fe2bfab6b8734ec639829d0ee0",
-      "fetchedAt": "2026-09-11T17:37:03.822Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 76148,
+      "sha256": "8cf95853bd0c3d0bd4cd152775558aa2ac3ef79b506bf01f4a32bba89c05f2a0",
+      "fetchedAt": "2026-09-23T18:27:29.689Z"
     },
     "pokemon/tinkatuff": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/958.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/9/9b/Tinkatuff_%28model%2C_microphone%29.png",
       "file": "pokemon/tinkatuff.png",
       "thumb": "thumbs/pokemon/tinkatuff.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 182761,
-      "sha256": "baf31ca0becee001f6f31d5508ea8798931730205cdf109858fc6220ca08ff00",
-      "fetchedAt": "2026-09-11T17:37:03.836Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 55479,
+      "sha256": "c1324bf7ca2745f8e5d8b8f9e40a48a04f8619c2e05635e19b768942d5c23c2a",
+      "fetchedAt": "2026-09-23T18:27:30.133Z"
     },
     "pokemon/toedscool": {
       "status": "ok",
@@ -16582,13 +16582,13 @@
     },
     "pokemon/tinkatink": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/957.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/e/ee/Tinkatink_%28model%2C_microphone%29.png",
       "file": "pokemon/tinkatink.png",
       "thumb": "thumbs/pokemon/tinkatink.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 130485,
-      "sha256": "dbf3a19dd4d2291ba2918239140c96b09e591aa0b69b82b705b451ed8325a158",
-      "fetchedAt": "2026-09-11T17:37:04.442Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 47758,
+      "sha256": "0320158802b2c2c9ca483858f56c4884a8c1005f0a649ef7ebe731ff1ecd1200",
+      "fetchedAt": "2026-09-23T18:27:29.709Z"
     },
     "pokemon/torchic": {
       "status": "ok",
@@ -16722,13 +16722,13 @@
     },
     "pokemon/treecko": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/4/42/Treecko_%28model%2C_twig%29.png",
       "file": "pokemon/treecko.png",
       "thumb": "thumbs/pokemon/treecko.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 125497,
-      "sha256": "eecfd2507ad6a4d32e074dbeaa7bdeb55938a97ff89cb878f5f13870357b9091",
-      "fetchedAt": "2026-09-11T17:37:05.223Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 58396,
+      "sha256": "9665a71f3452da33be5e4fb94bfde58876048b5be0a630afd9bbf444486a560b",
+      "fetchedAt": "2026-09-23T18:27:35.909Z"
     },
     "pokemon/trevenant": {
       "status": "ok",
@@ -17092,23 +17092,23 @@
     },
     "pokemon/vileplume": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/1/1a/Vileplume_Valencia_%28Model%29.png",
       "file": "pokemon/vileplume.png",
       "thumb": "thumbs/pokemon/vileplume.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 155232,
-      "sha256": "9c2b9e9a3b91e2400f6e54165d4dcdedf6650f85fcdf552a52d8d68a2129abb1",
-      "fetchedAt": "2026-09-11T17:37:07.231Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 48236,
+      "sha256": "23fcbd12132f235eaccd7122d3b1fd87dede017935f4d71e163d5e10bf2acdab",
+      "fetchedAt": "2026-09-23T18:27:44.707Z"
     },
     "pokemon/vivillon": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/666.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/8/86/Vivillon_Void_%28Model%29.png",
       "file": "pokemon/vivillon.png",
       "thumb": "thumbs/pokemon/vivillon.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 160836,
-      "sha256": "b3dbfb7060adb159c16b633a7f788ad96b29767db4973d46759667f317af5e41",
-      "fetchedAt": "2026-09-11T17:37:07.266Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 34337,
+      "sha256": "55766a3cc7e771a21db2e19085ec724bf87f5b087e61504e69df9e552414d349",
+      "fetchedAt": "2026-09-23T18:27:45.066Z"
     },
     "pokemon/volbeat": {
       "status": "ok",
@@ -17182,13 +17182,13 @@
     },
     "pokemon/wartortle": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/8/82/Wartortle_%28model%2C_wise_glasses%29.png",
       "file": "pokemon/wartortle.png",
       "thumb": "thumbs/pokemon/wartortle.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 179754,
-      "sha256": "5fc6739ca9f7c5c0eaf0a55761239ab5ebb4982575b9a6f1f29dd3286c430f52",
-      "fetchedAt": "2026-09-11T17:37:07.651Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 58664,
+      "sha256": "87c345c344200a4ef6aa2a76a3a6ca7f005e6b470adc43366d1c76274a1a8ed5",
+      "fetchedAt": "2026-09-23T18:27:47.080Z"
     },
     "pokemon/walrein": {
       "status": "ok",
@@ -17372,13 +17372,13 @@
     },
     "pokemon/whiscash": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/340.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/f/fe/Whiscash_Nero_%28Model%29.png",
       "file": "pokemon/whiscash.png",
       "thumb": "thumbs/pokemon/whiscash.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 118631,
-      "sha256": "7386de37c0bebcf2f6c79dc9cdec103496e5651098a4534d5e8367776ae5c58a",
-      "fetchedAt": "2026-09-11T17:37:08.927Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 45966,
+      "sha256": "aa8e369f069fb5d9d31c13ba068409d5b34622dc4053e2c5e4cacd6ef51a5a17",
+      "fetchedAt": "2026-09-23T18:27:49.498Z"
     },
     "pokemon/wooloo": {
       "status": "ok",
@@ -17552,13 +17552,13 @@
     },
     "pokemon/wooper": {
       "status": "ok",
-      "sourceUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/194.png",
+      "sourceUrl": "https://wiki.cobblemon.com/images/3/3d/Wooper_Heart_Male_%28model%29.png",
       "file": "pokemon/wooper.png",
       "thumb": "thumbs/pokemon/wooper.webp",
-      "licence": "PokeAPI/sprites - https://github.com/PokeAPI/sprites",
-      "bytes": 125101,
-      "sha256": "25911b07e4a73988baa0ed305559ac63f12bec2a8f538189aa58a3a84c646fc2",
-      "fetchedAt": "2026-09-11T17:37:10.157Z"
+      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
+      "bytes": 24330,
+      "sha256": "fbd5dd0f33103d81d31ca0ef3c2589024ee2ebe4fb1dc155b4cc67b06b0e94cf",
+      "fetchedAt": "2026-09-23T18:27:52.328Z"
     },
     "pokemon/zweilous": {
       "status": "ok",

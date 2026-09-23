@@ -60,7 +60,10 @@ async function exists(file) {
 async function download(key, url, relativePath, licence, { upscale = false } = {}) {
   const absolute = path.join(ASSETS, relativePath);
   const entry = manifest.entries[key];
-  if (entry?.status === 'ok' && await exists(absolute)) return entry;
+  // A cached entry only satisfies resumability for the source it was fetched from. The
+  // wiki-first switch reuses the same pokemon/<slug>.png path for both sources, so a
+  // stale PokeAPI entry must not shadow a species that now resolves to a wiki render.
+  if (entry?.status === 'ok' && entry.licence === licence && await exists(absolute)) return entry;
 
   try {
     const buffer = await request(url.includes('raw.githubusercontent') ? 'cdn' : 'wiki', url, { binary: true });
@@ -100,6 +103,50 @@ async function download(key, url, relativePath, licence, { upscale = false } = {
   return manifest.entries[key];
 }
 
+// Species slug to wiki title-case: `ho-oh` -> `Ho-Oh`, `type-null` -> `Type-Null`.
+const wikiSpeciesName = (slug) => slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+
+// The wiki stores almost no plain portraits - exactly one, Bulbasaur - so 65 of the 66 are
+// a regional form or a costume. "Least decorated" is the closest thing to a neutral pick:
+// fewest words added to the species name, then alphabetical so a re-run is stable rather
+// than dependent on API ordering.
+function pickRender(species, names) {
+  const usable = names.filter((n) => /\(model[,)]/i.test(n) && !/shiny/i.test(n) && !/wireframe/i.test(n));
+  if (!usable.length) return null;
+  const plain = usable.find((n) => new RegExp(`^${species}_\\(model\\)\\.png$`, 'i').test(n));
+  if (plain) return { file: plain, variant: null };
+  const decoration = (n) => n
+    .replace(/\.png$/i, '')
+    .replace(new RegExp(`^${species}_?`, 'i'), '')
+    .replace(/\(model,?\s*/i, '')
+    .replace(/\)$/, '')
+    .replace(/_/g, ' ')
+    .trim();
+  const sorted = [...usable].sort((a, b) => {
+    const da = decoration(a); const db = decoration(b);
+    return da.length - db.length || da.localeCompare(db);
+  });
+  return { file: sorted[0], variant: decoration(sorted[0]) || null };
+}
+
+// list=allimages with a species prefix is the only way to find a wiki render - there are
+// no per-Pokemon pages to query titles against, unlike items.
+async function findWikiRender(slug) {
+  const prefix = wikiSpeciesName(slug);
+  const url = `${WIKI_API}?${new URLSearchParams({
+    action: 'query', format: 'json', list: 'allimages', aiprefix: prefix, ailimit: '50',
+  })}`;
+  let data;
+  try {
+    data = await request('wiki', url);
+  } catch (error) {
+    console.log(`   [warn] allimages ${prefix}: ${error.message}`);
+    return null;
+  }
+  const names = (data?.query?.allimages ?? []).map((i) => i.name);
+  return pickRender(prefix, names);
+}
+
 async function minePokemon(client) {
   const { rows } = await client.query('SELECT id, species_slug, display_name FROM pokemon ORDER BY species_slug');
   console.log(`\n== pokemon (${rows.length})`);
@@ -112,6 +159,7 @@ async function minePokemon(client) {
 
   const unresolved = [];
   let done = 0;
+  let fromWiki = 0;
 
   // Downloads run concurrently, database writes do not. A single pg client cannot serve
   // overlapping queries, so the updates are collected here and applied in one pass below.
@@ -120,6 +168,29 @@ async function minePokemon(client) {
     const dexId = dexBySlug.get(slug)
       ?? dexBySlug.get(slug.replace(/_/g, '-'))
       ?? dexBySlug.get(POKEAPI_ALIASES[slug]);
+
+    const render = await findWikiRender(slug);
+    if (render) {
+      // MediaWiki normalises the title it hands back - every underscore becomes a space -
+      // so the map must be read back with the same normalisation queryWikiTitles's callers
+      // for items already rely on, or the lookup silently misses everything.
+      const wikiUrls = await queryWikiTitles([`File:${render.file}`], { prop: 'imageinfo', iiprop: 'url' });
+      const wikiUrl = wikiUrls.get(`File:${render.file.replace(/_/g, ' ')}`)?.imageinfo?.[0]?.url;
+      if (wikiUrl) {
+        const entry = await download(
+          `pokemon/${slug}`,
+          wikiUrl,
+          `pokemon/${slug}.png`,
+          LICENCES.wiki,
+        );
+        if (entry.status === 'ok') {
+          fromWiki++;
+          if (++done % 200 === 0) console.log(`   ${done}/${rows.length}`);
+          return [row.id, dexId ?? null, `/assets/${entry.file}`, `/assets/${entry.thumb}`, 'wiki', render.variant];
+        }
+      }
+    }
+
     if (!dexId) {
       unresolved.push(slug);
       manifest.entries[`pokemon/${slug}`] = {
@@ -127,6 +198,7 @@ async function minePokemon(client) {
         error: 'no PokeAPI species matches this Cobblemon slug',
         fetchedAt: new Date().toISOString(),
       };
+      if (++done % 200 === 0) console.log(`   ${done}/${rows.length}`);
       return null;
     }
     const entry = await download(
@@ -136,17 +208,23 @@ async function minePokemon(client) {
       LICENCES.pokeapi,
     );
     if (++done % 200 === 0) console.log(`   ${done}/${rows.length}`);
-    return entry.status === 'ok' ? [row.id, dexId, `/assets/${entry.file}`, `/assets/${entry.thumb}`] : null;
+    // A prior wiki entry left on disk from an earlier run must not survive a species that
+    // no longer resolves to the wiki - the source/variant columns are the record of truth.
+    return entry.status === 'ok'
+      ? [row.id, dexId, `/assets/${entry.file}`, `/assets/${entry.thumb}`, 'pokeapi', null]
+      : null;
   });
 
   for (const update of updates) {
     if (!update) continue;
     await client.query(
-      'UPDATE pokemon SET national_dex_id = $2, image_url = $3, thumb_url = $4 WHERE id = $1',
+      `UPDATE pokemon SET national_dex_id = $2, image_url = $3, thumb_url = $4,
+              image_source = $5, image_variant = $6 WHERE id = $1`,
       update,
     );
   }
 
+  console.log(`   from wiki: ${fromWiki}`);
   console.log(`   unresolved: ${unresolved.length}${unresolved.length ? ` (${unresolved.slice(0, 12).join(', ')}${unresolved.length > 12 ? ', ...' : ''})` : ''}`);
   await save();
 }

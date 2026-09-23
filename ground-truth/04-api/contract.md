@@ -30,7 +30,7 @@ GET /api/pokemon
            page, pageSize, total }
 
 GET /api/pokemon/:slug
-  200 -> { id, slug, displayName, nationalDexId, imageUrl,
+  200 -> { id, slug, displayName, nationalDexId, imageUrl, imageSource, imageVariant,
            spawns: [ { bucket, weight, levelMin, levelMax, context,
                        biomes: [...], conditions, aspects: {...}, formLabel } ] }
   404 -> { error: "Pokemon not found" }
@@ -166,6 +166,13 @@ places where the data forced a decision the shapes alone do not express.
   only, and nothing ever read it. Unlike the fields above, this one was mapped by hand in
   `findPokemonBySlug` rather than by a shared helper, so removing it cost nothing. A smoke
   assertion now pins the exact key list.
+- **`GET /api/pokemon/:slug` gained `imageSource` and `imageVariant` on 2026-09-24 (ADR
+  0012).** Detail-only: the list row carries no provenance note (nothing on the index
+  renders one), so per the principle above the fields do not belong on `toCard`.
+  `imageSource` is `'wiki'` or `'pokeapi'`; `imageVariant` is the decoration text
+  (`'Hisuian'`, `'Ink'`, `'messenger'`, ...) for 65 of the 66 wiki-sourced species and
+  `null` for the 838 PokeAPI species, the one plain wiki portrait, and any row from before
+  migration 0003.
 - **`spawns` stays a flat array.** The design note below says to group by form, and the
   shape says an array. The array is ordered so the base form comes first and each form's
   rows are adjacent, and the UI groups by walking it once. Inventing a `forms` wrapper

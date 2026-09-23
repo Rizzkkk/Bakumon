@@ -95,7 +95,25 @@ async function runChecks() {
   // because a typo in the mapping also produces undefined and would pass.
   check('the detail response ships exactly the fields the contract lists',
     Object.keys(abra.body).sort(),
-    ['displayName', 'id', 'imageUrl', 'nationalDexId', 'slug', 'spawns']);
+    ['displayName', 'id', 'imageSource', 'imageUrl', 'imageVariant', 'nationalDexId', 'slug', 'spawns']);
+
+  // Artwork comes from two sources now, and 65 of the 66 wiki renders are a regional form
+  // or a costume rather than a portrait. imageVariant is what lets the page say so, and a
+  // null variant on a wiki row means the one genuine portrait the wiki has.
+  const cyndaquil = await get('/api/pokemon/cyndaquil');
+  const abomasnow = await get('/api/pokemon/abomasnow');
+  const bulbasaur = await get('/api/pokemon/bulbasaur');
+  check('artwork provenance travels with the detail response',
+    [
+      [cyndaquil.body.imageSource, cyndaquil.body.imageVariant],
+      [abomasnow.body.imageSource, abomasnow.body.imageVariant],
+      [bulbasaur.body.imageSource, bulbasaur.body.imageVariant],
+    ],
+    [['wiki', 'Hisuian'], ['pokeapi', null], ['wiki', null]]);
+
+  check('a wiki render is served from the wiki path, a PokeAPI one is not',
+    [cyndaquil.body.imageUrl, abomasnow.body.imageUrl],
+    ['/assets/pokemon/cyndaquil.png', '/assets/pokemon/abomasnow.png']);
 
   check('abra has three spawns with the right buckets, weights and levels',
     abra.body.spawns

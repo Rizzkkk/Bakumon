@@ -6,11 +6,12 @@
 // renders as "[object Object]" for assistive tech. `caption` is the visible bar content and
 // defaults to `title`; ItemDetail passes an ItemName element there so the %s placeholder
 // chip still renders in the box while the aria-label keeps the raw stored name.
-export function Infobox({ title, caption = title, art, rows }) {
+export function Infobox({ title, caption = title, art, artNote, rows }) {
   return (
     <aside aria-label={`${title} at a glance`} className="infobox">
       <div className="infobox__caption">{caption}</div>
       <div className="infobox__art">{art}</div>
+      {artNote ? <p className="infobox__art-note">{artNote}</p> : null}
       <table>
         <tbody>
           {rows.map((row) => (

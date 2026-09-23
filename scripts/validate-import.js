@@ -186,6 +186,36 @@ await withClient(async (client) => {
     (await one(`SELECT has_table_privilege('bakumon_api','schema_migrations','SELECT') AS v`)).v,
     false);
 
+  // Migration 0003 added image_source/image_variant. Probing the column (rather than just
+  // trusting the migration ledger) is what proves it actually ran against this database.
+  check('pokemon.image_source column exists',
+    (await one(`SELECT EXISTS (
+       SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'pokemon' AND column_name = 'image_source') AS v`)).v,
+    true);
+
+  check('every pokemon row has an image_source',
+    Number((await one('SELECT count(*) FROM pokemon WHERE image_source IS NULL')).count), 0);
+
+  // 66 of 904 species have a wiki (model) render - measured 2026-09-24 against
+  // wiki.cobblemon.com/api.php?action=query&list=allimages, confirmed against the live
+  // database after `npm run mine pokemon` (see ground-truth/02-assets/sourcing.md).
+  check('the wiki-sourced pokemon count matches the measured coverage',
+    Number((await one(`SELECT count(*) FROM pokemon WHERE image_source = 'wiki'`)).count), 66);
+
+  check('image_variant is set only where the source is wiki',
+    Number((await one(
+      `SELECT count(*) FROM pokemon WHERE image_variant IS NOT NULL AND image_source != 'wiki'`)).count),
+    0);
+
+  // Bulbasaur is the one species with a plain `<Species>_(model).png` - every other wiki
+  // render is a regional form or costume and carries a variant label.
+  check('exactly one wiki pokemon has no variant label (Bulbasaur, the only plain portrait)',
+    (await all(
+      `SELECT species_slug FROM pokemon WHERE image_source = 'wiki' AND image_variant IS NULL`))
+      .map((r) => r.species_slug),
+    ['bulbasaur']);
+
   const report = [
     '# Import validation',
     '',

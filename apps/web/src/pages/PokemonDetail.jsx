@@ -253,7 +253,8 @@ function PokemonDetailPage({ slug }) {
 
         <Infobox
           title={data.displayName}
-          art={<Artwork src={data.imageUrl} alt={pokemonAlt(data.displayName)} size={220} />}
+          art={<Artwork src={data.imageUrl} alt={pokemonAlt(data.displayName, data.imageSource)} size={220} />}
+          artNote={data.imageVariant ? `Showing the ${data.imageVariant} variant, not the base species.` : null}
           rows={infoboxRows}
         />
       </div>

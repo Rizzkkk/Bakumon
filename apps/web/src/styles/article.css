@@ -57,6 +57,16 @@
   padding: 16px;
   background: var(--surface2);
 }
+.infobox__art-note {
+  margin: 0;
+  padding: 8px 14px;
+  background: var(--surface2);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted);
+  text-align: center;
+}
 .infobox table { width: 100%; border-collapse: collapse; }
 .infobox th, .infobox td {
   padding: 10px 12px;

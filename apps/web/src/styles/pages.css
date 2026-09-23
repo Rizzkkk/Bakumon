@@ -64,10 +64,12 @@
   box-shadow: inset 0 -4px 0 var(--brand-moss);
 }
 
-/* ---- Waving character (feature section) ---- */
+/* ---- Wall-break character (feature section) ---- */
 
-.waver { display: block; width: 100%; }
-.waver__img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+/* No `image-rendering: pixelated` here, unlike every other pixel image on the site: this
+   one is painted at roughly 20px blocks rather than on a 1:1 grid, and forcing nearest
+   neighbour on a downscale of it aliases the block edges instead of keeping them crisp. */
+.wallbreak { display: block; width: 100%; height: auto; }
 
 /* In the page margin, not in the flow: the cards keep the width they would have without
    it. `left: 100%` is the right edge of the centred container, and `bottom` matches the
@@ -75,7 +77,7 @@
    The margin is what gates it. The container is 1100px wide - `.page` in global.css, which
    is imported last and so outranks `.feature-section`'s own 1280px at equal specificity -
    leaving (100vw - 1100)/2 per side, and a character plus its 24px gap has to fit in that.
-   Below 1470px there is no room and no character; it is decoration, and the alternative is
+   Below 1520px there is no room and no character; it is decoration, and the alternative is
    either narrower cards or a horizontal scrollbar. */
 .feature-section__aside {
   position: absolute;
@@ -84,11 +86,11 @@
   display: none;
 }
 
-@media (min-width: 1470px) {
-  .feature-section__aside { display: block; width: 160px; }
+@media (min-width: 1520px) {
+  .feature-section__aside { display: block; width: 180px; }
 }
-@media (min-width: 1600px) {
-  .feature-section__aside { width: 200px; }
+@media (min-width: 1640px) {
+  .feature-section__aside { width: 240px; }
 }
 
 /* ---- Feature cards ---- */

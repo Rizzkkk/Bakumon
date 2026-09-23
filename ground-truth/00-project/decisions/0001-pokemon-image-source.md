@@ -1,6 +1,8 @@
 # 0001 - Pokemon artwork comes from PokeAPI, not the Cobblemon wiki
 
-- **Status**: accepted
+- **Status**: accepted. **Superseded in part by ADR 0012** (2026-09-24) - the wiki turned
+  out to hold `(model)` renders for 66 species; PokeAPI remains the fallback for the other
+  838. See 0012 for what changed and why the original probe was still right.
 - **Date**: 2026-09-11
 
 ## Context

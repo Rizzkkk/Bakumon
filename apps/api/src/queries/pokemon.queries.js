@@ -84,7 +84,7 @@ export function listPokemonSql({ search, buckets, biomes, limit, offset }) {
 }
 
 export const POKEMON_DETAIL_SQL = `SELECT p.id, p.species_slug, p.display_name, p.national_dex_id,
-            p.image_url,
+            p.image_url, p.image_source, p.image_variant,
             coalesce(spawns.rows, '[]'::json) AS spawns
        FROM pokemon p
        LEFT JOIN LATERAL (
@@ -150,6 +150,11 @@ export async function findPokemonBySlug(slug) {
     displayName: row.display_name,
     nationalDexId: row.national_dex_id,
     imageUrl: row.image_url,
+    // Detail only, per ADR 0012 - the list row renders no provenance note, so nothing
+    // there would read these. Null for every pre-migration row and for the 838 PokeAPI
+    // species; only the 66 wiki renders carry a variant.
+    imageSource: row.image_source,
+    imageVariant: row.image_variant,
     spawns: row.spawns,
   };
 }
