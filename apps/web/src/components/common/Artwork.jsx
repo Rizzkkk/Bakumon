@@ -6,7 +6,7 @@ export function Artwork({ src, alt, size = 256, pixel = false, missingLabel = 'N
   // because the card's own name already says which item this is.
   if (!src) {
     return (
-      <div className="art art--missing" style={{ aspectRatio: 1 }} aria-hidden="true">
+      <div className="art art--missing" style={{ width: size }} aria-hidden="true">
         {missingLabel}
       </div>
     );
@@ -19,6 +19,7 @@ export function Artwork({ src, alt, size = 256, pixel = false, missingLabel = 'N
       alt={alt}
       width={size}
       height={size}
+      style={{ width: size }}
       loading="lazy"
       decoding="async"
     />

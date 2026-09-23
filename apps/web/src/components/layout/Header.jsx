@@ -1,44 +1,11 @@
 import { useId, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ThemeToggle } from '../common/ThemeToggle.jsx';
 import { CtaButton } from '../common/CtaButton.jsx';
 import { PixelIcon } from '../common/PixelIcon.jsx';
 import { Drawer } from '../common/Drawer.jsx';
 import { WikiDrawer } from '../wiki/WikiDrawer.jsx';
-
-// Shared by the desktop search field and the mobile sub-bar's compact one - two copies
-// already, and the third (a future filter-sheet search) is exactly the trigger conventions.md
-// names for extracting.
-function WikiSearchField({ id, className, placeholder }) {
-  const [params] = useSearchParams();
-  const [value, setValue] = useState(params.get('q') ?? '');
-  const navigate = useNavigate();
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const next = new URLSearchParams(params);
-    if (value) next.set('q', value);
-    else next.delete('q');
-    navigate(`/wiki?${next.toString()}`);
-  };
-
-  return (
-    <form role="search" className={className} onSubmit={onSubmit}>
-      <label htmlFor={id} className="visually-hidden">Search the wiki</label>
-      <span className="site-header__search-icon" aria-hidden="true">
-        <PixelIcon name="search" size={20} />
-      </span>
-      <input
-        id={id}
-        type="search"
-        className="site-header__search-input"
-        placeholder={placeholder}
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-      />
-    </form>
-  );
-}
+import { WikiSearchField } from '../wiki/WikiSearchField.jsx';
 
 export function Header() {
   const location = useLocation();
@@ -108,7 +75,7 @@ export function Header() {
             <PixelIcon name="wiki" size={20} />
             Wiki menu
           </button>
-          <WikiSearchField id={mobileSearchId} className="site-header__search-field" placeholder="Search" />
+          <WikiSearchField id={mobileSearchId} placeholder="Search" />
         </div>
       ) : null}
 

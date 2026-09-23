@@ -46,15 +46,19 @@
 .filter-search--lg input { height: 48px; padding-left: 46px; font-size: 16px; }
 .filter-search--lg svg { left: 16px; }
 
-.filter-fieldset { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px; }
+/* A fieldset defaults to min-width: min-content and will not shrink below its widest
+   child, so a long biome token pushed the whole rail past the viewport at 1440px. */
+.filter-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
 .filter-fieldset legend { padding: 0 0 4px; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
 .filter-fieldset__intro { margin: 0; font-size: 14px; line-height: 21px; color: var(--muted); }
 .filter-fieldset__cap { margin: 0; padding: 8px 10px; background: var(--surface2); font-size: 13px; color: var(--muted); }
 
 .filter-checkbox { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; padding: 6px 0; box-sizing: border-box; cursor: pointer; }
 .filter-checkbox input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--text); flex-shrink: 0; }
-.filter-checkbox__body { display: flex; flex-direction: column; gap: 4px; }
-.filter-checkbox__help { font-size: 13px; line-height: 18px; color: var(--muted); max-width: 46ch; }
+.filter-checkbox__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+/* 46ch is a prose measure and the rail is 260px wide; it read as a max-width that never
+   applied and let the helper text set the rail's width instead. */
+.filter-checkbox__help { font-size: 13px; line-height: 18px; color: var(--muted); overflow-wrap: anywhere; }
 
 .filter-biome-list { border: 2px solid var(--line); background: var(--surface); max-height: 420px; overflow-y: auto; }
 .filter-biome-list__caption {

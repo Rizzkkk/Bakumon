@@ -77,15 +77,17 @@ code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
   border-radius: var(--radius);
 }
 
-/* Kit utility classes, lifted from any artboard's <style> block (identical in all 56). */
-.gridbg {
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
+/* Kit utility classes, lifted from any artboard's <style> block (identical in all 56).
+   The kit's `.gridbg` graph paper is gone with ADR 0011; `--grid` stays defined because
+   tokens.css is the kit's file and nothing else in it is edited by hand. */
 
 .art {
   display: block;
-  width: 100%;
+  /* Deliberately max-width, not width. Artwork sets its width inline from its size prop,
+     and a width here would beat that attribute and size every image to its container -
+     which rendered a 44px list thumbnail at 318px and pushed the list pages wider than a
+     phone viewport. Height follows from aspect-ratio so a narrow container still scales. */
+  max-width: 100%;
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;

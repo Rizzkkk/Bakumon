@@ -66,6 +66,33 @@
   box-shadow: inset 0 -4px 0 var(--brand-moss);
 }
 
+/* ---- Waving character (feature section) ---- */
+
+/* Two frames stacked in one box, so the pair reserves the space of one image and the
+   alternation cannot reflow the heading beside it. */
+.waver { position: relative; flex-shrink: 0; width: 132px; }
+.waver__frame { display: block; }
+.waver__frame--b { position: absolute; inset: 0; opacity: 0; }
+.waver__img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+
+/* A hard cut between two rendered poses, not a cross-fade: the frames are pixel art and a
+   fade renders both arms at once as a ghost. Motion only where it is welcome - with
+   reduced motion the page keeps frame a, which is the arm already raised. */
+@media (prefers-reduced-motion: no-preference) {
+  .waver__frame--b { animation: waver-swing 1.1s infinite; }
+}
+@keyframes waver-swing {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+.feature-section__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
 /* ---- Feature cards ---- */
 
 .feature-section {
@@ -116,6 +143,7 @@
 @media (min-width: 768px) {
   .feature-section { padding: 72px 32px; gap: 32px; }
   .feature-grid { flex-direction: row; gap: 24px; }
+  .waver { width: 200px; }
 }
 
 /* ---- CTA band ---- */

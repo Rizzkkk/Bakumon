@@ -13,6 +13,18 @@ records what it supersedes.
 
 ### Added
 
+- `assets/brand/character-wave-a.png` and `-wave-b.png` (493x790 each) plus their 320px and
+  480px WebPs, rendered by `npm run skin -- --pose wave --scale 10`. Two frames of one pose
+  on one canvas, cropped to the union of their content, so alternating them moves the arm
+  and nothing else.
+- `components/common/WavingCharacter.jsx` - both frames in the markup, alternated by a CSS
+  animation behind `prefers-reduced-motion: no-preference`. A hard cut, not a cross-fade:
+  fading two pixel-art poses renders both arms at once as a ghost. It sits beside the
+  feature-section heading on the landing page (ADR 0011).
+- `ADR 0011` (`ground-truth/00-project/decisions/0011-rounded-display-face-and-flush-nav.md`)
+  - the rounded display face, the flush-left wiki nav and the waving character, each a
+  departure from the kit and none of them touching colour.
+
 - `CHANGELOG.md` - this file. The project had no change history of any kind.
 - **Version control.** `git init`, 147 files in the first commit. Never run before;
   `pre-production.md` item 30 had been the stated first blocker since the project started.
@@ -39,7 +51,7 @@ records what it supersedes.
   isometric character for the landing page. No browser and no WebGL: the landing page has
   to work with the API down, and a hosted render service would be a third-party request on
   every page load, which ADR 0007 rules out and the privacy page denies. Reads the 64x64
-  (or legacy 64x32) skin directly, rasterises the three camera-facing planes of each body
+  (or legacy 64x32) skin directly, rasterises the camera-facing faces of each body
   part with a per-pixel z-buffer, and writes a trimmed PNG plus 320px and 480px WebPs.
   Verified against a colour-coded fixture skin carrying three asymmetric markers, which is
   what caught the two defects worth recording: the camera was initially behind the
@@ -48,9 +60,10 @@ records what it supersedes.
   silhouette edge; and depth was held per texel rather than per pixel, which made every arm
   and leg seam trade pixels and read as a zigzag.
 
-- **Three self-hosted webfonts** in `apps/web/public/fonts/`: Pixelify Sans (display),
-  Atkinson Hyperlegible (body) and IBM Plex Mono (identifiers). Latin subset only, all six
-  files verified as real woff2 by their `wOF2` magic bytes, 94,636 bytes total. Served from
+- **Three self-hosted webfonts** in `apps/web/public/fonts/`: Pixelify Sans (display,
+  replaced by Baloo 2 under ADR 0011), Atkinson Hyperlegible (body) and IBM Plex Mono
+  (identifiers). Latin subset only, all six files verified as real woff2 by their `wOF2`
+  magic bytes, 94,636 bytes total at the time of this entry. Served from
   the origin, never Google Fonts - a CDN request on every page load would contradict ADR
   0007 and falsify the privacy page. `grep -rn "fonts.googleapis\|fonts.gstatic"` over
   `apps/web/src`, `index.html` and the built `dist/` returns nothing.
@@ -117,6 +130,40 @@ records what it supersedes.
 
 ### Changed
 
+- The landing page's middle feature card now covers the server's own rules - no stealing,
+  no griefing, no unwanted PvP, and admins who play here - in place of a card about
+  legendary spawns. Asked for by the server owner.
+
+- **The display face is Baloo 2, not Pixelify Sans** (ADR 0011). Only `--font-display`
+  changes; Atkinson Hyperlegible keeps all prose and IBM Plex Mono keeps the identifiers.
+  Self-hosted on the same terms as the rest - one latin woff2, never Google Fonts. The font
+  payload goes from 94,636 to 115,808 bytes across the same six files, measured with
+  `os.path.getsize` over `apps/web/public/fonts/`: Baloo 2's subset is 33,188 bytes against
+  Pixelify Sans's 12,016, and carries 400-800 where the kit's carried 400-700.
+- **The wiki nav is flush against the viewport's left edge** and sticky, bordered only on
+  its right, rather than an inset card inside a centred 1440px container (ADR 0011).
+  `WikiLayout` gained a `wiki-layout__content` wrapper, which is where the centred measure
+  now lives, and the panel is `100vh` tall so it reaches the bottom of the screen rather
+  than ending with its nav, with a thin scrollbar drawn in its own tokens - `scrollbar-width`
+  for Firefox and `::-webkit-scrollbar` for WebKit, since neither covers both. It is wider
+  than the kit's 232px - 288px, and 332px from 1280px - its rows are
+  16px on 40px against the kit's 15px on 34px, and it carries the wiki search field above
+  the nav. Below 768px nothing changes: the sidebar is still hidden, `WikiDrawer` is still
+  the mobile equivalent, and the search there is still the header sub-bar's.
+- `WikiSearchField` moved out of `Header.jsx` into `components/wiki/WikiSearchField.jsx`.
+  The header's own comment named the third copy as the extraction trigger and the sidebar
+  is it. Its CSS block moved with it, `site-header__search-*` to `wiki-search__*`, because
+  a field rendered in three regions should not be named after one of them; the header keeps
+  `site-header__search` for placement only, compounded as `.wiki-search.site-header__search`
+  so its hide/show still out-specifies the shared base.
+- `scripts/render-skin.js` draws all six faces of each box and selects the camera-facing
+  ones by the sign of the face normal against the view direction, where it previously
+  hardcoded the three faces an unposed box shows - a rotated limb exposes different ones.
+  Face rects are derived from each part's net origin rather than tabulated, which is what
+  makes a 3-texel slim arm sample a 3-texel rect. Checked against the committed render:
+  at `--scale 10` the unposed output differs from `assets/brand/character.png` in 2 pixels
+  of 331,800, both at a seam where two faces tie for depth.
+
 - `apps/web/src/styles/tokens.css` replaced wholesale with `design/tokens.css` (ADR 0010),
   plus `--radius`/`--gutter`/`--measure` which the kit omits and `global.css` uses, and
   `color-scheme` so native controls and scrollbars follow the theme. A clearly-marked
@@ -146,6 +193,19 @@ records what it supersedes.
   its pixel grid, so it keeps that job while the 1267px file takes the hero and share card.
 
 ### Fixed
+
+- **The `Artwork` `size` prop never did anything.** `.art` in `global.css` set
+  `width: 100%`, and a class beats an HTML `width` attribute, so every image rendered at
+  its container's width instead of the size asked for. Measured in Chromium: a 44px list
+  thumbnail rendered at 318px, the Pokemon table's 48px artwork column at 261px, and both
+  list pages scrolled horizontally at 390px (429px and 464px against a 390px viewport).
+  The rule is now `max-width: 100%` and `Artwork` sets its width inline, so the prop wins
+  and a narrow container still scales it down with the height following from
+  `aspect-ratio`. Re-measured: 48x48, 56x56 and 220x220 where those sizes were asked for.
+- **The filter rail pushed the page 54px past a 1440px viewport.** A `<fieldset>` defaults
+  to `min-width: min-content` and will not shrink below its widest child, so a long biome
+  token set the rail's width; the helper text's `max-width: 46ch` was also wider than the
+  260px rail it sat in. Both fixed. All nine routes now measure clean at 1440px and 390px.
 
 - `scripts/render-skin.js` validates `--out` and `--scale`. `--out` is joined into a path,
   so a value of `../../elsewhere` wrote outside `assets/brand` entirely; it is now required
@@ -184,6 +244,10 @@ records what it supersedes.
   design, per the existing note not to fix that by changing either one.
 
 ### Removed
+
+- `apps/web/public/fonts/pixelify-sans-latin-400-700.woff2`, with the display face it
+  served (ADR 0011). Deleted rather than left in place, so nothing can quietly keep
+  referencing it.
 
 - **The token compatibility shim.** It existed so the pre-kit components kept rendering
   while they were replaced phase by phase, and deleting it is the only real test of whether

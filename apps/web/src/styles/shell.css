@@ -65,30 +65,7 @@
 }
 .site-header__navlink[aria-current="page"] { border-bottom-color: var(--text); }
 
-.site-header__search { display: none; }
-.site-header__search-field {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.site-header__search-icon {
-  position: absolute;
-  left: 12px;
-  color: var(--muted);
-  display: flex;
-}
-.site-header__search-input {
-  width: 100%;
-  height: 44px;
-  box-sizing: border-box;
-  padding: 0 12px 0 42px;
-  background: var(--surface);
-  color: var(--text);
-  border: 2px solid var(--line);
-  font: var(--type-body);
-  font-size: 15px;
-}
-.site-header__search-input::placeholder { color: var(--faint); }
+.wiki-search.site-header__search { display: none; }
 
 .site-header__actions {
   margin-left: auto;
@@ -121,15 +98,15 @@
   cursor: pointer;
   flex-shrink: 0;
 }
-.site-header__subbar .site-header__search-field { flex: 1; }
-.site-header__subbar .site-header__search-input { padding-left: 40px; border: 2px solid var(--line); background: var(--bg); }
+.site-header__subbar .wiki-search { flex: 1; }
+.site-header__subbar .wiki-search__input { padding-left: 40px; background: var(--bg); }
 
 @media (min-width: 768px) {
   .site-header__bar { height: 76px; padding: 0 32px; gap: 32px; }
   .site-header__logo { width: 44px; height: 44px; }
   .site-header__wordmark { font-size: 24px; }
   .site-header__nav { display: flex; gap: 8px; }
-  .site-header__search { display: flex; align-items: center; position: relative; width: 380px; }
+  .wiki-search.site-header__search { display: flex; width: 380px; }
   .site-header__mobile-only { display: none; }
   .site-header__desktop-only { display: inline-flex; }
   .site-header__subbar { display: none; }
@@ -138,6 +115,32 @@
   .site-header__logo { width: 36px; height: 36px; }
   .site-header__wordmark { font-size: 21px; }
 }
+
+/* ---- Wiki search field (header, mobile sub-bar, sidebar) ---- */
+
+.wiki-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.wiki-search__icon {
+  position: absolute;
+  left: 12px;
+  color: var(--muted);
+  display: flex;
+}
+.wiki-search__input {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 12px 0 42px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--line);
+  font: var(--type-body);
+  font-size: 15px;
+}
+.wiki-search__input::placeholder { color: var(--faint); }
 
 /* ---- Drawer (shared by the site-level menu and the wiki menu) ---- */
 
@@ -199,10 +202,10 @@
   align-items: center;
   gap: 10px;
   min-height: 44px;
-  padding: 0 10px;
+  padding: 0 12px;
   box-sizing: border-box;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text);
 }
 .wiki-nav__item[aria-current="page"] { background: var(--surface2); font-weight: 700; }
@@ -219,7 +222,7 @@
 }
 
 @media (min-width: 768px) {
-  .wiki-nav__item { min-height: 34px; }
+  .wiki-nav__item { min-height: 40px; }
 }
 
 /* ---- Wiki layout ---- */
@@ -228,19 +231,30 @@
    the centred container left a 100px dead gutter beside it. It is the page's primary
    control, so it gets the edge and the content keeps the centred measure. */
 .wiki-sidebar {
-  width: 232px;
+  width: 288px;
   flex-shrink: 0;
-  padding: 16px 8px;
+  padding: 20px 12px 32px;
   background: var(--surface);
   border-right: 2px solid var(--line);
   box-sizing: border-box;
   display: none;
   position: sticky;
   top: 0;
-  max-height: 100vh;
+  /* A full viewport height rather than a cap: the panel should reach the bottom of the
+     screen whether or not its nav is long enough to fill it. */
+  height: 100vh;
   overflow-y: auto;
   overscroll-behavior: contain;
+  /* The platform scrollbar is a 17px chrome-coloured slab against a 288px panel, which is
+     what it looked like. Thin and drawn in the panel's own tokens instead; both properties
+     are needed because Firefox implements the standard one and WebKit the pseudo-elements. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }
+.wiki-sidebar::-webkit-scrollbar { width: 8px; }
+.wiki-sidebar::-webkit-scrollbar-track { background: transparent; }
+.wiki-sidebar::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--surface); }
+.wiki-sidebar:hover::-webkit-scrollbar-thumb { background: var(--line-strong); }
 .wiki-sidebar__title {
   display: flex;
   align-items: center;
@@ -250,8 +264,13 @@
   border-bottom: 2px solid var(--line);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
 }
+
+/* On the panel's own surface rather than under it, so the field reads as part of the nav
+   and not as the first row of the list. */
+.wiki-sidebar__search { margin-bottom: 20px; }
+.wiki-sidebar__search .wiki-search__input { background: var(--bg); }
 
 .wiki-layout {
   width: 100%;
@@ -279,7 +298,7 @@
   .wiki-layout__rail { display: block; width: 260px; flex-shrink: 0; }
 }
 @media (min-width: 1280px) {
-  .wiki-sidebar { width: 264px; }
+  .wiki-sidebar { width: 332px; }
 }
 
 /* ---- Footer ---- */

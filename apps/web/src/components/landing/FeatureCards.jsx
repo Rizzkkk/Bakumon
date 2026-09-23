@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PixelIcon } from '../common/PixelIcon.jsx';
+import { WavingCharacter } from '../common/WavingCharacter.jsx';
 import { DISCORD_INVITE } from '../../lib/serverFacts.js';
 
 const FEATURES = [
@@ -13,12 +14,13 @@ const FEATURES = [
     linkText: 'Read the rules in Discord',
   },
   {
-    icon: <PixelIcon name="bucket-legendary" size={27} width={27} height={21} />,
+    icon: <PixelIcon name="check" size={20} />,
     badge: 'legendary',
-    title: 'Legendaries spawn at random',
-    body: 'No schedules and no player counts to wait for. A legendary can turn up at any time, so keep a few Poke Balls on you.',
-    href: '/wiki/pokemon',
-    linkText: 'See the legendaries',
+    title: 'Your build and your team stay yours',
+    body: 'No stealing, no griefing and no PvP unless both of you want it. Admins play here too, so the rules are enforced rather than just posted.',
+    href: DISCORD_INVITE,
+    external: true,
+    linkText: 'Ask an admin in Discord',
   },
   {
     icon: <PixelIcon name="wiki" size={20} />,
@@ -33,7 +35,10 @@ const FEATURES = [
 export function FeatureCards() {
   return (
     <section className="page feature-section">
-      <h2 className="feature-section__title">What to expect on Bakumon</h2>
+      <div className="feature-section__head">
+        <h2 className="feature-section__title">What to expect on Bakumon</h2>
+        <WavingCharacter className="feature-section__waver" />
+      </div>
       <div className="feature-grid">
         {FEATURES.map((feature) => (
           <article key={feature.title} className="feature-card">

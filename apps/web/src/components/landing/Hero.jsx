@@ -8,7 +8,7 @@ import { GrassSkyline } from './GrassSkyline.jsx';
 export function Hero() {
   return (
     <>
-      <section className="hero gridbg">
+      <section className="hero">
         <div className="hero__inner">
           <div className="hero__copy">
             <img

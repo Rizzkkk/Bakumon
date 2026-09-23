@@ -114,17 +114,20 @@ footnote to it - and the kit gives it a double frame rather than borrowing the r
 
 ## Typography
 
-**Superseded by ADR 0010.** ADR 0009 declined webfonts, and that decision was sound for a
-site with no design system. The kit supplies one, so three faces are now loaded - and
-**self-hosted**, never from Google Fonts:
+**Superseded by ADR 0010, and the display face again by ADR 0011.** ADR 0009 declined
+webfonts, and that decision was sound for a site with no design system. The kit supplies
+one, so three faces are now loaded - and **self-hosted**, never from Google Fonts:
 
 | Face | Role | Weights |
 |---|---|---|
-| Pixelify Sans | display: headings, labels, chips | 400-700 variable |
+| Baloo 2 | display: headings, labels, chips | 400-800 variable |
 | Atkinson Hyperlegible | body: all prose and UI | 400, 700, 400 italic |
 | IBM Plex Mono | identifiers | 400, 500 |
 
-Latin subset only, six woff2 files in `apps/web/public/fonts/`, **94,636 bytes total**,
+The kit's display face was Pixelify Sans. ADR 0011 replaced it with Baloo 2 - same role,
+same self-hosting terms, rounded rather than pixelated.
+
+Latin subset only, six woff2 files in `apps/web/public/fonts/`, **115,808 bytes total**,
 declared in `apps/web/src/styles/fonts.css` with `font-display: swap`. All three are OFL.
 
 Self-hosting is not a preference. A Google Fonts request is a third-party request on every
