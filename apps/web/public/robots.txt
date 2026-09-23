@@ -1,0 +1,7 @@
+# Bakumon. Everything here is public reference data about one Minecraft server.
+# There is no account area, no user content and nothing behind a login to keep out.
+User-agent: *
+Allow: /
+
+# No Sitemap line yet: it has to be an absolute URL and the site has no domain.
+# `SITE_URL=https://... npm run sitemap` writes both the sitemap and this line.

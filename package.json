@@ -23,7 +23,9 @@
     "explain": "node scripts/explain-api.js",
     "palette": "node scripts/extract-palette.js",
     "brand": "node scripts/compress-brand.js",
-    "skin": "node scripts/render-skin.js"
+    "skin": "node scripts/render-skin.js",
+    "sharecard": "node scripts/make-share-card.js",
+    "sitemap": "node scripts/make-sitemap.js"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
