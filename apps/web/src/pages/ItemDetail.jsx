@@ -7,7 +7,7 @@ import { itemAlt } from '../lib/altText.js';
 import { CATEGORY_LABELS, sourceCategoryLabel } from '../lib/labels.js';
 import { Artwork } from '../components/common/Artwork.jsx';
 import { ItemName } from '../components/common/ItemName.jsx';
-import { StateBlock, ErrorState } from '../components/common/StateBlock.jsx';
+import { ErrorState } from '../components/common/ErrorState.jsx';
 import { DescriptionPanel } from '../components/wiki/DescriptionPanel.jsx';
 
 export default function ItemDetail() {
@@ -19,7 +19,7 @@ export default function ItemDetail() {
   usePageTitle(data?.name);
 
   if (status === 'error') return <div className="page"><ErrorState error={error} /></div>;
-  if (!data) return <div className="page"><StateBlock variant="loading" title="Loading" /></div>;
+  if (!data) return <div className="page"><p role="status">Loading...</p></div>;
 
   return (
     <div className="page stack">

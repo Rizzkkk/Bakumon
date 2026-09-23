@@ -6,7 +6,8 @@ import { getPokemon } from '../api/endpoints.js';
 import { groupSpawns } from '../lib/groupSpawns.js';
 import { pokemonAlt } from '../lib/altText.js';
 import { Artwork } from '../components/common/Artwork.jsx';
-import { StateBlock, ErrorState } from '../components/common/StateBlock.jsx';
+import { ErrorState } from '../components/common/ErrorState.jsx';
+import { EmptyState } from '../components/common/EmptyState.jsx';
 import { SpawnTable } from '../components/wiki/SpawnTable.jsx';
 import { EventSpawnPanel } from '../components/wiki/EventSpawnPanel.jsx';
 
@@ -19,7 +20,7 @@ export default function PokemonDetail() {
   const { groups, events } = useMemo(() => groupSpawns(data?.spawns ?? []), [data]);
 
   if (status === 'error') return <div className="page"><ErrorState error={error} /></div>;
-  if (!data) return <div className="page"><StateBlock variant="loading" title="Loading" /></div>;
+  if (!data) return <div className="page"><p role="status">Loading...</p></div>;
 
   return (
     <div className="page stack">
@@ -48,8 +49,7 @@ export default function PokemonDetail() {
       {events.length ? <EventSpawnPanel rows={events} /> : null}
 
       {!groups.length && !events.length ? (
-        <StateBlock
-          variant="empty"
+        <EmptyState
           title="No spawn data"
           detail="The workbook records no spawn rules for this Pokemon."
         />

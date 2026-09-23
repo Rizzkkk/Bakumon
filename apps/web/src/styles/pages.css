@@ -1,0 +1,58 @@
+/* Owner: Phase 3 (landing page) and legal pages. */
+
+/* Carried over from the pre-kit global.css so Hero, DiscordCTA and ScreenshotGrid keep
+   rendering until Phase 3 rebuilds the landing page from landing-*. Not kit markup - do
+   not treat as reference. */
+.button {
+  display: inline-block;
+  padding: 11px 20px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.button:hover { border-color: var(--muted); }
+
+/* White label, not the field colour: measured 5.08:1 on --cta and 7.20:1 on --link, where
+   the field colour is 3.62:1 and fails AA at this size. */
+.button--primary {
+  color: var(--cta-text);
+  background: var(--cta);
+  border-color: var(--cta);
+}
+.button--primary:hover { background: var(--link); border-color: var(--link); }
+
+.hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1672 / 941;
+}
+
+.hero__body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px var(--gutter) 0;
+}
+.hero__tagline {
+  max-width: 44ch;
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
+
+.panel--cta { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+
+.grid--wide { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.shot { margin: 0; }
+.shot img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+
+@media (max-width: 767px) {
+  .hero__tagline { font-size: 1.1rem; }
+  .button { display: block; text-align: center; }
+  .hero__actions { display: grid; gap: 10px; }
+}

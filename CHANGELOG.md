@@ -75,6 +75,46 @@ records what it supersedes.
   ('common','rare')` and the two-set `INTERSECT`) and `?bucket=common&biome=%23cobblemon...`
   at 235, proving the two dimensions intersect rather than union.
 
+- **Phase 2: shell components.** `apps/web/src/styles/global.css` split into an entry point
+  plus `shell.css` (header/drawer/sidebar/footer/wiki layout, this phase's), and empty
+  `article.css`/`index.css`/`pages.css` placeholders for Phases 3-5, imported in that fixed
+  order so later phases cannot collide on the same file. The pre-kit `.card`/`.chip`/
+  `.panel`/`.hero__*`/table rules that PokemonCard, ItemCard, CategoryNav, SpawnTable, Hero
+  and the legal pages still depend on were carried into their natural owner file rather
+  than left in `global.css` (which the brief says must not keep component rules) or deleted
+  outright - those pages are not rebuilt until Phase 4/5. Flagged here as a deliberate
+  reading of "create these as EMPTY files", not a literal one.
+- `components/layout/Header.jsx` rewritten to the kit: 76px desktop bar (logo, wordmark,
+  `<nav aria-label="Main">`, a 380px `role="search"` on wiki routes only, then
+  ThemeToggle + `CtaButton`), 64px mobile bar (36px logo, 44px theme button, 44px
+  "Open site menu" button, Wiki link and the CTA leaving the bar), and a mobile wiki
+  sub-bar ("Wiki menu" trigger plus a compact search input) on wiki routes.
+- `components/common/Drawer.jsx` - one dialog shell (`role="dialog"`, focus trap, Escape,
+  scroll lock, focus return) used by both the new site-menu drawer and
+  `components/wiki/WikiDrawer.jsx`. The site-level drawer has no artboard (ADR 0010) and
+  deliberately mirrors the wiki drawer's shell rather than inventing its own.
+- `components/wiki/WikiNav.jsx` - one nav (Wiki / Pokemon / Items / Help, per
+  `wiki-home-d-light.html`) rendered into both `WikiSidebar.jsx` (232px desktop `<aside>`)
+  and `WikiDrawer.jsx`. The 904/934 counts are fetched from `listPokemon`/`listItems` with
+  `pageSize=1` and shown as `...` until they arrive - never hardcoded, per the brief.
+- `components/wiki/WikiLayout.jsx` - sidebar/drawer + `<main>` + an optional right-rail
+  slot, wrapping every `/wiki*` route in `App.jsx`.
+- `components/layout/Footer.jsx` rewritten to the kit's three-part layout (brand + legal
+  disclaimer + `Attribution.jsx`, nav links, "No accounts. No tracking."). `Attribution.jsx`
+  itself is unchanged - still licence-mandated, not decoration.
+- `components/common/CtaButton.jsx` - the one site-wide call to action at its three kit
+  sizes (44/52/60), importing `DISCORD_INVITE` from `lib/serverFacts.js` rather than
+  retyping it.
+- Shared primitives for Phases 4 and 5: `components/wiki/BucketChip.jsx` (five variants,
+  ultra-rare's double frame from `tokens-board.html`), `components/wiki/BiomeLabel.jsx`
+  (group icon + derived friendly name via the new `biomeLabel()` in `lib/labels.js`, raw
+  token in mono and in `title`), `components/wiki/Breadcrumb.jsx`,
+  `components/wiki/PageTitleBlock.jsx`, and `components/common/Skeleton.jsx` /
+  `EmptyState.jsx` / `ErrorState.jsx` (loading is `role="status"` plus plain
+  `var(--surface2)` rectangles - no shimmer, no `@keyframes`, matching the kit).
+- `/wiki/pokemon` and `/wiki/items` routes in `App.jsx`, each a placeholder rendered inside
+  `WikiLayout` until Phase 4 replaces the body.
+
 ### Changed
 
 - `apps/web/src/styles/tokens.css` replaced wholesale with `design/tokens.css` (ADR 0010),
@@ -137,4 +177,7 @@ records what it supersedes.
 
 ### Removed
 
-Nothing yet.
+- `components/common/StateBlock.jsx`, replaced by `Skeleton`/`EmptyState`/`ErrorState`.
+  Call sites (`ResultsGrid.jsx`, `PokemonDetail.jsx`, `ItemDetail.jsx`, `NotFound.jsx`)
+  updated to the minimum needed to keep building - those pages get their real Phase 4/5
+  rewrite later, so their surrounding markup is otherwise untouched.

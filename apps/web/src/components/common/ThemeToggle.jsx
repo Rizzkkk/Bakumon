@@ -9,23 +9,7 @@ export function ThemeToggle() {
   const next = theme === 'dark' ? 'light' : 'dark';
 
   return (
-    <button
-      type="button"
-      onClick={toggleTheme}
-      aria-label={`Switch to ${next} theme`}
-      style={{
-        width: 44,
-        height: 44,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'transparent',
-        color: 'var(--text)',
-        border: '2px solid var(--line)',
-        cursor: 'pointer',
-        padding: 0,
-      }}
-    >
+    <button type="button" className="icon-button" onClick={toggleTheme} aria-label={`Switch to ${next} theme`}>
       <PixelIcon name="theme" size={20} />
     </button>
   );

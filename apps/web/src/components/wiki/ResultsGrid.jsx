@@ -1,16 +1,16 @@
 import { PokemonCard } from './PokemonCard.jsx';
 import { ItemCard } from './ItemCard.jsx';
-import { StateBlock, ErrorState } from '../common/StateBlock.jsx';
+import { ErrorState } from '../common/ErrorState.jsx';
+import { EmptyState } from '../common/EmptyState.jsx';
 
 export function ResultsGrid({ tab, status, data, error, page, pageSize, onPage }) {
   if (status === 'error') return <ErrorState error={error} />;
-  if (status === 'loading' && !data) return <StateBlock variant="loading" title="Loading" />;
+  if (status === 'loading' && !data) return <p role="status">Loading...</p>;
   if (!data) return null;
 
   if (!data.data.length) {
     return (
-      <StateBlock
-        variant="empty"
+      <EmptyState
         title="Nothing matched"
         detail="Try a shorter search, or clear the filters."
       />

@@ -1,0 +1,33 @@
+/* Owner: Phase 4/5 (pokemon-detail, item-detail, ditto-detail, legendary-detail). */
+
+/* Carried over from the pre-kit global.css so DescriptionPanel, EventSpawnPanel,
+   SpawnTable and ItemDetail keep rendering until Phase 5 rebuilds these screens from the
+   pokemon-detail, item-detail, ditto-detail and legendary-detail artboards. Not kit
+   markup - do not treat as reference. */
+.panel {
+  padding: 16px;
+  background: var(--surface2);
+  border-radius: var(--radius);
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--surface2); }
+th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* The %s in four item names is a flavour the game substitutes at runtime. The token is
+   shown, not stripped - the workbook is authoritative (ADR 0004) - but rendered as a chip
+   so a visitor reads it as a placeholder rather than as a broken string. ADR 0009. */
+.placeholder-token {
+  padding: 0 6px;
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--muted);
+  background: var(--bg);
+  border-radius: 4px;
+}
+
+/* Legal copy is read, not scanned, so it gets a measure rather than the full width. Also
+   used by EventSpawnPanel's random-spawn note. */
+.prose { max-width: var(--measure); }
+.prose h2 { margin-top: 32px; font-size: 1.15rem; }
+.prose li { margin-bottom: 6px; }

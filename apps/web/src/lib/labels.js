@@ -47,6 +47,22 @@ const BUCKET_MAP = new Map(BUCKETS.map((entry) => [entry.slug, entry]));
 export const bucketMeta = (slug) =>
   BUCKET_MAP.get(slug) ?? { slug, label: slug ?? 'Unknown', token: 'var(--text-muted)' };
 
+// The kit's own vocabulary for the five buckets: a CSS-custom-property-safe slug (a bucket
+// name with a space cannot be a --t-legendary-event-bg token), a PixelIcon glyph name, and
+// the display label the kit uses ("Legendary", not the API's "legendary event"). Additive
+// to BUCKETS/bucketMeta above rather than replacing them - BucketBadge and CategoryNav
+// still read those.
+export const BUCKET_CHIP_META = {
+  common: { tokenSlug: 'common', icon: 'bucket-common', label: 'Common' },
+  uncommon: { tokenSlug: 'uncommon', icon: 'bucket-uncommon', label: 'Uncommon' },
+  rare: { tokenSlug: 'rare', icon: 'bucket-rare', label: 'Rare' },
+  'ultra-rare': { tokenSlug: 'ultra', icon: 'bucket-ultra-rare', label: 'Ultra-rare' },
+  'legendary event': { tokenSlug: 'legendary', icon: 'bucket-legendary', label: 'Legendary' },
+};
+
+export const bucketChipMeta = (slug) =>
+  BUCKET_CHIP_META[slug] ?? { tokenSlug: 'common', icon: 'bucket-common', label: slug ?? 'Unknown' };
+
 // null is a real value here, not missing data: the six legendary-event rows carry no
 // bucket, weight or level range. An em dash says "the workbook has nothing" where 'null'
 // or NaN would read as a defect.
@@ -56,6 +72,30 @@ export const EMPTY = '\u2014';
 // as a string for NaN and Infinity, and `?? EMPTY` does not catch either - which is how a
 // spawn table came to print the literal text NaN. Anything not a finite number is absent.
 export const numberOrEmpty = (value) => (Number.isFinite(Number(value)) && value !== null ? value : EMPTY);
+
+function capitalizeFirst(text) {
+  return text.length ? text[0].toUpperCase() + text.slice(1) : text;
+}
+
+// #cobblemon:is_temperate -> "Temperate biomes"; minecraft:cherry_grove -> "Cherry grove".
+// GET /api/biomes' `isTag` is what distinguishes the two shapes - a token this cannot
+// parse (no colon, or a tag not shaped like is_x) falls back to the raw string rather than
+// throwing, per the Phase 2 brief.
+export function biomeLabel(token, isTag) {
+  const colon = token?.indexOf(':') ?? -1;
+  if (!token || colon === -1) return token ?? '';
+
+  const name = token.slice(colon + 1);
+
+  if (isTag) {
+    const withoutIs = name.startsWith('is_') ? name.slice(3) : name;
+    const words = withoutIs.replace(/_/g, ' ').trim();
+    return words ? `${capitalizeFirst(words)} biomes` : token;
+  }
+
+  const words = name.replace(/_/g, ' ').trim();
+  return words ? capitalizeFirst(words) : token;
+}
 
 export const levelRange = (min, max) => {
   if (min === null || min === undefined) return EMPTY;
