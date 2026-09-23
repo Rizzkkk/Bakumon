@@ -32,7 +32,7 @@ is deleted rather than left in place, so nothing can quietly keep referencing it
 The 56 kit artboards still show the pixel face. They are the kit as delivered and are not
 rewritten; this ADR is where the difference is recorded.
 
-**The wiki nav is flush against the viewport's left edge**, not an inset bordered card.
+**The wiki panels take the screen edges**, instead of sitting inset as bordered cards.
 The kit's artboards centre the whole wiki layout in a 1440px container, which at 1440px
 leaves a dead gutter to the left of the nav and at wider viewports leaves more. The nav is
 the primary control on every wiki page, so it takes the edge: full-bleed, sticky to the
@@ -47,8 +47,13 @@ page means the one control people reach for lives in a different region from the
 are already pointing at. The nav rows grow with the panel: 16px on a 40px row against the
 kit's 15px on 34px.
 
-Below 768px nothing changes - the sidebar is still hidden, `WikiDrawer` is still the mobile
-equivalent, and the search below 768px is still the header sub-bar's.
+The Pokemon index's filter rail gets the opposite edge on the same terms: sticky, `100vh`,
+bordered on its left only, 300px and 340px from 1280px. One CSS rule covers both panels,
+because only the width and which side is bordered actually differ. `.filter-rail` keeps its
+own padding and stack and stops drawing a box, since the slot around it is the box now.
+
+Below 768px nothing changes - both panels are still hidden, `WikiDrawer` and `FilterSheet`
+are still the mobile equivalents, and the search below 768px is still the header sub-bar's.
 
 **The hero drops the kit's graph-paper grid.** `.gridbg` laid 32px rules across the whole
 hero in `--grid`, and it is the one surface treatment on the site that is decoration rather
@@ -57,26 +62,59 @@ which is where the page's texture actually comes from. The class is deleted rath
 left unused; `--grid` stays defined, because `tokens.css` is the kit's file and nothing in
 it is edited by hand.
 
-**The landing page's feature section carries a waving character.** ADR 0010 carried
-forward ADR 0009's layout decisions and the kit has no character in this section; this
-adds one. It is the same isometric render already justified by ADR 0010's hero note,
-posed: `scripts/render-skin.js` gained a `--pose wave` mode that rotates the left arm at
-the shoulder and emits two frames, which the page alternates with a CSS animation.
+**One character on the landing page, in the feature section's right margin.** ADR 0010
+carried forward ADR 0009's layout decisions and the kit has no character in this section;
+this adds one, and takes the other away. The hero's right slot goes back to the logo alone,
+as `landing-d-light.html` always had it - the same render appearing twice on one page made
+neither of them read as deliberate.
 
-Two committed frames rather than motion in the browser, for the reason the renderer exists
-at all: the landing page must render with the API down and must not pull a third-party
-render at page load. The animation is a hard cut between two pixel-art frames, not a
-cross-fade, and it is gated behind `prefers-reduced-motion: no-preference` - with reduced
-motion the page holds frame a, in which the arm is already raised.
+It is decoration, so it is placed as decoration: absolutely positioned into the page
+margin beside the cards, at `left: calc(100% + 24px)` from the centred container. The card
+grid keeps exactly the width it would have without it. The margin is also what gates it -
+the container is 1100px, so `(100vw - 1100)/2` has to hold the character and its gap, which
+happens at 1470px and not below. Below that there is no character rather than narrower
+cards or a horizontal scrollbar.
+
+**The render is front-on, not isometric.** The camera moved from the `(1, -1, 1)` dimetric
+view the renderer was written around to `(0, -1, 0.34)`: the character faces -y, so a -y
+camera is the one they are looking at. The dimetric view stood off their front-right and had
+them looking past the reader, which is the wrong read for a figure whose whole job on the
+page is to greet one. The `+z` term lifts the camera just above the eyeline, so the hat
+brim, the shoulders and the boot tops stay in frame; at a flat `(0, -1, 0)` every face but
+the front ones drops out and the render is a sheet of the skin file rather than a character.
+
+`project()` and `nearness()` are now built from that vector through an orthonormal camera
+frame rather than hardcoded, so the view is one constant to change. The wave also reads
+better under it: the arm swings in the plane of the image instead of away from the viewer.
+The waving arm is the character's left, which a front-on render mirrors onto the viewer's
+right - away from the cards, rather than across the 24px gap into them.
+
+The pose: `scripts/render-skin.js` gained a `--pose wave` mode that rotates the left arm at
+the shoulder, and one committed render of it, for the reason the renderer exists at all -
+the landing page must render with the API down and must not pull a third-party render at
+page load.
+
+**Static, not animated.** It was briefly two frames alternated by CSS. A figure standing at
+the edge of the page holding a wave reads as a character; the same figure flapping reads as
+a banner ad, and the motion was the first thing the eye went to on a page whose actual
+subject is three cards. The renderer emits one frame per pose accordingly - the two-frame
+machinery and its shared-canvas crop are gone rather than left dormant.
+
+The standing render is deleted with the placement it served - `character.png` and its two
+WebPs. `npm run skin` still produces a standing pose by default, but under the new camera it
+is a front-on one: the isometric render that file held is not reproducible without setting
+`VIEW` back, and nothing on the site wants it.
 
 ## Consequences
 
 `render-skin.js` now draws all six faces of each box and selects the camera-facing ones by
 the sign of the face normal against the view direction, where it previously hardcoded the
 three faces an unposed box shows. A rotated limb exposes different faces, so the hardcoded
-set was the thing in the way. The rewrite was checked against the committed render: at
-`--scale 10` the unposed output differs from `assets/brand/character.png` in 2 pixels of
-331,800, both at a seam where two faces tie for depth.
+set was the thing in the way. The rewrite was checked while the camera was still dimetric,
+against the standing render committed at the time: at `--scale 10` the unposed output
+differed from it in 2 pixels of 331,800, both at a seam where two faces tie for depth. That
+check is what licensed the camera change that followed it, and it cannot be re-run now that
+`VIEW` has moved.
 
 The frames of a pose are rendered onto one canvas and cropped to the union of their
 content, because trimming each frame to its own bounds is what would make the body jump

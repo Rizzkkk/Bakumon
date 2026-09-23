@@ -35,10 +35,7 @@ const FEATURES = [
 export function FeatureCards() {
   return (
     <section className="page feature-section">
-      <div className="feature-section__head">
-        <h2 className="feature-section__title">What to expect on Bakumon</h2>
-        <WavingCharacter className="feature-section__waver" />
-      </div>
+      <h2 className="feature-section__title">What to expect on Bakumon</h2>
       <div className="feature-grid">
         {FEATURES.map((feature) => (
           <article key={feature.title} className="feature-card">
@@ -59,6 +56,9 @@ export function FeatureCards() {
           </article>
         ))}
       </div>
+      {/* Last child, and absolutely positioned into the page margin beside the cards, so
+          the grid keeps the width it would have without it. */}
+      <WavingCharacter className="feature-section__aside" />
     </section>
   );
 }

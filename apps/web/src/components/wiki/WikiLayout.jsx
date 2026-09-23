@@ -10,8 +10,10 @@ export function WikiLayout({ children, rail }) {
           measure belongs to this wrapper rather than to the row that contains both. */}
       <div className="wiki-layout__content">
         <main className="wiki-layout__main">{children}</main>
-        {rail ? <div className="wiki-layout__rail">{rail}</div> : null}
       </div>
+      {/* Outside the centred wrapper, like the sidebar: both panels take a screen edge and
+          the measure between them stays centred. */}
+      {rail ? <div className="wiki-layout__rail">{rail}</div> : null}
     </div>
   );
 }

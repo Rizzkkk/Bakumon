@@ -14,22 +14,50 @@ import { ROOT } from './lib/paths.js';
 const BRAND = path.join(ROOT, 'assets/brand');
 
 /*
- * 2:1 dimetric, camera at front-right-above. The axis that projects to nothing is
- * (1, -1, 1), which is what puts the camera on the character's front-right rather than
- * behind them - flip the sign on y and the render is of their back, with the front and
- * side faces landing in the same screen band instead of meeting at the silhouette edge.
+ * Where the camera is, as a direction from the character towards it. The character faces
+ * -y, so a -y camera is the one they are looking at: head-on, both eyes visible, which a
+ * (1, -1, 1) dimetric camera is not - that one stands off their front-right and has them
+ * looking past the reader.
  *
+ * The +z term lifts the camera a little above their eyeline. It is what puts a sliver of
+ * the hat brim, the shoulders and the tops of the boots in frame; at exactly (0, -1, 0)
+ * every face but the front ones drops out and the render is a flat sheet of the skin file.
+ */
+const VIEW = [0, -1, 0.34];
+
+const cross = (a, b) => [
+  a[1] * b[2] - a[2] * b[1],
+  a[2] * b[0] - a[0] * b[2],
+  a[0] * b[1] - a[1] * b[0],
+];
+const unit = (v) => {
+  const n = Math.hypot(v[0], v[1], v[2]);
+  return [v[0] / n, v[1] / n, v[2] / n];
+};
+
+/*
+ * An orthonormal frame for the camera. Screen right is whatever is perpendicular to both
+ * the view and world up (+z), and screen up follows from those two - which is what keeps
+ * the character upright in frame for any camera that is not directly overhead.
+ */
+const DEPTH = unit(VIEW);
+const RIGHT = unit(cross([0, 0, 1], DEPTH));
+const UP = cross(DEPTH, RIGHT);
+
+/*
  * Linear in x, y and z with no translation term, so the same call projects a direction
  * vector as well as a point - which is what lets a rotated limb's edges be projected
- * rather than assumed.
+ * rather than assumed. Screen y is negated because pixel rows count downwards.
  */
-const project = (x, y, z, s) => [(x + y) * 2 * s, (x - y) * s - z * 2 * s];
+const project = (x, y, z, s) => [
+  (x * RIGHT[0] + y * RIGHT[1] + z * RIGHT[2]) * s,
+  -(x * UP[0] + y * UP[1] + z * UP[2]) * s,
+];
 
-// Nearness to a camera sitting front-right-above, used as a z-buffer key so the parts can
-// be drawn in any order and still occlude each other correctly. Applied to a face normal
-// it is the dot product with the view direction, so positive means the face is turned
-// towards the camera.
-const nearness = (x, y, z) => x - y + z;
+// Nearness to the camera, used as a z-buffer key so the parts can be drawn in any order and
+// still occlude each other correctly. Applied to a face normal it is the dot product with
+// the view direction, so positive means the face is turned towards the camera.
+const nearness = (x, y, z) => x * DEPTH[0] + y * DEPTH[1] + z * DEPTH[2];
 
 /*
  * Where each part's 6-face net starts in the 64x64 skin, as [u, v] of the net's top-left.
@@ -48,7 +76,8 @@ const OVERLAY = {
   rightLeg: [0, 32], leftLeg: [0, 48],
 };
 
-// The character faces -y. Their right is -x, so the camera sees their left side.
+// The character faces -y, towards the camera. Their right is -x, so it lands on the
+// viewer's left - the mirror everyone already expects from a front-on render.
 function boxes(slim) {
   const armW = slim ? 3 : 4;
   return [
@@ -62,16 +91,19 @@ function boxes(slim) {
 }
 
 /*
- * A wave is two frames the page alternates, not motion the renderer produces. Degrees turn
- * the left arm about the y axis at its shoulder: 180 is straight up, and more than that
- * swings the hand outward, away from the head. The waving arm is the left one because the
- * camera sits on that side - waving the right arm hides the hand behind the body.
+ * Degrees turn the left arm about the y axis at its shoulder: 180 is straight up, and more
+ * than that swings the hand outward, away from the head. The arm swings in the plane of the
+ * image under this camera, so the gesture is legible rather than foreshortened.
+ *
+ * The left arm, which a front-on render puts on the viewer's right: on the landing page the
+ * character stands to the right of the feature cards, so that is the arm that waves into
+ * open margin instead of across the 24px gap to the cards.
  */
-const WAVE_FRAMES = { a: 214, b: 238 };
+const POSES = { stand: 0, wave: 214 };
 
-const pose = (model, deg) => model.map((box) => (
+const pose = (model, deg) => (deg ? model.map((box) => (
   box.name === 'leftArm' ? { ...box, rot: { pivot: [box.x[0], 0, 23], deg } } : box
-));
+)) : model);
 
 // Rotation about the y axis through a pivot. Points move with the pivot, directions and
 // normals without it.
@@ -257,18 +289,17 @@ function render(model, skin, w, h, s, legacy, box3d) {
   return { buf: ctx.buf, W, H };
 }
 
-// The union of every frame's opaque bounds, so one extract crops them all identically.
-function contentBox(frames) {
+// The opaque bounds of the render, so the canvas the model was sized onto is cropped to
+// the character rather than to its margins.
+function contentBox({ buf, W, H }) {
   let minX = Infinity; let minY = Infinity; let maxX = -Infinity; let maxY = -Infinity;
-  for (const { buf, W, H } of frames) {
-    for (let y = 0; y < H; y++) {
-      for (let x = 0; x < W; x++) {
-        if (buf[(y * W + x) * 4 + 3] === 0) continue;
-        if (x < minX) minX = x;
-        if (x > maxX) maxX = x;
-        if (y < minY) minY = y;
-        if (y > maxY) maxY = y;
-      }
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (buf[(y * W + x) * 4 + 3] === 0) continue;
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
     }
   }
   return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
@@ -304,9 +335,9 @@ async function main() {
   const s = Number(arg('--scale', 8));
   const slim = args.includes('--slim');
   const poseName = arg('--pose', 'stand');
-  const outName = arg('--out', poseName === 'wave' ? 'character-wave' : 'character');
-  if (poseName !== 'stand' && poseName !== 'wave') {
-    console.error(`[fail] unknown pose "${poseName}" - expected stand or wave`);
+  const outName = arg('--out', poseName === 'stand' ? 'character' : `character-${poseName}`);
+  if (!(poseName in POSES)) {
+    console.error(`[fail] unknown pose "${poseName}" - expected ${Object.keys(POSES).join(' or ')}`);
     process.exit(2);
   }
 
@@ -321,20 +352,11 @@ async function main() {
   }
   const legacy = h === 32;
 
-  const model = boxes(slim);
-  const models = poseName === 'wave'
-    ? Object.entries(WAVE_FRAMES).map(([frame, deg]) => [`${outName}-${frame}`, pose(model, deg)])
-    : [[outName, model]];
-
-  // One canvas for every frame, sized from the widest pose, so the shared crop below is
-  // a crop of the same coordinate space in each.
-  const all = models.flatMap(([, m]) => m);
-  const box3d = bounds(all, s);
+  const model = pose(boxes(slim), POSES[poseName]);
 
   fs.mkdirSync(BRAND, { recursive: true });
-  const frames = models.map(([, m]) => render(m, skin, w, h, s, legacy, box3d));
-  const crop = contentBox(frames);
-  for (let i = 0; i < frames.length; i++) await write(frames[i], crop, models[i][0]);
+  const frame = render(model, skin, w, h, s, legacy, bounds(model, s));
+  await write(frame, contentBox(frame), outName);
 
   console.log(`[ok] source ${w}x${h}${legacy ? ' (legacy, left limbs mirrored)' : ''}, scale ${s}, ${slim ? 'slim' : 'classic'} arms, pose ${poseName}`);
 }

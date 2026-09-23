@@ -13,14 +13,10 @@ records what it supersedes.
 
 ### Added
 
-- `assets/brand/character-wave-a.png` and `-wave-b.png` (493x790 each) plus their 320px and
-  480px WebPs, rendered by `npm run skin -- --pose wave --scale 10`. Two frames of one pose
-  on one canvas, cropped to the union of their content, so alternating them moves the arm
-  and nothing else.
-- `components/common/WavingCharacter.jsx` - both frames in the markup, alternated by a CSS
-  animation behind `prefers-reduced-motion: no-preference`. A hard cut, not a cross-fade:
-  fading two pixel-art poses renders both arms at once as a ghost. It sits beside the
-  feature-section heading on the landing page (ADR 0011).
+- `components/common/WavingCharacter.jsx` - one static render, absolutely
+  positioned into the page margin to the right of the feature cards, which is why the grid
+  keeps the width it would have without it, and it appears only from 1470px - the width at
+  which `(100vw - 1100)/2` holds a 160px character and its 24px gap (ADR 0011).
 - `ADR 0011` (`ground-truth/00-project/decisions/0011-rounded-display-face-and-flush-nav.md`)
   - the rounded display face, the flush-left wiki nav and the waving character, each a
   departure from the kit and none of them touching colour.
@@ -42,13 +38,14 @@ records what it supersedes.
 - `assets/brand/logo-1267.png` (1267x1241, RGBA, real alpha) and `assets/brand/wordmark.png`
   (2172x724, RGBA) from the kit. Measured with `sharp().metadata()`. The repo had no
   wordmark at all, and the logo is 3.2x the linear resolution of `logo-transparent.png`.
-- `assets/brand/character.png` (420x790) plus 320px and 480px WebPs, rendered from
-  `assets/brand/skin.png` by `npm run skin`. Classic 4px arms, detected from the skin's
-  back-arm columns rather than asked for. Committed as a static image, so the landing page
-  gains a character without gaining a request or a dependency.
+- `assets/brand/character-wave.png` (488x887) plus its 320px and 480px WebPs, rendered from
+  `assets/brand/skin.png` by `npm run skin -- --pose wave --scale 26`. Classic
+  4px arms, detected from the skin's back-arm columns rather than asked for. Committed as
+  static images, so the landing page gains a character without gaining a request or a
+  dependency. The standing render that shipped first is removed below.
 
 - `scripts/render-skin.js` / `npm run skin` - renders a Minecraft skin PNG as a static
-  isometric character for the landing page. No browser and no WebGL: the landing page has
+  character for the landing page. No browser and no WebGL: the landing page has
   to work with the API down, and a hosted render service would be a third-party request on
   every page load, which ADR 0007 rules out and the privacy page denies. Reads the 64x64
   (or legacy 64x32) skin directly, rasterises the camera-facing faces of each body
@@ -158,6 +155,15 @@ records what it supersedes.
   payload goes from 94,636 to 115,808 bytes across the same six files, measured with
   `os.path.getsize` over `apps/web/public/fonts/`: Baloo 2's subset is 33,188 bytes against
   Pixelify Sans's 12,016, and carries 400-800 where the kit's carried 400-700.
+- **The Pokemon index's filter rail takes the viewport's right edge** on the same terms as
+  the nav: sticky, `100vh`, bordered on its left only, 300px and 340px from 1280px. It moved
+  out of `wiki-layout__content` to sit beside it, and one CSS rule now covers both panels
+  because only the width and the bordered side differ. `.filter-rail` keeps its padding and
+  stack and stops drawing its own box.
+- **The hero's right slot is the logo alone again**, as `landing-d-light.html` always had
+  it. The same character render appearing twice on one page made neither read as deliberate.
+  The logo now shows at every width rather than only from 768px - it is the whole slot - and
+  it carries the kit's real alt text instead of the empty one it had beside the character.
 - **The wiki nav is flush against the viewport's left edge** and sticky, bordered only on
   its right, rather than an inset card inside a centred 1440px container (ADR 0011).
   `WikiLayout` gained a `wiki-layout__content` wrapper, which is where the centred measure
@@ -174,13 +180,24 @@ records what it supersedes.
   a field rendered in three regions should not be named after one of them; the header keeps
   `site-header__search` for placement only, compounded as `.wiki-search.site-header__search`
   so its hide/show still out-specifies the shared base.
+- **The character is static, not animated** (ADR 0011). The two-frame alternation, its
+  `prefers-reduced-motion` gate and the renderer's shared-canvas union crop are all gone;
+  `--pose` now emits one frame, and `POSES` is the map of the two it knows.
+- **`scripts/render-skin.js` renders front-on, not isometric** (ADR 0011). `VIEW` moved from
+  the `(1, -1, 1)` dimetric camera to `(0, -1, 0.34)` - the character faces -y, so a -y
+  camera is the one they look at, and the `+z` term keeps the hat brim, shoulders and boot
+  tops in frame rather than flattening the render to front faces alone. `project()` and
+  `nearness()` are derived from that vector through an orthonormal camera frame instead of
+  being hardcoded, so the view is one constant. Confirmed against the 64x64 skin layout and
+  the front-view mirror convention (the character's left arm lands on the viewer's right).
 - `scripts/render-skin.js` draws all six faces of each box and selects the camera-facing
   ones by the sign of the face normal against the view direction, where it previously
   hardcoded the three faces an unposed box shows - a rotated limb exposes different ones.
   Face rects are derived from each part's net origin rather than tabulated, which is what
   makes a 3-texel slim arm sample a 3-texel rect. Checked against the committed render:
-  at `--scale 10` the unposed output differs from `assets/brand/character.png` in 2 pixels
-  of 331,800, both at a seam where two faces tie for depth.
+  at `--scale 10` the unposed output differed from the then-committed
+  `assets/brand/character.png` in 2 pixels of 331,800, both at a seam where two faces tie
+  for depth. The check predates the camera change above and cannot be re-run against it.
 
 - `apps/web/src/styles/tokens.css` replaced wholesale with `design/tokens.css` (ADR 0010),
   plus `--radius`/`--gutter`/`--measure` which the kit omits and `global.css` uses, and
@@ -266,6 +283,9 @@ records what it supersedes.
 - `apps/web/public/fonts/pixelify-sans-latin-400-700.woff2`, with the display face it
   served (ADR 0011). Deleted rather than left in place, so nothing can quietly keep
   referencing it.
+- `assets/brand/character.png` and its 320px and 480px WebPs, with the hero placement they
+  served (ADR 0011). `npm run skin` still renders that pose by default, so it is regenerable
+  rather than lost.
 
 - **The token compatibility shim.** It existed so the pre-kit components kept rendering
   while they were replaced phase by phase, and deleting it is the only real test of whether

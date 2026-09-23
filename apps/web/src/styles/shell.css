@@ -227,21 +227,20 @@
 
 /* ---- Wiki layout ---- */
 
-/* The nav is flush against the viewport's left edge rather than inset as a card: at 1440px
-   the centred container left a 100px dead gutter beside it. It is the page's primary
-   control, so it gets the edge and the content keeps the centred measure. */
-.wiki-sidebar {
-  width: 288px;
+/* Both panels take a screen edge rather than sitting inset as cards: at 1440px the centred
+   container left a dead gutter beside each of them. They are the page's controls, so they
+   get the edges and the content keeps the centred measure between them. One rule for the
+   two because only the width and which side is bordered actually differ. */
+.wiki-sidebar,
+.wiki-layout__rail {
   flex-shrink: 0;
-  padding: 20px 12px 32px;
   background: var(--surface);
-  border-right: 2px solid var(--line);
   box-sizing: border-box;
   display: none;
   position: sticky;
   top: 0;
-  /* A full viewport height rather than a cap: the panel should reach the bottom of the
-     screen whether or not its nav is long enough to fill it. */
+  /* A full viewport height rather than a cap: a panel should reach the bottom of the screen
+     whether or not its contents are long enough to fill it. */
   height: 100vh;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -251,10 +250,24 @@
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
 }
-.wiki-sidebar::-webkit-scrollbar { width: 8px; }
-.wiki-sidebar::-webkit-scrollbar-track { background: transparent; }
-.wiki-sidebar::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--surface); }
-.wiki-sidebar:hover::-webkit-scrollbar-thumb { background: var(--line-strong); }
+.wiki-sidebar::-webkit-scrollbar,
+.wiki-layout__rail::-webkit-scrollbar { width: 8px; }
+.wiki-sidebar::-webkit-scrollbar-track,
+.wiki-layout__rail::-webkit-scrollbar-track { background: transparent; }
+.wiki-sidebar::-webkit-scrollbar-thumb,
+.wiki-layout__rail::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--surface); }
+.wiki-sidebar:hover::-webkit-scrollbar-thumb,
+.wiki-layout__rail:hover::-webkit-scrollbar-thumb { background: var(--line-strong); }
+
+.wiki-sidebar {
+  width: 288px;
+  padding: 20px 12px 32px;
+  border-right: 2px solid var(--line);
+}
+.wiki-layout__rail {
+  width: 300px;
+  border-left: 2px solid var(--line);
+}
 .wiki-sidebar__title {
   display: flex;
   align-items: center;
@@ -286,19 +299,18 @@
   padding: 20px 16px 40px;
   box-sizing: border-box;
   display: flex;
-  gap: 24px;
   align-items: flex-start;
 }
 .wiki-layout__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
-.wiki-layout__rail { display: none; }
 
 @media (min-width: 768px) {
-  .wiki-sidebar { display: block; }
-  .wiki-layout__content { padding: 32px; gap: 32px; }
-  .wiki-layout__rail { display: block; width: 260px; flex-shrink: 0; }
+  .wiki-sidebar,
+  .wiki-layout__rail { display: block; }
+  .wiki-layout__content { padding: 32px; }
 }
 @media (min-width: 1280px) {
   .wiki-sidebar { width: 332px; }
+  .wiki-layout__rail { width: 340px; }
 }
 
 /* ---- Footer ---- */
