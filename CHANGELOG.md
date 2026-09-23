@@ -177,7 +177,20 @@ records what it supersedes.
 
 ### Removed
 
-- `components/common/StateBlock.jsx`, replaced by `Skeleton`/`EmptyState`/`ErrorState`.
-  Call sites (`ResultsGrid.jsx`, `PokemonDetail.jsx`, `ItemDetail.jsx`, `NotFound.jsx`)
-  updated to the minimum needed to keep building - those pages get their real Phase 4/5
-  rewrite later, so their surrounding markup is otherwise untouched.
+- **The token compatibility shim.** It existed so the pre-kit components kept rendering
+  while they were replaced phase by phase, and deleting it is the only real test of whether
+  they actually moved: a grep for all fourteen old token names across `apps/web/src` now
+  returns nothing outside the token file itself.
+- `BucketBadge.jsx` and `bucketMeta()`. `BucketChip` does the same job from the kit's
+  tokens, and the badge was the last thing keeping the five `--bucket-*` aliases alive. The
+  `token` field is gone from `BUCKETS`, which is now the five slugs and labels and nothing
+  else.
+- `lib/screenshots.js` and `ScreenshotGrid.jsx`. No gameplay screenshot appears in any of
+  the 56 artboards, which closes `pre-production.md` item 7 by design rather than by
+  supplying the screenshots it asked for.
+- `StateBlock.jsx`, replaced by `Skeleton`/`EmptyState`/`ErrorState`.
+- `SearchBar.jsx`, `CategoryNav.jsx` and `ResultsGrid.jsx`. `WikiHome` stopped being the
+  results page when the two index routes took that job.
+- `EventSpawnPanel.jsx`, superseded by `LegendaryPanel`.
+
+Each removal was checked for an importer first.
