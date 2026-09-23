@@ -30,6 +30,11 @@ records what it supersedes.
 - `assets/brand/logo-1267.png` (1267x1241, RGBA, real alpha) and `assets/brand/wordmark.png`
   (2172x724, RGBA) from the kit. Measured with `sharp().metadata()`. The repo had no
   wordmark at all, and the logo is 3.2x the linear resolution of `logo-transparent.png`.
+- `assets/brand/character.png` (420x790) plus 320px and 480px WebPs, rendered from
+  `assets/brand/skin.png` by `npm run skin`. Classic 4px arms, detected from the skin's
+  back-arm columns rather than asked for. Committed as a static image, so the landing page
+  gains a character without gaining a request or a dependency.
+
 - `scripts/render-skin.js` / `npm run skin` - renders a Minecraft skin PNG as a static
   isometric character for the landing page. No browser and no WebGL: the landing page has
   to work with the API down, and a hosted render service would be a third-party request on

@@ -227,7 +227,9 @@ async function main() {
   for (const box of model) {
     if (legacy && box.name !== 'head') continue; // legacy skins only carry the hat layer
     const key = legacy ? box.name.replace(/^left/, 'right') : box.name;
-    drawBox(ctx, box, OVERLAY[key], 0.5);
+    // Minecraft inflates the hat layer by 0.5 and the jacket, sleeves and trousers by 0.25.
+    // Using 0.5 throughout detaches a sleeve from its arm and reads as a floating box.
+    drawBox(ctx, box, OVERLAY[key], box.name === 'head' ? 0.5 : 0.25);
   }
 
   fs.mkdirSync(BRAND, { recursive: true });
