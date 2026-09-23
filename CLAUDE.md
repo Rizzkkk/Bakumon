@@ -47,5 +47,6 @@ npm run web:build  # static build into apps/web/dist
 npm run verify:web # assert the frontend's pure logic against the running API
 npm run palette    # regenerate ground-truth/reports/brand-palette.md from the logo
 npm run brand      # WebP banner/logo derivatives + the favicon set
+npm run skin       # isometric character render from a Minecraft skin PNG
 npm run explain    # regenerate ground-truth/reports/query-plans.md from EXPLAIN ANALYZE
 ```

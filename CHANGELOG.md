@@ -30,6 +30,19 @@ records what it supersedes.
 - `assets/brand/logo-1267.png` (1267x1241, RGBA, real alpha) and `assets/brand/wordmark.png`
   (2172x724, RGBA) from the kit. Measured with `sharp().metadata()`. The repo had no
   wordmark at all, and the logo is 3.2x the linear resolution of `logo-transparent.png`.
+- `scripts/render-skin.js` / `npm run skin` - renders a Minecraft skin PNG as a static
+  isometric character for the landing page. No browser and no WebGL: the landing page has
+  to work with the API down, and a hosted render service would be a third-party request on
+  every page load, which ADR 0007 rules out and the privacy page denies. Reads the 64x64
+  (or legacy 64x32) skin directly, rasterises the three camera-facing planes of each body
+  part with a per-pixel z-buffer, and writes a trimmed PNG plus 320px and 480px WebPs.
+  Verified against a colour-coded fixture skin carrying three asymmetric markers, which is
+  what caught the two defects worth recording: the camera was initially behind the
+  character, because the projection's null axis was (1, 1, 1) rather than (1, -1, 1), which
+  also made the front and side faces land in the same screen band instead of meeting at the
+  silhouette edge; and depth was held per texel rather than per pixel, which made every arm
+  and leg seam trade pixels and read as a zigzag.
+
 - **Three self-hosted webfonts** in `apps/web/public/fonts/`: Pixelify Sans (display),
   Atkinson Hyperlegible (body) and IBM Plex Mono (identifiers). Latin subset only, all six
   files verified as real woff2 by their `wOF2` magic bytes, 94,636 bytes total. Served from
