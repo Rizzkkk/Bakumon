@@ -34,3 +34,29 @@ reason the site is worth building.
   that assumes one bucket per species is wrong.
 - The 25-player figure is **current configuration**, not a fixed rule. If the site states
   it, it should be sourced from here so there is one place to change it.
+
+## Correction, 2026-09-24: the player gate is off
+
+The server owner confirmed the 25-player requirement has since been turned off. Legendaries
+now spawn genuinely at random, with no player count to reach.
+
+The quoted block above is left exactly as it is, because it is a verbatim transcription of
+what the workbook says and ADR 0004 makes the workbook authoritative. This section records
+that the workbook is now describing a configuration the server no longer runs.
+
+**What changed in the code**: `EVENT_PLAYER_THRESHOLD` is deleted from
+`apps/web/src/lib/serverFacts.js`, and `LegendaryPanel` no longer tells a reader that
+legendaries are "tied to 25+ players being online". It says they turn up at random, which
+is now true and was the only thing on the site asserting the gate.
+
+**What has not changed, and is the real fix**: all six `legendary event` spawn rows still
+carry the workbook's own `conditions` text, `Requires 25+ players online; random event;
+10-minute despawn`. That string is imported data, not copy, and ADR 0004 forbids the API or
+the site rewriting a workbook value - so it is still wrong in the database and will stay
+wrong until the workbook is re-exported and `npm run import` re-run. It is not currently
+rendered anywhere: `LegendaryPanel` replaces the spawn table for these species and shows
+Timing, Level and Where it can appear, none of which read `conditions`. So the stale text
+is invisible today, which is exactly the condition under which it will be forgotten.
+
+`pre-production.md` item 4 already owns the re-export question; this is the first concrete
+reason to answer it.

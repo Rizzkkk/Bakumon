@@ -17,7 +17,7 @@ const FEATURES = [
     icon: <PixelIcon name="check" size={20} />,
     badge: 'legendary',
     title: 'Your build and your team stay yours',
-    body: 'No stealing, no griefing and no PvP unless both of you want it. Admins play here too, so the rules are enforced rather than just posted.',
+    body: 'Claim your land and it stays yours. No stealing, no griefing and no PvP unless both of you want it, and admins who play here enforce it rather than just posting it.',
     href: DISCORD_INVITE,
     external: true,
     linkText: 'Ask an admin in Discord',

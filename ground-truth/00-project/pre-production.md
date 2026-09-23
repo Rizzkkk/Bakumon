@@ -104,10 +104,19 @@ Decisions and inputs that cannot be derived from the code or the workbook.
 9. **[blocker] Domain and DNS access.** Plus the Hostinger VPS credentials, now that
    ADR 0005 has landed on the VPS.
 
-10. **[answered 2026-09-23: 25 is current.]** Now published on every legendary-event
-    Pokemon page, from the single constant `EVENT_PLAYER_THRESHOLD` in
-    `apps/web/src/lib/serverFacts.js`. If the server config moves on, that is the one line
-    to change.
+10. **[superseded 2026-09-24: the gate is off.]** The owner confirmed the 25-player
+    requirement has been turned off and legendaries now spawn genuinely at random.
+    `EVENT_PLAYER_THRESHOLD` is deleted and `LegendaryPanel` no longer asserts a threshold,
+    so the site publishes no player count at all.
+
+    **This did not fix the data.** The six `legendary event` rows still carry the
+    workbook's `conditions` text, `Requires 25+ players online; random event; 10-minute
+    despawn`. ADR 0004 forbids rewriting a workbook value in code, so the only real fix is
+    a workbook re-export plus `npm run import` - item 4. Nothing renders that field for
+    these species today, which is why it can sit wrong indefinitely without anyone noticing.
+    Recorded in `01-data/server-notes.md`.
+
+    Answered 2026-09-23 as "25 is current", which it no longer is.
     Original note: The workbook notes say Pebble
     Spawn Events need 25 players online. That number will be published on the site; if the
     server config has moved on, it is wrong the day we launch.

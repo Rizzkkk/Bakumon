@@ -28,8 +28,9 @@ players cannot get anywhere else:
 
 - an `ultra-rare` tier that the base mod does not have, covering selected starter lines,
   pseudo-legendary final evolutions and other deliberately scarce Pokemon
-- legendaries removed from natural spawning entirely and moved to Pebble Spawn Events
-  gated on 25 players being online
+- legendaries removed from natural spawning entirely and moved to Pebble Spawn Events.
+  The workbook records these as gated on 25 players online; that gate was turned off
+  before launch and the workbook has not been re-exported - see `01-data/server-notes.md`
 - third-party biomes in the spawn tables (`aether`, `the_bumblezone`, `biomesoplenty`,
   `byg`), which tells you the modpack this server runs
 

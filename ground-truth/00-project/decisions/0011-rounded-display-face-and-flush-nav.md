@@ -50,6 +50,13 @@ kit's 15px on 34px.
 Below 768px nothing changes - the sidebar is still hidden, `WikiDrawer` is still the mobile
 equivalent, and the search below 768px is still the header sub-bar's.
 
+**The hero drops the kit's graph-paper grid.** `.gridbg` laid 32px rules across the whole
+hero in `--grid`, and it is the one surface treatment on the site that is decoration rather
+than structure. The hero keeps its flat `--hero` field and the grass skyline below it,
+which is where the page's texture actually comes from. The class is deleted rather than
+left unused; `--grid` stays defined, because `tokens.css` is the kit's file and nothing in
+it is edited by hand.
+
 **The landing page's feature section carries a waving character.** ADR 0010 carried
 forward ADR 0009's layout decisions and the kit has no character in this section; this
 adds one. It is the same isometric render already justified by ADR 0010's hero note,

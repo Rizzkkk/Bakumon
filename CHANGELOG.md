@@ -130,10 +130,28 @@ records what it supersedes.
 
 ### Changed
 
+- **The site no longer tells anyone that legendaries need 25 players online.** The owner
+  confirmed on 2026-09-24 that the Pebble Spawn Event player gate is off and legendaries
+  now spawn genuinely at random. `EVENT_PLAYER_THRESHOLD` is deleted from `serverFacts.js`
+  and `LegendaryPanel` drops the claim, so the site publishes no player count at all.
+  `01-data/server-notes.md` keeps its verbatim workbook transcription untouched - ADR 0004
+  makes the workbook authoritative - and carries a dated correction alongside it instead.
+
+  **The data is still wrong and this did not fix it.** All six `legendary event` rows carry
+  the workbook's own `conditions` text, `Requires 25+ players online; random event;
+  10-minute despawn`. Rewriting that in code is exactly what ADR 0004 forbids, so the fix
+  is a workbook re-export and `npm run import`. Nothing renders that field for these
+  species today, which is precisely why it could sit wrong indefinitely - recorded in
+  `pre-production.md` items 4 and 10 rather than left to be rediscovered.
+
 - The landing page's middle feature card now covers the server's own rules - no stealing,
   no griefing, no unwanted PvP, and admins who play here - in place of a card about
   legendary spawns. Asked for by the server owner.
 
+- **The hero drops the kit's `.gridbg` graph paper** (ADR 0011) - the one decorative
+  surface treatment on the site, against the structural ones it sits next to. The class is
+  deleted from `global.css` and the hero keeps its flat `--hero` field; the `--grid` token
+  stays defined because `tokens.css` is the kit's file and is not hand-edited.
 - **The display face is Baloo 2, not Pixelify Sans** (ADR 0011). Only `--font-display`
   changes; Atkinson Hyperlegible keeps all prose and IBM Plex Mono keeps the identifiers.
   Self-hosted on the same terms as the rest - one latin woff2, never Google Fonts. The font

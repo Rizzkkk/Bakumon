@@ -1,4 +1,3 @@
-import { EVENT_PLAYER_THRESHOLD } from '../../lib/serverFacts.js';
 import { EMPTY, levelRange } from '../../lib/labels.js';
 import { PixelIcon } from '../common/PixelIcon.jsx';
 
@@ -22,8 +21,7 @@ export function LegendaryPanel({ displayName, rows }) {
       <p className="legendary-panel__headline">{displayName} spawns at random.</p>
       <p className="legendary-panel__body">
         Legendaries are not part of Bakumon&rsquo;s regular spawn tables. They turn up at
-        random, tied to {EVENT_PLAYER_THRESHOLD}+ players being online rather than a biome or
-        a schedule, so keep a few Poke Balls on you.
+        random rather than in a biome or on a schedule, so keep a few Poke Balls on you.
       </p>
       <dl className="legendary-dl">
         <div className="legendary-dl__row">
