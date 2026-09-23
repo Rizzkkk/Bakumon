@@ -91,8 +91,9 @@ code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
-  background: var(--bg);
-  border-radius: 4px;
+  /* No background fill. Every Pokemon render and every item texture is a transparent PNG,
+     and painting --bg behind one puts it in a visibly wrong-coloured box wherever the
+     surface underneath is not --bg - which on the index rows it never is. */
 }
 /* 203 of the 934 items have no artwork at all - known-gaps.md entry 2. That is 22% of item
    cards, so the missing case is a normal state with a real design, not an error. */

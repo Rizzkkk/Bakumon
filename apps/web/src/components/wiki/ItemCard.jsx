@@ -11,7 +11,7 @@ export function ItemCard({ item }) {
     <li className="index-row">
       {/* imageUrl, not a thumbnail: item art is a 16x16 game texture averaging 1.4 KB, so a
           24-row page is 33 KB and a thumbnail would save nothing worth a migration. */}
-      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={44} pixel />
+      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={96} pixel />
       <div className="index-row__body">
         <Link className="index-row__name" to={`/wiki/items/${encodeURIComponent(item.itemId)}`}>
           <ItemName name={item.name} />

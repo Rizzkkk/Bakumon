@@ -229,6 +229,17 @@ records what it supersedes.
 
 ### Fixed
 
+- **Artwork no longer renders in a visibly wrong-coloured box.** `.art` painted
+  `background: var(--bg)` behind every image; every Pokemon render and item texture is a
+  transparent PNG, and the index rows are `--surface`, so each thumbnail sat on a
+  mismatched rectangle. The fill is gone and the art sits on whatever surface is actually
+  under it.
+- Index artwork doubled to 96px from 48px (desktop table) and 56px (mobile cards). Pokemon
+  thumbnails are 256px so this is a downscale; item textures are 16x16 and keep
+  `image-rendering: pixelated`, so they stay crisp rather than blurring. The artwork column
+  is now pinned to 120px so the other five columns cannot shuffle as lazy images arrive.
+  All nine routes re-measured clean at 1440px and 390px.
+
 - **The `Artwork` `size` prop never did anything.** `.art` in `global.css` set
   `width: 100%`, and a class beats an HTML `width` attribute, so every image rendered at
   its container's width instead of the size asked for. Measured in Chromium: a 44px list

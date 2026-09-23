@@ -159,7 +159,7 @@ export default function PokemonIndex() {
                 {rows.map((pokemon) => (
                   <tr key={pokemon.id}>
                     <td>
-                      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={48} />
+                      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={96} />
                     </td>
                     <td>
                       <Link className="index-table__name" to={`/wiki/pokemon/${encodeURIComponent(pokemon.slug)}`}>

@@ -122,7 +122,7 @@ export default function ItemsIndex() {
                 {rows.map((item) => (
                   <tr key={item.itemId}>
                     <td>
-                      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={40} pixel />
+                      <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={96} pixel />
                     </td>
                     <td>
                       <Link className="index-table__name" to={`/wiki/items/${encodeURIComponent(item.itemId)}`}>
