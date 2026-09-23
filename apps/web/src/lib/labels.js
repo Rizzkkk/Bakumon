@@ -1,0 +1,63 @@
+// The 13 source categories are derived from the workbook and no endpoint publishes them -
+// 04-api/contract.md records that as deliberate. This is therefore a display copy, and
+// scripts/validate-import.js asserts the exact 13 slugs against the database so the two
+// cannot drift in silence. Counts are from `npm run validate`, 2026-09-23.
+export const SOURCE_CATEGORIES = [
+  { slug: 'berries-berry-items', label: 'Berries' },
+  { slug: 'poke-balls-catching', label: 'Poke Balls' },
+  { slug: 'evolution-evolution-items', label: 'Evolution' },
+  { slug: 'held-battle-items', label: 'Held & Battle' },
+  { slug: 'medicine-recovery', label: 'Medicine' },
+  { slug: 'food-sweets', label: 'Food & Sweets' },
+  { slug: 'mints-nature', label: 'Mints' },
+  { slug: 'fossils', label: 'Fossils' },
+  { slug: 'materials-crafting', label: 'Materials' },
+  { slug: 'training-progression', label: 'Training' },
+  { slug: 'technical-moves', label: 'Technical' },
+  { slug: 'utility', label: 'Utility' },
+  { slug: 'other-cobblemon-item', label: 'Other' },
+];
+
+const SOURCE_LABELS = new Map(SOURCE_CATEGORIES.map((entry) => [entry.slug, entry.label]));
+
+// An unknown slug must not break the page. The API returns an empty result rather than a
+// 400 for one (items.controller.js), so the UI degrades to a readable fallback too.
+export const sourceCategoryLabel = (slug) =>
+  SOURCE_LABELS.get(slug) ?? (slug ?? '').replace(/-/g, ' ');
+
+export const CATEGORY_LABELS = {
+  consumable: 'Consumable',
+  held: 'Held',
+  evolution: 'Evolution',
+  other: 'Other',
+};
+
+// ultra-rare is a Bakumon-specific tier sitting above rare, not a footnote to it, and
+// server-notes.md requires it to read as prominently. It shares the accent colour.
+export const BUCKETS = [
+  { slug: 'common', label: 'Common', token: 'var(--bucket-common)' },
+  { slug: 'uncommon', label: 'Uncommon', token: 'var(--bucket-uncommon)' },
+  { slug: 'rare', label: 'Rare', token: 'var(--bucket-rare)' },
+  { slug: 'ultra-rare', label: 'Ultra-rare', token: 'var(--bucket-ultra-rare)' },
+  { slug: 'legendary event', label: 'Legendary event', token: 'var(--bucket-event)' },
+];
+
+const BUCKET_MAP = new Map(BUCKETS.map((entry) => [entry.slug, entry]));
+
+export const bucketMeta = (slug) =>
+  BUCKET_MAP.get(slug) ?? { slug, label: slug ?? 'Unknown', token: 'var(--text-muted)' };
+
+// null is a real value here, not missing data: the six legendary-event rows carry no
+// bucket, weight or level range. An em dash says "the workbook has nothing" where 'null'
+// or NaN would read as a defect.
+export const EMPTY = '\u2014';
+
+// Belt and braces against the shape rather than the value. A NUMERIC column reaches JSON
+// as a string for NaN and Infinity, and `?? EMPTY` does not catch either - which is how a
+// spawn table came to print the literal text NaN. Anything not a finite number is absent.
+export const numberOrEmpty = (value) => (Number.isFinite(Number(value)) && value !== null ? value : EMPTY);
+
+export const levelRange = (min, max) => {
+  if (min === null || min === undefined) return EMPTY;
+  return min === max ? String(min) : `${min}-${max}`;
+};

@@ -1,0 +1,155 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import sharp from 'sharp';
+import { ROOT } from './lib/paths.js';
+
+const LOGO = path.join(ROOT, 'assets/brand/Logo.png');
+const SAMPLE = 256;
+const CLUSTERS = 8;
+
+// Clustering happens in CIE Lab, not RGB. The logo is roughly 70% near-black field, and
+// euclidean distance in RGB treats every dark pixel as the same colour - the run that
+// produced this file in RGB returned five indistinguishable charcoals and no accent at all.
+// Lab separates lightness from chroma, so a dark warm brown and a dark neutral stay apart.
+const srgbToLinear = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+
+function rgbToLab([r, g, b]) {
+  const [lr, lg, lb] = [r, g, b].map((v) => srgbToLinear(v / 255));
+  const x = (lr * 0.4124 + lg * 0.3576 + lb * 0.1805) / 0.95047;
+  const y = lr * 0.2126 + lg * 0.7152 + lb * 0.0722;
+  const z = (lr * 0.0193 + lg * 0.1192 + lb * 0.9505) / 1.08883;
+  const f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))];
+}
+
+// WCAG 2.1 relative luminance and contrast ratio, so the report can state which pairs are
+// legal for body text rather than implying it from how they look.
+const luminance = ([r, g, b]) => {
+  const [lr, lg, lb] = [r, g, b].map((v) => srgbToLinear(v / 255));
+  return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb;
+};
+
+const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+
+const hex = ([r, g, b]) =>
+  '#' + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
+
+function kmeans(points, k, iterations = 40) {
+  // k-means++ seeding. Uniform random seeding on an image this dominated by one colour
+  // routinely put every initial centroid inside the background.
+  const centroids = [points[Math.floor(points.length / 2)]];
+  while (centroids.length < k) {
+    const distances = points.map((p) =>
+      Math.min(...centroids.map((c) => (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 + (p[2] - c[2]) ** 2)));
+    const total = distances.reduce((a, b) => a + b, 0);
+    let target = total / 2;
+    let index = 0;
+    while (target > 0 && index < distances.length - 1) target -= distances[index++];
+    centroids.push(points[index]);
+  }
+
+  let assignment = new Array(points.length).fill(0);
+  for (let pass = 0; pass < iterations; pass++) {
+    let moved = false;
+    points.forEach((p, i) => {
+      let best = 0;
+      let bestDistance = Infinity;
+      centroids.forEach((c, ci) => {
+        const d = (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 + (p[2] - c[2]) ** 2;
+        if (d < bestDistance) { bestDistance = d; best = ci; }
+      });
+      if (assignment[i] !== best) { assignment[i] = best; moved = true; }
+    });
+    if (!moved && pass > 0) break;
+
+    const sums = centroids.map(() => [0, 0, 0, 0]);
+    points.forEach((p, i) => {
+      const s = sums[assignment[i]];
+      s[0] += p[0]; s[1] += p[1]; s[2] += p[2]; s[3]++;
+    });
+    sums.forEach((s, i) => {
+      if (s[3]) centroids[i] = [s[0] / s[3], s[1] / s[3], s[2] / s[3]];
+    });
+  }
+  return { centroids, assignment };
+}
+
+const { data, info } = await sharp(LOGO)
+  .resize(SAMPLE, SAMPLE, { fit: 'inside' })
+  .removeAlpha()
+  .raw()
+  .toBuffer({ resolveWithObject: true });
+
+const rgb = [];
+for (let i = 0; i < data.length; i += info.channels) {
+  rgb.push([data[i], data[i + 1], data[i + 2]]);
+}
+
+const lab = rgb.map(rgbToLab);
+const { assignment } = kmeans(lab, CLUSTERS);
+
+const clusters = Array.from({ length: CLUSTERS }, () => ({ rgb: [0, 0, 0], count: 0 }));
+rgb.forEach((p, i) => {
+  const c = clusters[assignment[i]];
+  c.rgb[0] += p[0]; c.rgb[1] += p[1]; c.rgb[2] += p[2]; c.count++;
+});
+
+const palette = clusters
+  .filter((c) => c.count)
+  .map((c) => ({ rgb: c.rgb.map((v) => v / c.count), coverage: c.count / rgb.length }))
+  .sort((a, b) => b.coverage - a.coverage);
+
+// The modal cluster is the field the mark sits on, not a colour to paint with. Naming it
+// explicitly is what stops the report reading as "the brand colour is black".
+const background = palette[0];
+const foregrounds = palette.slice(1);
+
+console.log(`[palette] ${rgb.length} pixels sampled from ${path.relative(ROOT, LOGO)}`);
+for (const entry of palette) {
+  const ratio = contrast(entry.rgb, background.rgb);
+  console.log(`  ${hex(entry.rgb)}  coverage ${(entry.coverage * 100).toFixed(1).padStart(5)}%  contrast vs field ${ratio.toFixed(2)}`);
+}
+
+const row = (entry, index) => {
+  const ratio = contrast(entry.rgb, background.rgb);
+  const aa = ratio >= 4.5 ? 'yes' : ratio >= 3 ? 'large text only' : 'no';
+  return `| ${index === 0 ? 'field (modal)' : `tone ${index}`} | \`${hex(entry.rgb)}\` | ${(entry.coverage * 100).toFixed(1)}% | ${ratio.toFixed(2)}:1 | ${aa} |`;
+};
+
+const report = [
+  '# Brand palette',
+  '',
+  `Generated by \`npm run palette\` (\`scripts/extract-palette.js\`) on ${new Date().toISOString().slice(0, 10)}.`,
+  '**Do not hand-edit.**',
+  '',
+  `Sampled from \`assets/brand/Logo.png\` downsampled to ${info.width}x${info.height}`,
+  `(${rgb.length} pixels), clustered into ${CLUSTERS} groups by k-means in CIE Lab.`,
+  '',
+  'Clustering is done in Lab rather than RGB because roughly two thirds of the logo is a',
+  'single near-black field; in RGB every dark pixel collapses into one cluster and the',
+  'accent colours never surface. Contrast is WCAG 2.1 relative luminance against the modal',
+  'cluster, which is the field the mark sits on rather than a colour to paint with.',
+  '',
+  '| Role | Hex | Coverage | Contrast vs field | AA body text |',
+  '|---|---|---|---|---|',
+  ...palette.map(row),
+  '',
+  '## Reading this',
+  '',
+  `The field is \`${hex(background.rgb)}\` at ${(background.coverage * 100).toFixed(1)}% of the image.`,
+  'Anything in the table at 4.5:1 or better carries body text on that field; anything',
+  'between 3:1 and 4.5:1 is legal for large text and UI borders only. A tone that fails',
+  'both is an accent to be used as a fill behind its own foreground, never as text.',
+  '',
+  `${foregrounds.length} non-field tones were found.`,
+  '',
+  'The site\'s tokens live in `apps/web/src/styles/tokens.css` and are the only place a hex',
+  'appears in application code. When this report changes, that file changes with it.',
+  '',
+].join('\n');
+
+await fs.writeFile(path.join(ROOT, 'ground-truth/reports/brand-palette.md'), `${report}\n`, 'utf8');
+console.log('\nWrote ground-truth/reports/brand-palette.md');

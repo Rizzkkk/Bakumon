@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bakumon-db
+    environment:
+      POSTGRES_USER: bakumon
+      POSTGRES_PASSWORD: bakumon
+      POSTGRES_DB: bakumon
+    ports:
+      # Loopback-bound: Docker publishes to 0.0.0.0 by default and, on Linux, writes its
+      # own iptables rules that bypass ufw - so `npm run db:up` on a server would expose
+      # Postgres with these example credentials to the internet.
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - bakumon-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bakumon -d bakumon"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  bakumon-pgdata:

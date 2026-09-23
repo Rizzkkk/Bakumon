@@ -1,0 +1,10 @@
+# The deploy target is a Linux VPS (ADR 0005). Keep LF in the repo and in the working
+# tree so a file authored on Windows and a file authored on the box are the same bytes.
+* text=auto eol=lf
+
+# Binary. Never normalise, never diff as text.
+*.png binary
+*.webp binary
+*.woff2 binary
+*.xlsx binary
+*.zip binary

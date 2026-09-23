@@ -1,0 +1,47 @@
+/*
+ * The only file in the application that defines a colour. Every value below is a cluster
+ * centroid from ground-truth/reports/brand-palette.md, produced by `npm run palette` from
+ * assets/brand/Logo.png - not eyedropped per component. When that report changes, this
+ * file changes with it. ADR 0009.
+ *
+ * Dark-first is not a style preference. The logo is a 1254x1254 PNG with no alpha channel
+ * (colour type 2, measured in 05-frontend/brand.md), so it renders as a solid rectangle on
+ * any surface but its own near-black field. A light theme needs the transparent re-export
+ * first; pre-production.md item 5.
+ */
+:root {
+  --field: #141414;          /* 85.4% coverage - the field the mark sits on */
+  --surface: #1c1c1c;        /* between field and raised, for page chrome */
+  --surface-raised: #2c2c2c; /* 6.6% - cards, table headers */
+  --border: #595146;         /* 3.2% - warm, 2.37:1, borders and rules only */
+  --text-muted: #8d816e;     /* 4.84:1 on the field: legal for body text */
+  --text: #d3c7ba;           /* 11.10:1 - primary text */
+  --accent: #cd3524;         /* the Poke Ball red. 3.64:1: large text and fills, not body */
+  --accent-deep: #a6261c;
+  --accent-shadow: #671916;
+
+  /* Not from the logo, and the only token here that is not. The accent is a mid-red: the
+     field colour on it measures 3.62:1 and --text 3.06:1, both of which fail AA for a
+     16px bold button label (16px bold is not "large text" - that starts at 18.66px bold).
+     White measures 5.08:1 on --accent and 7.20:1 on --accent-deep, so it is the only
+     label colour that passes on both the resting and hover states. */
+  --on-accent: #ffffff;
+
+  /* Buckets. ultra-rare takes the accent because server-notes.md requires it to read as
+     prominently as rare - it is a Bakumon-specific tier, not a lesser one. */
+  --bucket-common: #8d816e;
+  --bucket-uncommon: #d3c7ba;
+  --bucket-rare: #cd3524;
+  --bucket-ultra-rare: #cd3524;
+  --bucket-event: #d3c7ba;
+
+  --radius: 6px;
+  --gutter: 16px;            /* the phone-width side gutter */
+  --measure: 68ch;
+
+  /* No webfont is loaded. Two system stacks instead: one for prose, one for the strings
+     that are literally identifiers - cobblemon:ability_capsule, #cobblemon:is_overworld,
+     snake_pattern=attack. Rendering those proportionally is how they get read as prose. */
+  --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}

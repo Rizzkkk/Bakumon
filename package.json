@@ -1,0 +1,32 @@
+{
+  "name": "bakumon",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "type": "module",
+  "scripts": {
+    "audit": "node scripts/audit-workbook.js",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:schema": "node scripts/apply-schema.js",
+    "import": "node scripts/import-xlsx.js",
+    "validate": "node scripts/validate-import.js",
+    "mine": "node scripts/mine-assets.js",
+    "api": "npm start --workspace @bakumon/api",
+    "web": "npm run dev --workspace @bakumon/web",
+    "web:build": "npm run build --workspace @bakumon/web",
+    "smoke": "node scripts/smoke-api.js",
+    "verify:web": "node scripts/verify-web.js",
+    "explain": "node scripts/explain-api.js",
+    "palette": "node scripts/extract-palette.js",
+    "brand": "node scripts/compress-brand.js"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "pg": "^8.13.1",
+    "sharp": "^0.33.5"
+  }
+}
