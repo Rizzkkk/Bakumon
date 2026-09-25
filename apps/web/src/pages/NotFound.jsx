@@ -1,10 +1,16 @@
 import { useId, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
 import { PixelIcon } from '../components/common/PixelIcon.jsx';
 
 export default function NotFound() {
-  usePageTitle('Page not found');
+  // A 404 is the one page that should never be indexed, so it says so. The status code
+  // itself is the server's job (06-deployment/runbook.md); this is the client half.
+  useHead({
+    title: 'Page Not Found - Bakumon Wiki',
+    description: 'That page does not exist on the Bakumon wiki.',
+    noindex: true,
+  });
 
   const navigate = useNavigate();
   const [query, setQuery] = useState('');

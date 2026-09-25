@@ -28,21 +28,34 @@
     <meta name="description" content="A community wiki for the Bakumon Minecraft server: Pokemon spawn data and item reference for Cobblemon." />
 
     <!--
-      Site-wide only, and that is the honest ceiling. Social scrapers do not run
-      JavaScript, so a client-rendered SPA cannot serve per-route og: tags - every link
-      would unfurl as whatever the shell says regardless. Shipping per-page og: tags here
-      would be markup that nothing ever reads. ADR 0008. Per-page <title> is different and
-      does work; it is set by usePageTitle inside an effect.
+      The og: tags below are site-wide, and that is the honest ceiling for them. Social
+      scrapers do not run JavaScript, so a client-rendered SPA cannot serve per-route og:
+      tags - every link unfurls as whatever this shell says regardless. Shipping per-page
+      og: tags here would be markup nothing ever reads. ADR 0008.
 
-      og:image is root-relative. Discord and most scrapers resolve that against the page
-      URL, but the specification asks for an absolute one - set og:url and make this
-      absolute once the real domain is known. 06-deployment/runbook.md.
+      The line is not "per-route head tags are impossible", though, because Google DOES
+      render JavaScript. Split precisely:
+
+        Read by Google, set per route in hooks/useHead.js - <title>, <meta name=
+        "description">, <link rel="canonical">, and the JSON-LD blocks.
+
+        Read by scrapers, frozen here for every URL - everything og:.
+
+      The description below is therefore a fallback in two senses: it is what a scraper
+      always sees, and it is what a reader sees for the instant before the route's own
+      description replaces it.
+
+      og:url and og:image are absolute, which is what the Open Graph specification asks
+      for. They are hardcoded rather than read from VITE_SITE_URL because this file is not
+      processed by the bundler's env substitution - if the domain ever changes, these two
+      lines change with apps/web/.env. 06-deployment/runbook.md.
     -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Bakumon" />
-    <meta property="og:title" content="Bakumon Wiki" />
-    <meta property="og:description" content="Pokemon spawn data and item reference for the Bakumon Cobblemon server." />
-    <meta property="og:image" content="/assets/brand/banner-1280.webp" />
+    <meta property="og:url" content="https://bakumon.net/" />
+    <meta property="og:title" content="Bakumon - Friendly Cobblemon Minecraft Server" />
+    <meta property="og:description" content="A safe, friendly Cobblemon Minecraft server. Claim your land, keep what you build, and look up every Pokemon spawn and item." />
+    <meta property="og:image" content="https://bakumon.net/assets/brand/banner-1280.webp" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="720" />
     <meta name="twitter:card" content="summary_large_image" />

@@ -14,7 +14,8 @@ import { SkeletonStatus, Skeleton } from '../components/common/Skeleton.jsx';
 import { Artwork } from '../components/common/Artwork.jsx';
 import { PixelIcon } from '../components/common/PixelIcon.jsx';
 import { usePokemonSearch, PAGE_SIZE } from '../hooks/useWikiSearch.js';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
+import { absoluteUrl } from '../lib/site.js';
 import { useResource } from '../hooks/useResource.js';
 import { listPokemon } from '../api/endpoints.js';
 import { bucketChipMeta, biomeLabel } from '../lib/labels.js';
@@ -29,7 +30,6 @@ function useOverallTotal() {
 }
 
 export default function PokemonIndex() {
-  usePageTitle('Pokemon');
   const { q, bucket, biome, page, status, data, error, update, retry } = usePokemonSearch();
   const overallTotal = useOverallTotal();
   const { biomes } = useBiomeList();
@@ -41,10 +41,36 @@ export default function PokemonIndex() {
   const showEmpty = status !== 'loading' && data && rows.length === 0;
   const showLoadingSkeleton = status === 'loading' && !data;
 
+  /*
+   * The ItemList describes the rows actually on screen, filters and all, which is why it is
+   * built from `rows` rather than from `overallTotal`. A filtered page that advertised all
+   * 904 would be telling a crawler something the page does not show.
+   */
+  useHead({
+    title: overallTotal ? `All ${overallTotal} Pokemon Spawns - Bakumon Wiki` : 'Pokemon Spawns - Bakumon Wiki',
+    description: overallTotal
+      ? `Spawn biomes, rarity bucket, level range and weight for all ${overallTotal} Pokemon `
+        + 'on the Bakumon Cobblemon server. Filter by biome or rarity.'
+      : 'Spawn biomes, rarity bucket, level range and weight for every Pokemon on the '
+        + 'Bakumon Cobblemon server. Filter by biome or rarity.',
+    jsonLd: rows.length && absoluteUrl('/') ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Pokemon spawns on Bakumon',
+      numberOfItems: rows.length,
+      itemListElement: rows.map((pokemon, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: pokemon.displayName,
+        url: absoluteUrl(`/wiki/pokemon/${encodeURIComponent(pokemon.slug)}`),
+      })),
+    } : undefined,
+  });
+
   return (
     <div className="stack">
       <Breadcrumb items={[{ to: '/wiki', label: 'Wiki' }]} current="Pokemon" />
-      <PageTitleBlock title="All Pokemon" subtitle="Bakumon Wiki - Spawn data from this server's own config" />
+      <PageTitleBlock title="All Pokemon" subtitle="Bakumon Wiki · Spawn data from this server's own config" />
 
       <p className="index-intro">
         All {overallTotal ?? '…'} Pokemon that spawn on Bakumon. Buckets and biomes come

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useResource } from '../hooks/useResource.js';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
+import { absoluteUrl } from '../lib/site.js';
 import { getItem } from '../api/endpoints.js';
 import { hasPlaceholder } from '../lib/placeholderName.js';
 import { itemAlt } from '../lib/altText.js';
@@ -114,9 +115,35 @@ function ItemDetailPage({ itemId }) {
   const [retryKey, setRetryKey] = useState(0);
   const { status, data, error } = useResource((signal) => getItem(itemId, { signal }), [itemId, retryKey]);
 
-  // The raw stored name, not the rendered one: a tab reading "flavour Poke Puff" would be a
-  // title this wiki invented.
-  usePageTitle(data?.name);
+  /*
+   * The raw stored name, not the rendered one: a tab reading "flavour Poke Puff" would be a
+   * title this wiki invented. Falling back to the item ID rather than nothing, so the tab
+   * says which page you are on while loading and on a 404 - neither of which used to set a
+   * title at all.
+   */
+  const name = data?.name ?? itemId;
+  useHead({
+    title: `${name} - Item & Evolution Uses - Bakumon Wiki`,
+    /*
+     * The stored description is often a single clause - "Evolves certain Pokemon" is 23
+     * characters - which on its own is too thin to be a useful search snippet. Where it is
+     * short it is kept and the page's own context added after it, rather than replaced:
+     * the workbook's wording is the accurate part and should lead.
+     */
+    description: data?.description
+      ? `${data.description.trim().replace(/\.$/, '')}. ${name} on the Bakumon Cobblemon `
+        + `server${data.evolutionUseCount ? `, used in ${data.evolutionUseCount} evolution${data.evolutionUseCount === 1 ? '' : 's'}` : ''}.`
+      : `What ${name} does on the Bakumon Cobblemon server, and which Pokemon evolutions use it.`,
+    jsonLd: data && absoluteUrl('/') ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: name,
+      about: name,
+      url: absoluteUrl(`/wiki/items/${encodeURIComponent(itemId)}`),
+      isPartOf: { '@type': 'WebSite', name: 'Bakumon', url: absoluteUrl('/') },
+      image: data.imageUrl ? absoluteUrl(data.imageUrl) : undefined,
+    } : undefined,
+  });
 
   if (status === 'error' && error?.status === 404) {
     return (

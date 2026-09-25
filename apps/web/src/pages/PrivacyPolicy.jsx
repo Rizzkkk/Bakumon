@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
 import { DISCORD_INVITE } from '../lib/serverFacts.js';
 import { LegalArticle, LegalSection } from '../components/common/LegalArticle.jsx';
 
@@ -9,7 +9,11 @@ import { LegalArticle, LegalSection } from '../components/common/LegalArticle.js
 // requires a superseding ADR and a rewrite of this copy in the same pass - not a quiet
 // script tag.
 export default function PrivacyPolicy() {
-  usePageTitle('Privacy');
+  useHead({
+    title: 'Privacy Policy - Bakumon',
+    description: 'Bakumon collects no personal data, runs no analytics and sets no '
+      + 'tracking cookies. What that means in practice, in full.',
+  });
 
   return (
     <LegalArticle

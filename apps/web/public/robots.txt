@@ -3,5 +3,4 @@
 User-agent: *
 Allow: /
 
-# No Sitemap line yet: it has to be an absolute URL and the site has no domain.
-# `SITE_URL=https://... npm run sitemap` writes both the sitemap and this line.
+Sitemap: https://bakumon.net/sitemap.xml

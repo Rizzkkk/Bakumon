@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Breadcrumb } from '../components/wiki/Breadcrumb.jsx';
+import { DefinitionList } from '../components/wiki/DefinitionList.jsx';
 import { PageTitleBlock } from '../components/wiki/PageTitleBlock.jsx';
 import { BucketChip } from '../components/wiki/BucketChip.jsx';
 import { PixelIcon } from '../components/common/PixelIcon.jsx';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
+import { spawnGlossaryRows } from '../lib/spawnGlossary.js';
 import { useResource } from '../hooks/useResource.js';
 import { listPokemon, listItems } from '../api/endpoints.js';
 import { BUCKETS, SOURCE_CATEGORIES } from '../lib/labels.js';
@@ -19,10 +21,20 @@ function useHubTotals() {
 }
 
 export default function WikiHome() {
-  usePageTitle(undefined);
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const { pokemonTotal, itemsTotal } = useHubTotals();
+
+  // The totals arrive from the API and are undefined on first paint, so both strings have
+  // a number-free form rather than rendering "All undefined Pokemon".
+  useHead({
+    title: 'Bakumon Wiki - Cobblemon Spawns & Items',
+    description: pokemonTotal && itemsTotal
+      ? `Spawn locations, biomes and rarity for ${pokemonTotal} Pokemon, plus ${itemsTotal} `
+        + 'items, taken from the Bakumon server’s own Cobblemon config.'
+      : 'Spawn locations, biomes and rarity for every Pokemon on the Bakumon Cobblemon '
+        + 'server, plus the full item reference.',
+  });
 
   // No unified search endpoint exists (04-api/contract.md lists five, none of them
   // cross-resource), so this hands the term to the Pokemon index - the wiki's first and
@@ -38,8 +50,8 @@ export default function WikiHome() {
       <PageTitleBlock title="Bakumon Wiki" subtitle="Look up every Pokemon and item on the Bakumon server" />
 
       <p className="index-intro">
-        Spawn data on this wiki comes from Bakumon&#39;s own server config, so it matches what
-        you will find in game, not the Cobblemon defaults.
+        Spawn data here comes from Bakumon&#39;s own server config. It matches what you
+        find in game, not the Cobblemon defaults.
       </p>
 
       <form role="search" className="hub-search" onSubmit={onSearch}>
@@ -111,7 +123,7 @@ export default function WikiHome() {
         <ul>
           <li><a href="#reading-spawn-rows">Reading spawn rows</a>: what bucket, weight, level and context mean.</li>
           <li><a href="#biome-groups-explained">Biome groups explained</a>: why you see names like <code className="mono">#cobblemon:is_temperate</code>.</li>
-          <li>Legendaries spawn at random on Bakumon, so they have their own section on each page instead of a spawn table.</li>
+          <li>Legendaries spawn at random on Bakumon. They get their own section on each page instead of a spawn table.</li>
         </ul>
       </section>
 
@@ -121,39 +133,24 @@ export default function WikiHome() {
           Every species page lists the spawn rules this server actually runs, grouped by form
           and aspect. A row means one rule, and a species can carry several that disagree.
         </p>
-        <dl className="definition-list">
-          <dt>Bucket</dt>
-          <dd>How rare the roll is: common, uncommon, rare, ultra-rare, or legendary. A species
-            can sit in more than one, depending on where and when it spawns.</dd>
-          <dt>Weight</dt>
-          <dd>The relative chance of this rule winning against the others eligible at the same
-            moment. It is a weight, not a percentage.</dd>
-          <dt>Level</dt>
-          <dd>The range the Pokemon can appear at when this rule fires.</dd>
-          <dt>Context</dt>
-          <dd>What you have to be doing for the rule to apply: walking on the surface, fishing,
-            underground, and so on.</dd>
-          <dt>Biomes</dt>
-          <dd>Where it applies. See below.</dd>
-          <dt>Conditions</dt>
-          <dd>Anything else the rule requires: time of day, moon phase, or a location detail
-            such as being inside a slime chunk.</dd>
-        </dl>
+        {/* Same source as the species page's reference box, rendered in the longer
+            register. The two used to define Weight differently. */}
+        <DefinitionList items={spawnGlossaryRows('long')} />
       </section>
 
       <section className="hub-help" id="biome-groups-explained">
         <h3>Biome groups explained</h3>
         <p>
-          A spawn rule usually names a <strong>group</strong> of biomes rather than one biome.
-          A group is written with a leading <code className="mono">#</code>, so
-          {' '}<code className="mono">#cobblemon:is_temperate</code> means every biome the game
-          counts as temperate, not a biome called "temperate".
+          A spawn rule usually names a <strong>group</strong> of biomes, not one biome.
+          A group is written with a leading <code className="mono">#</code>.
+          {' '}<code className="mono">#cobblemon:is_temperate</code> means every biome the
+          game counts as temperate, not a biome called "temperate".
         </p>
         <p>
-          Single biomes have no <code className="mono">#</code> and mean exactly one place, as
-          with <code className="mono">minecraft:cherry_grove</code>. The Pokemon filter keeps
-          the two apart for that reason, and every biome label on the site shows its raw token
-          underneath so you can match it against the game.
+          Single biomes have no <code className="mono">#</code> and mean exactly one place,
+          as with <code className="mono">minecraft:cherry_grove</code>. The Pokemon filter
+          keeps the two apart for that reason. Every biome label also shows its raw token
+          underneath, so you can match it against the game.
         </p>
       </section>
     </div>

@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useResource } from '../hooks/useResource.js';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
+import { absoluteUrl } from '../lib/site.js';
 import { getPokemon } from '../api/endpoints.js';
 import { groupSpawns } from '../lib/groupSpawns.js';
 import { pokemonAlt } from '../lib/altText.js';
@@ -21,15 +22,7 @@ import { BucketDistributionBar } from '../components/wiki/BucketDistributionBar.
 import { SpawnGroup } from '../components/wiki/SpawnGroup.jsx';
 import { LegendaryPanel } from '../components/wiki/LegendaryPanel.jsx';
 import { DefinitionList } from '../components/wiki/DefinitionList.jsx';
-
-const READING_SPAWN_ROWS = [
-  { term: 'Bucket', description: "How rare the spawn is. Ultra-rare is Bakumon's own tier above rare." },
-  { term: 'Weight', description: 'Chance relative to other spawns in the same bucket and place. Higher is more often.' },
-  { term: 'Level', description: 'Level range the Pokemon spawns at.' },
-  { term: 'Context', description: 'Where it appears: on the ground, in water, from fishing.' },
-  { term: 'Biomes', description: 'Where the row applies. The group icon marks a biome tag covering many biomes.' },
-  { term: 'Conditions', description: 'Time, weather, moon, chunk and anything else the row needs.' },
-];
+import { spawnGlossaryRows } from '../lib/spawnGlossary.js';
 
 const distinctBuckets = (rows) => {
   const present = new Set(rows.map((row) => row.bucket));
@@ -176,8 +169,6 @@ function PokemonDetailPage({ slug }) {
   const [retryKey, setRetryKey] = useState(0);
   const { status, data, error } = useResource((signal) => getPokemon(slug, { signal }), [slug, retryKey]);
 
-  usePageTitle(data?.displayName);
-
   const { groups, events } = useMemo(() => groupSpawns(data?.spawns ?? []), [data]);
   const isLegendary = events.length > 0;
   const naturalBuckets = distinctBuckets(groups.flatMap((group) => group.rows));
@@ -192,6 +183,36 @@ function PokemonDetailPage({ slug }) {
   // new key; a plain click handler cannot reach into a native <details> a screen-reader or
   // keyboard user has already toggled without fighting it.
   const [expandAllTick, setExpandAllTick] = useState(0);
+
+  /*
+   * The interim title matters here. `data` is undefined for the whole fetch and undefined
+   * again on a 404, so the tab used to read the bare site name while loading and never
+   * changed at all on a missing species. Falling back to the slug gives both states a
+   * title that says which page you are on.
+   *
+   * The biome count is the useful part of the description and it is the thing a search
+   * result should show, so it is built from the spawn rows rather than asserted.
+   */
+  const biomeCount = useMemo(() => distinctBiomeCount(data?.spawns ?? []), [data]);
+  const name = data?.displayName ?? slug;
+  useHead({
+    title: `${name} Spawn Locations - Bakumon Cobblemon Wiki`,
+    description: data
+      ? `Where ${name} spawns on the Bakumon Cobblemon server`
+        + `${biomeCount ? `: ${biomeCount} biome${biomeCount === 1 ? '' : 's'}` : ''}, with `
+        + 'rarity bucket, level range and spawn weight.'
+      : `Spawn locations, biomes, rarity and level range for ${name} on the Bakumon `
+        + 'Cobblemon server.',
+    jsonLd: data && absoluteUrl('/') ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: `${name} spawn locations`,
+      about: name,
+      url: absoluteUrl(`/wiki/pokemon/${encodeURIComponent(slug)}`),
+      isPartOf: { '@type': 'WebSite', name: 'Bakumon', url: absoluteUrl('/') },
+      image: data.imageUrl ? absoluteUrl(data.imageUrl) : undefined,
+    } : undefined,
+  });
 
   if (status === 'error' && error?.status === 404) {
     return (
@@ -305,7 +326,7 @@ function PokemonDetailPage({ slug }) {
       ) : (
         <section className="stack" id="reading-spawn-rows">
           <SectionHeading>Reading spawn rows</SectionHeading>
-          <DefinitionList items={READING_SPAWN_ROWS} />
+          <DefinitionList items={spawnGlossaryRows('short')} />
         </section>
       )}
     </div>

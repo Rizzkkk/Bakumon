@@ -13,6 +13,28 @@ records what it supersedes.
 
 ### Added
 
+- **Per-route `<title>`, meta description, canonical link and JSON-LD**, in one
+  `hooks/useHead.js` rather than three hooks. The split that decides what is worth building:
+  social scrapers do not run JavaScript, so `og:` stays frozen at `index.html` for every
+  URL, but **Google does render JavaScript**, so these four are read. Measured in a real
+  browser across nine routes: nine distinct titles, all under 60 characters, where `/` and
+  `/wiki` previously emitted the identical string.
+- **Canonical links, the highest-value item in the set.** The indexes accept `q`, `bucket`,
+  `biome`, `source` and `page`, so identical markup was reachable at an unbounded number of
+  URLs with nothing naming the real one. Every parameter collapses to the bare path except
+  `page`, which is self-canonical because page 2 is different content, not a filtered view
+  of page 1. A `page` value that is not a plain positive integer is ignored rather than
+  echoed back, so a junk query string cannot mint a canonical of its own.
+- **Structured data built from what the page renders.** `WebSite` + `SearchAction` on `/`,
+  `ItemList` on both indexes, `Article` on both detail pages, and `BreadcrumbList` emitted
+  by `Breadcrumb` itself - from the same `items` the nav renders, so the trail a crawler is
+  told about and the trail a reader sees cannot drift. The index `ItemList` describes the
+  rows actually on screen, filters included, rather than advertising all 904.
+- **`bakumon.net` wired through** (supplied 2026-09-25): `VITE_SITE_URL`, absolute `og:url`
+  and `og:image`, and `sitemap.xml` at **1,844 URLs** with the `Sitemap:` line in
+  `robots.txt`. Without the variable every origin-dependent tag renders nothing rather than
+  guessing - verified in both states.
+- `lib/spawnGlossary.js` - the six spawn-row definitions, defined once.
 - **Item artwork covers 744 of 934 rows, up from 731** (`npm run mine items`, confirmed by
   the new `npm run validate` assertion). The thirteen recovered were three unrelated bugs,
   none of them a missing texture. Two rows have no display name at all - the workbook's
@@ -291,6 +313,22 @@ records what it supersedes.
 
 ### Fixed
 
+- **Two nested `<main>` elements on all five wiki routes.** `App.jsx` wraps every route in
+  `<main id="main">` and `WikiLayout` rendered a second one inside it. Two main landmarks is
+  invalid, and a screen reader's "jump to main" lands on whichever it picks while the skip
+  link targets the outer one. Now a `div`; verified as exactly one `main` and one `h1` on
+  all nine routes.
+- **"Weight" was defined twice and the two definitions disagreed.** The wiki hub said "the
+  relative chance of this rule winning against the others eligible at the same moment"; the
+  species page said "relative to other spawns in the same bucket and place". Both
+  constraints are real and neither copy carried both, so the rule a reader got depended on
+  which page they happened to open. `lib/spawnGlossary.js` now states both, once.
+- **The subtitle separator was a hyphen on the index pages and a middle dot on the detail
+  pages.** Middle dot everywhere, which is what the artboards use.
+- **The longest sentence on the site went from 30 words to 20**, measured against the
+  rendered DOM rather than the source. Sentences over 18 words: 8 before, 3 after, none
+  over the 20-word cap. Every factual claim kept.
+- The items index loading skeleton was still 44px against 96px artwork.
 - **The miner's resumability cache could not see a resolver change, and that cost a manual
   cleanup.** `download()` skipped any entry that was `ok`, still on disk and carried the
   same licence. Licence cannot distinguish two different textures from the same source, so

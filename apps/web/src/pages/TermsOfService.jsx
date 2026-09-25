@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
 import { DISCORD_INVITE } from '../lib/serverFacts.js';
 import { LegalArticle, LegalSection } from '../components/common/LegalArticle.jsx';
 
 export default function TermsOfService() {
-  usePageTitle('Terms of use');
+  useHead({
+    title: 'Terms of Use - Bakumon',
+    description: 'The terms for using the Bakumon community wiki, and what the spawn and '
+      + 'item data on it does and does not describe.',
+  });
 
   return (
     <LegalArticle title="Terms of use" updated="Last updated 23 September 2026">

@@ -10,7 +10,8 @@ import { Artwork } from '../components/common/Artwork.jsx';
 import { PixelIcon } from '../components/common/PixelIcon.jsx';
 import { ItemName } from '../components/common/ItemName.jsx';
 import { useItemsSearch, PAGE_SIZE } from '../hooks/useWikiSearch.js';
-import { usePageTitle } from '../hooks/usePageTitle.js';
+import { useHead } from '../hooks/useHead.js';
+import { absoluteUrl } from '../lib/site.js';
 import { useResource } from '../hooks/useResource.js';
 import { listItems } from '../api/endpoints.js';
 import { SOURCE_CATEGORIES, sourceCategoryLabel, EMPTY } from '../lib/labels.js';
@@ -24,7 +25,6 @@ function useOverallTotal() {
 }
 
 export default function ItemsIndex() {
-  usePageTitle('Items');
   const { q, source, page, status, data, error, update, retry } = useItemsSearch();
   const overallTotal = useOverallTotal();
 
@@ -32,10 +32,31 @@ export default function ItemsIndex() {
   const showEmpty = status !== 'loading' && data && rows.length === 0;
   const showLoadingSkeleton = status === 'loading' && !data;
 
+  useHead({
+    title: overallTotal ? `All ${overallTotal} Cobblemon Items - Bakumon Wiki` : 'Cobblemon Items - Bakumon Wiki',
+    description: overallTotal
+      ? `Every one of the ${overallTotal} Cobblemon items on the Bakumon server, with what `
+        + 'each one does and which evolutions use it.'
+      : 'Every Cobblemon item on the Bakumon server, with what each one does and which '
+        + 'evolutions use it.',
+    jsonLd: rows.length && absoluteUrl('/') ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Cobblemon items on Bakumon',
+      numberOfItems: rows.length,
+      itemListElement: rows.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        url: absoluteUrl(`/wiki/items/${encodeURIComponent(item.itemId)}`),
+      })),
+    } : undefined,
+  });
+
   return (
     <div className="stack">
       <Breadcrumb items={[{ to: '/wiki', label: 'Wiki' }]} current="Items" />
-      <PageTitleBlock title="All items" subtitle="Bakumon Wiki - Items on this server" />
+      <PageTitleBlock title="All items" subtitle="Bakumon Wiki · Items on this server" />
 
       <p className="index-intro">
         All {overallTotal ?? '…'} items on Bakumon. Pick a source to narrow the list.
@@ -91,7 +112,7 @@ export default function ItemsIndex() {
           <div className="index-list-skeleton">
             {Array.from({ length: 8 }, (_, index) => (
               <div key={index} className="index-row">
-                <Skeleton width={44} height={44} />
+                <Skeleton width={96} height={96} />
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
                   <Skeleton width="40%" height={18} />
                   <Skeleton width="30%" height={14} />

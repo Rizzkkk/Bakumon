@@ -10,8 +10,8 @@ export function DiscordCTA() {
         <div className="cta-band__copy">
           <h2 className="cta-band__title">The server address lives in Discord</h2>
           <p className="cta-band__body">
-            So do the version, the rules and how to join. Say hello there and someone will
-            help you get in.
+            The version, the rules and the joining steps are all there too. Say hello and
+            someone will help you get in.
           </p>
         </div>
         <CtaButton size={60} />

@@ -19,8 +19,8 @@ export function Hero() {
             />
             <h1 className="hero__title">A safe, friendly Cobblemon server.</h1>
             <p className="hero__lede">
-              Catch, trade and explore with people who look out for each other. Legendaries
-              turn up at random, so any trip out could be the one.
+              Catch, trade and explore with people who look out for each other.
+              Legendaries turn up at random, with no schedule to wait for.
             </p>
             <div className="hero__cta">
               <CtaButton size={60} />
