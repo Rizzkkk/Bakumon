@@ -12,7 +12,7 @@ export function PokemonCard({ pokemon }) {
     <li className="index-row">
       {/* thumbUrl, never imageUrl. A 24-row page is 315 KB of thumbnails against 3.0 MB of
           originals - measured, pre-production.md item 25. */}
-      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={96} />
+      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={128} />
       <div className="index-row__body">
         <Link className="index-row__name" to={`/wiki/pokemon/${encodeURIComponent(pokemon.slug)}`}>
           {pokemon.displayName}

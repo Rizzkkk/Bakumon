@@ -82,7 +82,7 @@ export default function PokemonIndex() {
           <div className="index-list-skeleton">
             {Array.from({ length: 8 }, (_, index) => (
               <div key={index} className="index-row">
-                <Skeleton width={56} height={56} />
+                <Skeleton width={128} height={128} />
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
                   <Skeleton width="40%" height={18} />
                   <Skeleton width="70%" height={14} />
@@ -159,7 +159,7 @@ export default function PokemonIndex() {
                 {rows.map((pokemon) => (
                   <tr key={pokemon.id}>
                     <td>
-                      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={96} />
+                      <Artwork src={pokemon.thumbUrl} alt={pokemonAlt(pokemon.displayName)} size={128} />
                     </td>
                     <td>
                       <Link className="index-table__name" to={`/wiki/pokemon/${encodeURIComponent(pokemon.slug)}`}>

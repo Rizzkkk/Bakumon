@@ -246,8 +246,8 @@
 }
 .index-table td { padding: 8px 12px; border: 1px solid var(--line); vertical-align: middle; }
 /* Pin the artwork column. The images are lazy, so without a fixed width the other five
-   columns shuffle sideways as each one arrives. 96 + the cell's 12px padding either side. */
-.index-table td:first-child, .index-table th:first-child { width: 120px; }
+   columns shuffle sideways as each one arrives. 128 + the cell's 12px padding either side. */
+.index-table td:first-child, .index-table th:first-child { width: 152px; }
 .index-table__name { display: block; font-family: var(--font-display); font-weight: 600; }
 
 .index-list { margin: 0; padding: 0; list-style: none; background: var(--surface); border: 2px solid var(--line); border-top-width: 1px; }
