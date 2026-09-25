@@ -22,7 +22,7 @@ module.exports = {
   apps: [{
     name: 'bakumon-api',
     script: 'apps/api/src/index.js',
-    cwd: '/srv/bakumon',
+    cwd: '/var/www/bakumon',
     instances: 1,
     exec_mode: 'fork',
     max_memory_restart: '300M',

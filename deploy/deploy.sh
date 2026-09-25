@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Deploy Bakumon to the VPS. Run ON the box, from /srv/bakumon.
+# Deploy Bakumon to the VPS. Run ON the box, from /var/www/bakumon.
 #
 #   ./deploy/deploy.sh
 #
@@ -32,6 +32,19 @@ grep -q '^CORS_ORIGINS=.*bakumon\.net' .env || {
   exit 1
 }
 command -v pm2 >/dev/null || { echo "pm2 not installed"; exit 1; }
+
+# This box hosts other sites. Port 3001 is only a default, and the failure if something
+# else already holds it is a listen EADDRINUSE at restart time, after the build has
+# already landed. Checked here, before anything is changed.
+PORT="${PORT:-3001}"
+if ss -ltnp 2>/dev/null | grep -q ":${PORT}\b"; then
+  if ! pm2 pid bakumon-api >/dev/null 2>&1 || [ -z "$(pm2 pid bakumon-api 2>/dev/null)" ]; then
+    echo "port ${PORT} is already in use by something that is not bakumon-api:"
+    ss -ltnp | grep ":${PORT}\b"
+    echo "pick another with PORT=<n>, and change proxy_pass in the nginx site to match."
+    exit 1
+  fi
+fi
 
 step "pulling"
 git pull --ff-only

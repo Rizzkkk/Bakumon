@@ -82,16 +82,30 @@ to 127.0.0.1:3001 behind nginx, so neither should ever be reachable from outside
 bind is the control and this is the backstop, and backstops are what catch the day someone
 changes a bind while debugging.
 
+**This box hosts other sites, so read this before running `ufw enable`.** Enabling a
+default-deny policy drops every port you have not explicitly allowed, including ones
+another site on this VPS may depend on. Check what is currently listening first, and allow
+those too:
+
+```
+ss -ltnp                 # what is actually listening, and which process owns it
+ufw status verbose       # whether ufw is already on and what it already allows
+```
+
+If `ufw status` says inactive and something other than 22/80/443 is listening on a public
+address, allow it in the same pass or that site goes dark the moment ufw comes up.
+
 ```
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow 22/tcp
 ufw allow 80,443/tcp
+# ... plus an `ufw allow` for anything else `ss -ltnp` showed on a public address
 ufw enable
 ```
 
-Do **not** open 5432 or 3001. If Postgres needs to be reached from a laptop, tunnel it over
-SSH rather than exposing the port.
+Do **not** open 5432 or the API port. If Postgres needs to be reached from a laptop, tunnel
+it over SSH rather than exposing the port.
 
 ### nginx
 
@@ -104,13 +118,13 @@ thing to paste:
 
 ```
 location /api/ { proxy_pass http://127.0.0.1:3001; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
-location /assets/ { alias /srv/bakumon/assets/; expires 30d; }
+location /assets/ { alias /var/www/bakumon/assets/; expires 30d; }
 location / { try_files $uri $uri/ /index.html; }
 ```
 
 `deploy/nginx.conf` adds what this snippet leaves out and what item 36 asked for: an
-explicit `root` (at `/srv/bakumon/apps/web/dist` - `npm run web:build` writes inside the
-workspace, so the `/srv/bakumon/dist` item 36 named does not exist), `location ~ /\. { deny
+explicit `root` (at `/var/www/bakumon/apps/web/dist` - `npm run web:build` writes inside the
+workspace, so the `/var/www/bakumon/dist` item 36 named does not exist), `location ~ /\. { deny
 all; }` so a misconfigured root still cannot serve `.env`, the five security headers, gzip
 for `application/json`, and two separate `limit_req` zones so a crawler walking the 1,844
 sitemap URLs cannot exhaust the budget real API calls need.

@@ -398,7 +398,7 @@ it was acted on. Fixed in the same pass:
     walking the 1,844 sitemap URLs cannot exhaust the budget real API calls need.
 
     Two corrections to this item as originally written. The root is
-    `/srv/bakumon/apps/web/dist`, not `/srv/bakumon/dist` - `npm run web:build` writes
+    `/var/www/bakumon/apps/web/dist`, not `/srv/bakumon/dist` - `npm run web:build` writes
     inside the workspace, so the path named here did not exist. And `location ~ /\. { deny
     all; }` is in as well, kept as a second control rather than an alternative: the `root`
     is the fix, the dotfile deny is what still refuses `GET /.env` on the day someone
