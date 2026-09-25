@@ -75,17 +75,45 @@ needs three variables:
 | `PORT` | Default 3001, which is what the nginx block below proxies to. |
 | `CORS_ORIGINS` | Comma-separated. **Empty means no browser origin is allowed** - CORS fails closed, so this must be set to the real site origin before the frontend goes live. |
 
+### Firewall
+
+Before anything listens on a public address. Postgres binds to loopback and the API binds
+to 127.0.0.1:3001 behind nginx, so neither should ever be reachable from outside - but the
+bind is the control and this is the backstop, and backstops are what catch the day someone
+changes a bind while debugging.
+
+```
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow 80,443/tcp
+ufw enable
+```
+
+Do **not** open 5432 or 3001. If Postgres needs to be reached from a laptop, tunnel it over
+SSH rather than exposing the port.
+
 ### nginx
 
 `/api` proxies to the Node process; `/assets` is served straight off disk; everything else
 is the SPA build, which needs a catch-all to `index.html` because routing is client-side
 (ADR 0008).
 
+The installable file is **`deploy/nginx.conf`** - this snippet is the shape of it, not the
+thing to paste:
+
 ```
 location /api/ { proxy_pass http://127.0.0.1:3001; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
 location /assets/ { alias /srv/bakumon/assets/; expires 30d; }
 location / { try_files $uri $uri/ /index.html; }
 ```
+
+`deploy/nginx.conf` adds what this snippet leaves out and what item 36 asked for: an
+explicit `root` (at `/srv/bakumon/apps/web/dist` - `npm run web:build` writes inside the
+workspace, so the `/srv/bakumon/dist` item 36 named does not exist), `location ~ /\. { deny
+all; }` so a misconfigured root still cannot serve `.env`, the five security headers, gzip
+for `application/json`, and two separate `limit_req` zones so a crawler walking the 1,844
+sitemap URLs cannot exhaust the budget real API calls need.
 
 The API sets `trust proxy` to **1**, meaning exactly one hop. If another proxy or a CDN is
 ever put in front, that number has to change or every visitor behind it shares one

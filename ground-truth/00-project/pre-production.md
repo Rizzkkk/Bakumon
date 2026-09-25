@@ -309,12 +309,19 @@ before, which is why none of them had ever been actioned.
     Still open, and moved to item 31: no remote, so there is still no way to deploy by
     pulling.
 
-31. **No deployment artifacts exist.** Everything about deployment lives as prose in
-    `06-deployment/runbook.md`. Missing as files: a Dockerfile for the API, an nginx config
-    (the runbook has a three-line snippet), a PM2 ecosystem file - so the `instances: 1`
-    constraint the in-memory rate limiter depends on is enforced only by someone
-    remembering it - and any deploy script that would enforce item 27's migrations-before-
-    code ordering.
+31. **[mostly done 2026-09-25] Deployment artifacts.** `deploy/` now holds `nginx.conf`,
+    `ecosystem.config.cjs` and `deploy.sh`. The script is the one that matters: it enforces
+    item 27's migrations-before-code ordering rather than leaving it to a human following a
+    list, checks its preconditions up front instead of discovering them halfway through a
+    half-landed deploy, refuses to run if `CORS_ORIGINS` does not mention `bakumon.net`
+    (CORS fails closed, so the site would load and every API call would be blocked) or if
+    `VITE_SITE_URL` is missing (baked in at build time, so its absence silently ships a
+    site with no canonical tags), and finishes by running `npm run smoke` against the box -
+    a deploy that "succeeded" and serves 500s is the failure that catches.
+
+    **No Dockerfile**, and deliberately not. ADR 0005 puts the API on PM2 on the VPS; a
+    Dockerfile nothing builds or runs is a second deployment story to keep in sync with the
+    real one. Write it when something actually needs a container.
 
 32. **No backup script for `assets/`.** Item 26 records the decision as open; nothing in
     `scripts/` matches `*backup*`. 3,270 files, all gitignored.
@@ -381,18 +388,38 @@ it was acted on. Fixed in the same pass:
     this into a live memory-corruption surface, so upgrade before building one.
     Re-confirmed by `npm audit` on 2026-09-23: `sharp <=0.35.4-rc.0`, high, CVE-2026-33327,
     CVE-2026-33328, CVE-2026-35590, CVE-2026-35591.
-36. **nginx has no security headers, no `gzip` for `application/json`, no `limit_req` and
-    no explicit `root`.** All four belong in the nginx config file that item 31 already
-    says does not exist. The `root` one matters most: if it points at the checkout rather
-    than at `apps/web/dist`, `GET /.env` returns `DATABASE_URL` in plaintext. Write
-    `root /srv/bakumon/dist;` explicitly and add `location ~ /\. { deny all; }`.
-37. **No firewall step in the runbook.** The loopback bind above is the control; `ufw
-    default deny incoming` plus `allow 22,80,443` is the backstop.
-38. **No PM2 ecosystem file**, so `instances: 1` - which the in-memory rate limiter
-    depends on - is enforced by someone remembering it. It is also where `kill_timeout`
-    belongs: PM2 SIGKILLs 1.6s after the signal by default, so the 5s graceful shutdown in
-    `index.js` never actually completes. And `pm2 install pm2-logrotate`: nothing rotates
-    the request log today, and it shares a disk with the Postgres data directory.
+36. **[done 2026-09-25] nginx security headers, JSON gzip, `limit_req` and an explicit
+    `root`.** All in `deploy/nginx.conf`. Five headers (nosniff, DENY framing,
+    strict-origin-when-cross-origin, a Permissions-Policy denying every powerful feature
+    since ADR 0007 rules out analytics, and HSTS without `preload` because preloading is
+    effectively irreversible), plus a CSP with `frame-ancestors 'none'`. `gzip_types`
+    includes `application/json`, which is not in nginx's default list and is what every
+    wiki page is actually made of. Two `limit_req` zones rather than one, so a crawler
+    walking the 1,844 sitemap URLs cannot exhaust the budget real API calls need.
+
+    Two corrections to this item as originally written. The root is
+    `/srv/bakumon/apps/web/dist`, not `/srv/bakumon/dist` - `npm run web:build` writes
+    inside the workspace, so the path named here did not exist. And `location ~ /\. { deny
+    all; }` is in as well, kept as a second control rather than an alternative: the `root`
+    is the fix, the dotfile deny is what still refuses `GET /.env` on the day someone
+    repoints the root while debugging.
+37. **[done 2026-09-25] Firewall step in the runbook.** `06-deployment/runbook.md` now has
+    a Firewall section before the nginx one: `ufw default deny incoming`, allow 22/80/443,
+    and an explicit note not to open 5432 or 3001 - tunnel Postgres over SSH instead. The
+    loopback bind stays the control; this is the backstop for the day someone changes a
+    bind while debugging.
+38. **[partial 2026-09-25] PM2 ecosystem file.** `deploy/ecosystem.config.cjs` exists, so
+    `instances: 1` is enforced by a committed file rather than by memory, and the file says
+    why: the rate limiter keeps its buckets in process memory, so a cluster would multiply
+    every published limit by the worker count. It is `.cjs` deliberately - the root package
+    is `"type": "module"` and PM2 fails on a `.js` one with a bare `Unexpected token
+    'export'`. It also supplies the API's read-only `DATABASE_URL`, which is how the API
+    gets `bakumon_api` while the ingest scripts keep the owning role from the root `.env`.
+
+    **Still open from this item**: `kill_timeout` is not set, so PM2 still SIGKILLs 1.6s
+    after the signal and the 5s graceful shutdown in `index.js` never completes; and
+    `pm2 install pm2-logrotate` is still a manual step, with nothing rotating the request
+    log on a disk it shares with the Postgres data directory.
 39. **No Postgres backup.** ADR 0005 says "the runbook owns both"; it does not. Rebuilding
     from the workbook is possible but loses `wiki_description` and the mined artwork until
     `npm run mine` re-runs, and that path has never been timed.

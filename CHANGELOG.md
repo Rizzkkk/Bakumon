@@ -34,6 +34,26 @@ records what it supersedes.
   and `og:image`, and `sitemap.xml` at **1,844 URLs** with the `Sitemap:` line in
   `robots.txt`. Without the variable every origin-dependent tag renders nothing rather than
   guessing - verified in both states.
+- **`deploy/` - the deployment artifacts that pre-production.md item 31 said did not
+  exist.** `deploy.sh` is the one that matters: it enforces item 27's migrations-before-
+  code ordering in a script rather than a list a human can half-follow, checks preconditions
+  up front rather than halfway through a half-landed deploy, refuses to run when
+  `CORS_ORIGINS` omits `bakumon.net` (CORS fails closed - the site would load and every API
+  call would be blocked) or when `VITE_SITE_URL` is missing (baked in at build time, so its
+  absence silently ships a site with no canonical tags), and finishes by running
+  `npm run smoke` against the box.
+  `ecosystem.config.cjs` puts `instances: 1` in a committed file instead of someone's
+  memory - the rate limiter's buckets are in process memory, so a cluster multiplies every
+  published limit by the worker count - and supplies the API's read-only `DATABASE_URL` so
+  the ingest scripts keep the owning role.
+  `nginx.conf` closes item 36: five security headers plus a CSP, `application/json` in
+  `gzip_types` (not in nginx's default list, and it is what every wiki page is made of), two
+  separate `limit_req` zones so a crawler walking the 1,844 sitemap URLs cannot exhaust the
+  API's budget, an explicit `root`, and `location ~ /\. { deny all; }` as a second control
+  so a repointed root still cannot serve `.env`. No Dockerfile, deliberately: ADR 0005 puts
+  the API on PM2, and a Dockerfile nothing runs is a second deployment story to keep in sync.
+- A **firewall step** in `06-deployment/runbook.md` (item 37): `ufw default deny incoming`,
+  22/80/443 only, and an explicit note not to open 5432 or 3001.
 - `lib/spawnGlossary.js` - the six spawn-row definitions, defined once.
 - **Item artwork covers 744 of 934 rows, up from 731** (`npm run mine items`, confirmed by
   the new `npm run validate` assertion). The thirteen recovered were three unrelated bugs,
