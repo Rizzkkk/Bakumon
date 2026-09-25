@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-23T18:31:57.287Z",
+  "generatedAt": "2026-09-25T06:33:07.834Z",
   "entries": {
     "items/cobblemon:ability_capsule": {
       "status": "ok",
@@ -81,16 +81,6 @@
       "bytes": 2981,
       "sha256": "eadcd8a71c0dfd37c2015983be34a597065fe57d2eed9c72e3b3625844dbc13d",
       "fetchedAt": "2026-09-11T17:31:55.891Z"
-    },
-    "items/cobblemon:ancient_azure_rod": {
-      "status": "ok",
-      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/fishing/ancient_azure_rod.png",
-      "file": "items/cobblemon_ancient_azure_rod.png",
-      "thumb": "thumbs/items/cobblemon_ancient_azure_rod.webp",
-      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
-      "bytes": 300,
-      "sha256": "160389d7c5dec9be16568aada90e69ac6ba9199cf342077aae96cd0319d21af4",
-      "fetchedAt": "2026-09-11T17:40:30.640Z"
     },
     "items/cobblemon:ancient_citrine_ball": {
       "status": "ok",
@@ -414,9 +404,10 @@
     },
     "items/cobblemon:apricorn": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.350Z"
+      "wikiTitleTried": "File:Apricorn.png",
+      "textureBasenameTried": "apricorn",
+      "fetchedAt": "2026-09-25T06:33:05.748Z"
     },
     "items/cobblemon:apricorn_boat": {
       "status": "ok",
@@ -580,27 +571,31 @@
     },
     "items/cobblemon:aprijuice.prefix.delicious": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.427Z"
+      "wikiTitleTried": "File:Delicious.png",
+      "textureBasenameTried": "aprijuice.prefix.delicious",
+      "fetchedAt": "2026-09-25T06:33:05.802Z"
     },
     "items/cobblemon:aprijuice.prefix.plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.427Z"
+      "wikiTitleTried": "File:Plain.png",
+      "textureBasenameTried": "aprijuice.prefix.plain",
+      "fetchedAt": "2026-09-25T06:33:05.803Z"
     },
     "items/cobblemon:aprijuice.prefix.tasty": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.427Z"
+      "wikiTitleTried": "File:Tasty.png",
+      "textureBasenameTried": "aprijuice.prefix.tasty",
+      "fetchedAt": "2026-09-25T06:33:05.804Z"
     },
     "items/cobblemon:aprijuice.quality_format": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.427Z"
+      "wikiTitleTried": "File:%1$s_%2$s.png",
+      "textureBasenameTried": "aprijuice.quality_format",
+      "fetchedAt": "2026-09-25T06:33:05.805Z"
     },
     "items/cobblemon:aprijuice_black": {
       "status": "ok",
@@ -612,17 +607,19 @@
       "sha256": "150e95bc731c5f17cc03085a965fe6c82e9daf146e34a650e98ac4dc023f537f",
       "fetchedAt": "2026-09-11T17:40:38.608Z"
     },
-    "items/cobblemon:aprijuice_black_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.431Z"
-    },
     "items/cobblemon:aprijuice_black_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.431Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_black.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_black_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_black_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_black_umbrella.webp",
+      "bytes": 358,
+      "sha256": "2df0dad5060f5ecb131d76a2fbb00f9849c990fa28d9a74a4efd47c411c9175d",
+      "fetchedAt": "2026-09-23T21:19:33.632Z"
     },
     "items/cobblemon:aprijuice_blue": {
       "status": "ok",
@@ -634,17 +631,19 @@
       "sha256": "7d9cf356746868298b0a9aa7913a3798d275c8dd1adf09f396f7473181579f65",
       "fetchedAt": "2026-09-11T17:40:39.124Z"
     },
-    "items/cobblemon:aprijuice_blue_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.435Z"
-    },
     "items/cobblemon:aprijuice_blue_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.435Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_blue.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_blue_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_blue_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_blue_umbrella.webp",
+      "bytes": 358,
+      "sha256": "49ccfc2decff131c6f81bc83663527b0abe67cad2c10b54003cbc21fa828f5b9",
+      "fetchedAt": "2026-09-23T21:19:34.716Z"
     },
     "items/cobblemon:aprijuice_green": {
       "status": "ok",
@@ -656,17 +655,19 @@
       "sha256": "1faef9ee732164aaeb823828d7a4ef03c5c58e56adf4e680cd9872391389110d",
       "fetchedAt": "2026-09-11T17:40:39.559Z"
     },
-    "items/cobblemon:aprijuice_green_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.441Z"
-    },
     "items/cobblemon:aprijuice_green_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.441Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_green.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_green_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_green_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_green_umbrella.webp",
+      "bytes": 356,
+      "sha256": "fe4d2893254c3c459ab7de0ceee839fee13508b0d4e023204d2ab3eeed07a18d",
+      "fetchedAt": "2026-09-23T21:19:35.780Z"
     },
     "items/cobblemon:aprijuice_pink": {
       "status": "ok",
@@ -678,17 +679,19 @@
       "sha256": "aac5eb6c19c02853c2117eb8df42ec5e0be457860348d405d9968b60150ab071",
       "fetchedAt": "2026-09-11T17:40:40.046Z"
     },
-    "items/cobblemon:aprijuice_pink_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.444Z"
-    },
     "items/cobblemon:aprijuice_pink_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.444Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_pink.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_pink_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_pink_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_pink_umbrella.webp",
+      "bytes": 359,
+      "sha256": "4ff9140561e2ae8d8ce7765168a20793d28e92d3a23733342ed16140b3eecf82",
+      "fetchedAt": "2026-09-23T21:19:37.008Z"
     },
     "items/cobblemon:aprijuice_red": {
       "status": "ok",
@@ -700,17 +703,19 @@
       "sha256": "fea782ce20b2f7faf51077f4447e6fa0d285471ec16bfe719b6efc30e0103a44",
       "fetchedAt": "2026-09-11T17:40:40.508Z"
     },
-    "items/cobblemon:aprijuice_red_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.449Z"
-    },
     "items/cobblemon:aprijuice_red_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.449Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_red.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_red_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_red_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_red_umbrella.webp",
+      "bytes": 357,
+      "sha256": "a6f61588dd604b46233c183d2ef579ada98a88578d6bcb485165f11f1c768e44",
+      "fetchedAt": "2026-09-23T21:19:38.050Z"
     },
     "items/cobblemon:aprijuice_white": {
       "status": "ok",
@@ -722,17 +727,19 @@
       "sha256": "99480c6498df9647cb8e0761146ca9cadc84e6269b2f930e7aab5c636df33b22",
       "fetchedAt": "2026-09-11T17:40:40.972Z"
     },
-    "items/cobblemon:aprijuice_white_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.453Z"
-    },
     "items/cobblemon:aprijuice_white_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.453Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_white.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_white_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_white_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_white_umbrella.webp",
+      "bytes": 356,
+      "sha256": "fcdb800a09577e0c53f62e029d3e55831b67fe575118c98cea59e2cb49708245",
+      "fetchedAt": "2026-09-23T21:19:39.226Z"
     },
     "items/cobblemon:aprijuice_yellow": {
       "status": "ok",
@@ -744,17 +751,19 @@
       "sha256": "49b9d0901d047306f5dd0754dec103203099199316b62b461e98e92183bf6024",
       "fetchedAt": "2026-09-11T17:40:41.434Z"
     },
-    "items/cobblemon:aprijuice_yellow_leaf": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.456Z"
-    },
     "items/cobblemon:aprijuice_yellow_umbrella": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.456Z"
+      "status": "ok",
+      "derived": "composited from the base juice and its umbrella overlay",
+      "sourceUrls": [
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_yellow.png",
+        "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/aprijuice/aprijuice_yellow_overlay_umbrella.png"
+      ],
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_aprijuice_yellow_umbrella.png",
+      "thumb": "thumbs/items/cobblemon_aprijuice_yellow_umbrella.webp",
+      "bytes": 359,
+      "sha256": "26c6f561ef73ca982850a17c3840e6ebd14a31823b0e16361f1477dd62d90c33",
+      "fetchedAt": "2026-09-23T21:19:40.276Z"
     },
     "items/cobblemon:armor_fossil": {
       "status": "ok",
@@ -1688,33 +1697,38 @@
     },
     "items/cobblemon:cobblemon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.853Z"
+      "wikiTitleTried": "File:Cobblemon.png",
+      "textureBasenameTried": "cobblemon",
+      "fetchedAt": "2026-09-25T06:33:06.127Z"
     },
     "items/cobblemon:cobblemon_blue": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.853Z"
+      "wikiTitleTried": "File:Cobblemon_Blue.png",
+      "textureBasenameTried": "cobblemon_blue",
+      "fetchedAt": "2026-09-25T06:33:06.128Z"
     },
     "items/cobblemon:cobblemon_green": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.853Z"
+      "wikiTitleTried": "File:Cobblemon_Green.png",
+      "textureBasenameTried": "cobblemon_green",
+      "fetchedAt": "2026-09-25T06:33:06.129Z"
     },
     "items/cobblemon:cobblemon_purple": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.853Z"
+      "wikiTitleTried": "File:Cobblemon_Purple.png",
+      "textureBasenameTried": "cobblemon_purple",
+      "fetchedAt": "2026-09-25T06:33:06.131Z"
     },
     "items/cobblemon:cobblemon_yellow": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.853Z"
+      "wikiTitleTried": "File:Cobblemon_Yellow.png",
+      "textureBasenameTried": "cobblemon_yellow",
+      "fetchedAt": "2026-09-25T06:33:06.132Z"
     },
     "items/cobblemon:colbur_berry": {
       "status": "ok",
@@ -1788,27 +1802,31 @@
     },
     "items/cobblemon:cream_puff": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.880Z"
+      "wikiTitleTried": "File:Cream_Puff.png",
+      "textureBasenameTried": "cream_puff",
+      "fetchedAt": "2026-09-25T06:33:06.154Z"
     },
     "items/cobblemon:cream_puff.deluxe": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.880Z"
+      "wikiTitleTried": "File:Deluxe_Cream_Puff.png",
+      "textureBasenameTried": "cream_puff.deluxe",
+      "fetchedAt": "2026-09-25T06:33:06.154Z"
     },
     "items/cobblemon:cream_puff.fancy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.880Z"
+      "wikiTitleTried": "File:Fancy_Cream_Puff.png",
+      "textureBasenameTried": "cream_puff.fancy",
+      "fetchedAt": "2026-09-25T06:33:06.155Z"
     },
     "items/cobblemon:cream_puff.frosted": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:31.880Z"
+      "wikiTitleTried": "File:Frosted_Cream_Puff.png",
+      "textureBasenameTried": "cream_puff.frosted",
+      "fetchedAt": "2026-09-25T06:33:06.156Z"
     },
     "items/cobblemon:custap_berry": {
       "status": "ok",
@@ -2772,9 +2790,10 @@
     },
     "items/cobblemon:gimmighoul_chest": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:32.405Z"
+      "wikiTitleTried": "File:Gimmighoul_Chest.png",
+      "textureBasenameTried": "gimmighoul_chest",
+      "fetchedAt": "2026-09-25T06:33:06.511Z"
     },
     "items/cobblemon:grass_gem": {
       "status": "ok",
@@ -2948,9 +2967,10 @@
     },
     "items/cobblemon:handheld_rotated": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:32.483Z"
+      "wikiTitleTried": "File:Handheld_Rotated.png",
+      "textureBasenameTried": "handheld_rotated",
+      "fetchedAt": "2026-09-25T06:33:06.563Z"
     },
     "items/cobblemon:hard_stone": {
       "status": "ok",
@@ -3254,9 +3274,10 @@
     },
     "items/cobblemon:incense_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:32.669Z"
+      "wikiTitleTried": "File:Incense_Sweet.png",
+      "textureBasenameTried": "incense_sweet",
+      "fetchedAt": "2026-09-25T06:33:06.662Z"
     },
     "items/cobblemon:iron": {
       "status": "ok",
@@ -3480,9 +3501,10 @@
     },
     "items/cobblemon:lectern": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:32.801Z"
+      "wikiTitleTried": "File:Lectern.png",
+      "textureBasenameTried": "lectern",
+      "fetchedAt": "2026-09-25T06:33:06.723Z"
     },
     "items/cobblemon:leek_and_potato_stew": {
       "status": "ok",
@@ -4666,747 +4688,871 @@
     },
     "items/cobblemon:poke_cake": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Cake.png",
+      "textureBasenameTried": "poke_cake",
+      "fetchedAt": "2026-09-25T06:33:07.064Z"
     },
     "items/cobblemon:poke_puff": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:%s_Poke_Puff.png",
+      "textureBasenameTried": "poke_puff",
+      "fetchedAt": "2026-09-25T06:33:07.065Z"
     },
     "items/cobblemon:poke_puff.deluxe": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Deluxe_%s_Poke_Puff.png",
+      "textureBasenameTried": "poke_puff.deluxe",
+      "fetchedAt": "2026-09-25T06:33:07.066Z"
     },
     "items/cobblemon:poke_puff.fancy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Fancy_%s_Poke_Puff.png",
+      "textureBasenameTried": "poke_puff.fancy",
+      "fetchedAt": "2026-09-25T06:33:07.067Z"
     },
     "items/cobblemon:poke_puff.frosted": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Frosted_%s_Poke_Puff.png",
+      "textureBasenameTried": "poke_puff.frosted",
+      "fetchedAt": "2026-09-25T06:33:07.067Z"
     },
     "items/cobblemon:poke_puff_overlay_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_berry",
+      "fetchedAt": "2026-09-25T06:33:07.068Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.069Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_dry",
+      "fetchedAt": "2026-09-25T06:33:07.069Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_mild",
+      "fetchedAt": "2026-09-25T06:33:07.070Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_plain",
+      "fetchedAt": "2026-09-25T06:33:07.071Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_sour",
+      "fetchedAt": "2026-09-25T06:33:07.072Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.072Z"
     },
     "items/cobblemon:poke_puff_overlay_berry_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Berry_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_berry_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.073Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.073Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_berry",
+      "fetchedAt": "2026-09-25T06:33:07.074Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_clover",
+      "fetchedAt": "2026-09-25T06:33:07.075Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_flower",
+      "fetchedAt": "2026-09-25T06:33:07.075Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_love",
+      "fetchedAt": "2026-09-25T06:33:07.076Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_only",
+      "fetchedAt": "2026-09-25T06:33:07.077Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.077Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_star",
+      "fetchedAt": "2026-09-25T06:33:07.078Z"
     },
     "items/cobblemon:poke_puff_overlay_bitter_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Bitter_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_bitter_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.079Z"
     },
     "items/cobblemon:poke_puff_overlay_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_clover",
+      "fetchedAt": "2026-09-25T06:33:07.079Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.079Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_dry",
+      "fetchedAt": "2026-09-25T06:33:07.080Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_mild",
+      "fetchedAt": "2026-09-25T06:33:07.080Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_plain",
+      "fetchedAt": "2026-09-25T06:33:07.081Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_sour",
+      "fetchedAt": "2026-09-25T06:33:07.082Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.082Z"
     },
     "items/cobblemon:poke_puff_overlay_clover_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Clover_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_clover_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.083Z"
     },
     "items/cobblemon:poke_puff_overlay_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_dry",
+      "fetchedAt": "2026-09-25T06:33:07.083Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_berry",
+      "fetchedAt": "2026-09-25T06:33:07.084Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_clover",
+      "fetchedAt": "2026-09-25T06:33:07.085Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_flower",
+      "fetchedAt": "2026-09-25T06:33:07.086Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_love",
+      "fetchedAt": "2026-09-25T06:33:07.087Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_only",
+      "fetchedAt": "2026-09-25T06:33:07.087Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.088Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_star",
+      "fetchedAt": "2026-09-25T06:33:07.088Z"
     },
     "items/cobblemon:poke_puff_overlay_dry_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Dry_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_dry_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.089Z"
     },
     "items/cobblemon:poke_puff_overlay_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_flower",
+      "fetchedAt": "2026-09-25T06:33:07.090Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.090Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_dry",
+      "fetchedAt": "2026-09-25T06:33:07.091Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_mild",
+      "fetchedAt": "2026-09-25T06:33:07.091Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_plain",
+      "fetchedAt": "2026-09-25T06:33:07.092Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_sour",
+      "fetchedAt": "2026-09-25T06:33:07.093Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.093Z"
     },
     "items/cobblemon:poke_puff_overlay_flower_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Flower_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_flower_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.094Z"
     },
     "items/cobblemon:poke_puff_overlay_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_love",
+      "fetchedAt": "2026-09-25T06:33:07.095Z"
     },
     "items/cobblemon:poke_puff_overlay_love_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_love_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.096Z"
     },
     "items/cobblemon:poke_puff_overlay_love_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_love_dry",
+      "fetchedAt": "2026-09-25T06:33:07.096Z"
     },
     "items/cobblemon:poke_puff_overlay_love_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_love_mild",
+      "fetchedAt": "2026-09-25T06:33:07.097Z"
     },
     "items/cobblemon:poke_puff_overlay_love_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_love_plain",
+      "fetchedAt": "2026-09-25T06:33:07.097Z"
     },
     "items/cobblemon:poke_puff_overlay_love_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_love_sour",
+      "fetchedAt": "2026-09-25T06:33:07.098Z"
     },
     "items/cobblemon:poke_puff_overlay_love_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_love_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.099Z"
     },
     "items/cobblemon:poke_puff_overlay_love_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Love_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_love_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.099Z"
     },
     "items/cobblemon:poke_puff_overlay_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_mild",
+      "fetchedAt": "2026-09-25T06:33:07.100Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_berry",
+      "fetchedAt": "2026-09-25T06:33:07.100Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_clover",
+      "fetchedAt": "2026-09-25T06:33:07.101Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_flower",
+      "fetchedAt": "2026-09-25T06:33:07.102Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_love",
+      "fetchedAt": "2026-09-25T06:33:07.102Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.375Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_only",
+      "fetchedAt": "2026-09-25T06:33:07.103Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.103Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_star",
+      "fetchedAt": "2026-09-25T06:33:07.104Z"
     },
     "items/cobblemon:poke_puff_overlay_mild_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Mild_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_mild_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.104Z"
     },
     "items/cobblemon:poke_puff_overlay_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_plain",
+      "fetchedAt": "2026-09-25T06:33:07.105Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_berry",
+      "fetchedAt": "2026-09-25T06:33:07.106Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_clover",
+      "fetchedAt": "2026-09-25T06:33:07.106Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_flower",
+      "fetchedAt": "2026-09-25T06:33:07.107Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_love",
+      "fetchedAt": "2026-09-25T06:33:07.107Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_only",
+      "fetchedAt": "2026-09-25T06:33:07.107Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.108Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_star",
+      "fetchedAt": "2026-09-25T06:33:07.108Z"
     },
     "items/cobblemon:poke_puff_overlay_plain_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Plain_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_plain_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.109Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.110Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.111Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_dry",
+      "fetchedAt": "2026-09-25T06:33:07.111Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_mild",
+      "fetchedAt": "2026-09-25T06:33:07.112Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_plain",
+      "fetchedAt": "2026-09-25T06:33:07.113Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_sour",
+      "fetchedAt": "2026-09-25T06:33:07.113Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.114Z"
     },
     "items/cobblemon:poke_puff_overlay_ribbon_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Ribbon_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_ribbon_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.114Z"
     },
     "items/cobblemon:poke_puff_overlay_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_sour",
+      "fetchedAt": "2026-09-25T06:33:07.115Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_berry",
+      "fetchedAt": "2026-09-25T06:33:07.115Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_clover",
+      "fetchedAt": "2026-09-25T06:33:07.116Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_flower",
+      "fetchedAt": "2026-09-25T06:33:07.117Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_love",
+      "fetchedAt": "2026-09-25T06:33:07.117Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_only",
+      "fetchedAt": "2026-09-25T06:33:07.118Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.118Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_star",
+      "fetchedAt": "2026-09-25T06:33:07.119Z"
     },
     "items/cobblemon:poke_puff_overlay_sour_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sour_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_sour_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.120Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.120Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_berry",
+      "fetchedAt": "2026-09-25T06:33:07.121Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_clover",
+      "fetchedAt": "2026-09-25T06:33:07.121Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_flower",
+      "fetchedAt": "2026-09-25T06:33:07.122Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_love",
+      "fetchedAt": "2026-09-25T06:33:07.123Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_only",
+      "fetchedAt": "2026-09-25T06:33:07.123Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.124Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_star",
+      "fetchedAt": "2026-09-25T06:33:07.125Z"
     },
     "items/cobblemon:poke_puff_overlay_spicy_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Spicy_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_spicy_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.125Z"
     },
     "items/cobblemon:poke_puff_overlay_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_star",
+      "fetchedAt": "2026-09-25T06:33:07.126Z"
     },
     "items/cobblemon:poke_puff_overlay_star_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_star_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.127Z"
     },
     "items/cobblemon:poke_puff_overlay_star_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_star_dry",
+      "fetchedAt": "2026-09-25T06:33:07.128Z"
     },
     "items/cobblemon:poke_puff_overlay_star_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_star_mild",
+      "fetchedAt": "2026-09-25T06:33:07.129Z"
     },
     "items/cobblemon:poke_puff_overlay_star_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_star_plain",
+      "fetchedAt": "2026-09-25T06:33:07.129Z"
     },
     "items/cobblemon:poke_puff_overlay_star_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_star_sour",
+      "fetchedAt": "2026-09-25T06:33:07.130Z"
     },
     "items/cobblemon:poke_puff_overlay_star_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_star_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.130Z"
     },
     "items/cobblemon:poke_puff_overlay_star_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Star_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_star_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.131Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.132Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_bitter": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Bitter.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_bitter",
+      "fetchedAt": "2026-09-25T06:33:07.132Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_dry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Dry.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_dry",
+      "fetchedAt": "2026-09-25T06:33:07.133Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_mild": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Mild.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_mild",
+      "fetchedAt": "2026-09-25T06:33:07.134Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_plain": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Plain.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_plain",
+      "fetchedAt": "2026-09-25T06:33:07.134Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_sour": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Sour.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_sour",
+      "fetchedAt": "2026-09-25T06:33:07.135Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_spicy": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Spicy.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_spicy",
+      "fetchedAt": "2026-09-25T06:33:07.135Z"
     },
     "items/cobblemon:poke_puff_overlay_strawberry_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Strawberry_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_strawberry_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.136Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet",
+      "fetchedAt": "2026-09-25T06:33:07.136Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_berry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Berry.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_berry",
+      "fetchedAt": "2026-09-25T06:33:07.137Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_clover": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Clover.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_clover",
+      "fetchedAt": "2026-09-25T06:33:07.137Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_flower": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Flower.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_flower",
+      "fetchedAt": "2026-09-25T06:33:07.138Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_love": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Love.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_love",
+      "fetchedAt": "2026-09-25T06:33:07.139Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_only": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.376Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Only.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_only",
+      "fetchedAt": "2026-09-25T06:33:07.140Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_ribbon": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.384Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Ribbon.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_ribbon",
+      "fetchedAt": "2026-09-25T06:33:07.147Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_star": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.384Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Star.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_star",
+      "fetchedAt": "2026-09-25T06:33:07.148Z"
     },
     "items/cobblemon:poke_puff_overlay_sweet_strawberry": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.385Z"
+      "wikiTitleTried": "File:Poke_Puff_Overlay_Sweet_Strawberry.png",
+      "textureBasenameTried": "poke_puff_overlay_sweet_strawberry",
+      "fetchedAt": "2026-09-25T06:33:07.149Z"
     },
     "items/cobblemon:poke_rod": {
       "status": "ok",
@@ -5438,30 +5584,6 @@
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:30.970Z"
     },
-    "items/cobblemon:pokedex_black_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.403Z"
-    },
-    "items/cobblemon:pokedex_black_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.404Z"
-    },
-    "items/cobblemon:pokedex_black_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.404Z"
-    },
-    "items/cobblemon:pokedex_black_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.404Z"
-    },
     "items/cobblemon:pokedex_blue": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/9/9d/Pok%C3%A9dex.gif",
@@ -5471,30 +5593,6 @@
       "bytes": 1411,
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:31.098Z"
-    },
-    "items/cobblemon:pokedex_blue_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.408Z"
-    },
-    "items/cobblemon:pokedex_blue_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.408Z"
-    },
-    "items/cobblemon:pokedex_blue_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.408Z"
-    },
-    "items/cobblemon:pokedex_blue_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.408Z"
     },
     "items/cobblemon:pokedex_green": {
       "status": "ok",
@@ -5506,30 +5604,6 @@
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:31.638Z"
     },
-    "items/cobblemon:pokedex_green_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.414Z"
-    },
-    "items/cobblemon:pokedex_green_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.414Z"
-    },
-    "items/cobblemon:pokedex_green_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.414Z"
-    },
-    "items/cobblemon:pokedex_green_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.414Z"
-    },
     "items/cobblemon:pokedex_pink": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/9/9d/Pok%C3%A9dex.gif",
@@ -5539,30 +5613,6 @@
       "bytes": 1411,
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:31.925Z"
-    },
-    "items/cobblemon:pokedex_pink_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.421Z"
-    },
-    "items/cobblemon:pokedex_pink_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.421Z"
-    },
-    "items/cobblemon:pokedex_pink_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.421Z"
-    },
-    "items/cobblemon:pokedex_pink_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.421Z"
     },
     "items/cobblemon:pokedex_red": {
       "status": "ok",
@@ -5574,30 +5624,6 @@
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:32.287Z"
     },
-    "items/cobblemon:pokedex_red_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.427Z"
-    },
-    "items/cobblemon:pokedex_red_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.427Z"
-    },
-    "items/cobblemon:pokedex_red_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.427Z"
-    },
-    "items/cobblemon:pokedex_red_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.427Z"
-    },
     "items/cobblemon:pokedex_white": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/9/9d/Pok%C3%A9dex.gif",
@@ -5608,30 +5634,6 @@
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:32.689Z"
     },
-    "items/cobblemon:pokedex_white_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.433Z"
-    },
-    "items/cobblemon:pokedex_white_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.433Z"
-    },
-    "items/cobblemon:pokedex_white_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.433Z"
-    },
-    "items/cobblemon:pokedex_white_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.433Z"
-    },
     "items/cobblemon:pokedex_yellow": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/9/9d/Pok%C3%A9dex.gif",
@@ -5641,30 +5643,6 @@
       "bytes": 1411,
       "sha256": "77584d51affb8eb18878ea07361684569bc505693fbb410b59f9a49a93222af9",
       "fetchedAt": "2026-09-11T17:34:33.116Z"
-    },
-    "items/cobblemon:pokedex_yellow_model_flat": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.440Z"
-    },
-    "items/cobblemon:pokedex_yellow_model_flat_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.440Z"
-    },
-    "items/cobblemon:pokedex_yellow_model_off": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.440Z"
-    },
-    "items/cobblemon:pokedex_yellow_model_scanning": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.440Z"
     },
     "items/cobblemon:pokerod_smithing_template": {
       "status": "ok",
@@ -5878,9 +5856,10 @@
     },
     "items/cobblemon:ponigiri_dried_kelp": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.515Z"
+      "wikiTitleTried": "File:Ponigiri_Dried_Kelp.png",
+      "textureBasenameTried": "ponigiri_dried_kelp",
+      "fetchedAt": "2026-09-25T06:33:07.245Z"
     },
     "items/cobblemon:ponigiri_egg": {
       "status": "ok",
@@ -5904,9 +5883,10 @@
     },
     "items/cobblemon:ponigiri_medicinal_leek": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.524Z"
+      "wikiTitleTried": "File:Ponigiri_Medicinal_Leek.png",
+      "textureBasenameTried": "ponigiri_medicinal_leek",
+      "fetchedAt": "2026-09-25T06:33:07.249Z"
     },
     "items/cobblemon:ponigiri_mutton": {
       "status": "ok",
@@ -5917,12 +5897,6 @@
       "bytes": 458,
       "sha256": "dfbdc4ebdbaf18b1a8bf12b612fcc508389cbcb0361287a8f0b393cb276a4cce",
       "fetchedAt": "2026-09-11T17:34:42.681Z"
-    },
-    "items/cobblemon:ponigiri_poisonous_potato": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.529Z"
     },
     "items/cobblemon:ponigiri_porkchop": {
       "status": "ok",
@@ -5974,12 +5948,6 @@
       "sha256": "cb4d261e1392217b05dad104be987c36a5d4614149f3f67f44053ae8ef0714ec",
       "fetchedAt": "2026-09-11T17:34:44.733Z"
     },
-    "items/cobblemon:ponigiri_rotten_flesh": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.547Z"
-    },
     "items/cobblemon:ponigiri_salmon": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/2/21/Ponigiri_Salmon.png",
@@ -5992,9 +5960,10 @@
     },
     "items/cobblemon:ponigiri_sweet_berries": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.550Z"
+      "wikiTitleTried": "File:Ponigiri_Sweet_Berries.png",
+      "textureBasenameTried": "ponigiri_sweet_berries",
+      "fetchedAt": "2026-09-25T06:33:07.268Z"
     },
     "items/cobblemon:ponigiri_tasty_tail": {
       "status": "ok",
@@ -6476,12 +6445,6 @@
       "sha256": "72ee3231de7571f6d47b29322a1e7622a9e76f7691a96c89583db80007459556",
       "fetchedAt": "2026-09-11T17:35:04.392Z"
     },
-    "items/cobblemon:relic_coin_pouch_case": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:33.917Z"
-    },
     "items/cobblemon:relic_coin_sack": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/5/5c/Relic_Coin_Sack.png",
@@ -6792,12 +6755,6 @@
       "sha256": "979c5006a4d25ee431d5b974a38935ea7d249d534ccd88ba47f017f80ef87839",
       "fetchedAt": "2026-09-11T17:35:17.830Z"
     },
-    "items/cobblemon:saccharine_log_slathered": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.056Z"
-    },
     "items/cobblemon:saccharine_planks": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/4/48/Saccharine_Planks.png",
@@ -7050,9 +7007,10 @@
     },
     "items/cobblemon:shiny_marker": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.171Z"
+      "wikiTitleTried": "File:Shiny_Marker.png",
+      "textureBasenameTried": "shiny_marker",
+      "fetchedAt": "2026-09-25T06:33:07.506Z"
     },
     "items/cobblemon:shiny_stone": {
       "status": "ok",
@@ -7126,9 +7084,10 @@
     },
     "items/cobblemon:sinister_masterpiece_tea": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.195Z"
+      "wikiTitleTried": "File:Sinister_Masterpiece_Tea.png",
+      "textureBasenameTried": "sinister_masterpiece_tea",
+      "fetchedAt": "2026-09-25T06:33:07.520Z"
     },
     "items/cobblemon:sinister_tea": {
       "status": "ok",
@@ -7142,9 +7101,10 @@
     },
     "items/cobblemon:sinister_unremarkable_tea": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.200Z"
+      "wikiTitleTried": "File:Sinister_Unremarkable_Tea.png",
+      "textureBasenameTried": "sinister_unremarkable_tea",
+      "fetchedAt": "2026-09-25T06:33:07.524Z"
     },
     "items/cobblemon:sitrus_berry": {
       "status": "ok",
@@ -7308,21 +7268,24 @@
     },
     "items/cobblemon:smithing_template.pokerod.additions_slot_description": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.277Z"
+      "wikiTitleTried": "File:Add_Poké_Ball.png",
+      "textureBasenameTried": "smithing_template.pokerod.additions_slot_description",
+      "fetchedAt": "2026-09-25T06:33:07.568Z"
     },
     "items/cobblemon:smithing_template.pokerod.base_slot_description": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.277Z"
+      "wikiTitleTried": "File:Add_Fishing_Rod.png",
+      "textureBasenameTried": "smithing_template.pokerod.base_slot_description",
+      "fetchedAt": "2026-09-25T06:33:07.570Z"
     },
     "items/cobblemon:smithing_template.pokerod.ingredients": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.277Z"
+      "wikiTitleTried": "File:Poké_Balls.png",
+      "textureBasenameTried": "smithing_template.pokerod.ingredients",
+      "fetchedAt": "2026-09-25T06:33:07.571Z"
     },
     "items/cobblemon:smoke_ball": {
       "status": "ok",
@@ -7754,12 +7717,6 @@
       "sha256": "80813a8164d6aeb1641332ea4fb445c3a6ed69b37cee71ee209eb850ff4a5fc2",
       "fetchedAt": "2026-09-11T17:35:52.572Z"
     },
-    "items/cobblemon:tatami_block": {
-      "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.503Z"
-    },
     "items/cobblemon:tatami_mat": {
       "status": "ok",
       "sourceUrl": "https://wiki.cobblemon.com/images/d/d8/Tatami_Mat.png",
@@ -7792,9 +7749,10 @@
     },
     "items/cobblemon:terrain_extruder": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.518Z"
+      "wikiTitleTried": "File:Terrain_Extruder.png",
+      "textureBasenameTried": "terrain_extruder",
+      "fetchedAt": "2026-09-25T06:33:07.683Z"
     },
     "items/cobblemon:throat_spray": {
       "status": "ok",
@@ -8248,15 +8206,17 @@
     },
     "items/cobblemon:wearable/template_band": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.741Z"
+      "wikiTitleTried": "File:Wearable/Template_Band.png",
+      "textureBasenameTried": "template_band",
+      "fetchedAt": "2026-09-25T06:33:07.767Z"
     },
     "items/cobblemon:wearable/template_glasses": {
       "status": "unresolved",
-      "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
       "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.741Z"
+      "wikiTitleTried": "File:Wearable/Template_Glasses.png",
+      "textureBasenameTried": "template_glasses",
+      "fetchedAt": "2026-09-25T06:33:07.768Z"
     },
     "items/cobblemon:wearable/wise_glasses": {
       "status": "ok",
@@ -8519,16 +8479,24 @@
       "fetchedAt": "2026-09-11T17:36:16.508Z"
     },
     "items/minecraft:bone": {
-      "status": "unresolved",
+      "status": "ok",
+      "sourceUrl": "https://wiki.cobblemon.com/images/2/2c/Bone.png",
       "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.903Z"
+      "file": "items/minecraft_bone.png",
+      "thumb": "thumbs/items/minecraft_bone.webp",
+      "bytes": 238,
+      "sha256": "530e22d036d6e7eed455d1f6499e0d1e08e170fc0fadd726e574cc83e86fb115",
+      "fetchedAt": "2026-09-23T21:19:56.832Z"
     },
     "items/minecraft:snowball": {
-      "status": "unresolved",
+      "status": "ok",
+      "sourceUrl": "https://wiki.cobblemon.com/images/0/04/Snowball.png",
       "licence": "CC BY 4.0 - Cobblemon Wiki, https://wiki.cobblemon.com",
-      "error": "no File: page on the wiki and no texture in the mod asset tree",
-      "fetchedAt": "2026-09-16T11:48:34.903Z"
+      "file": "items/minecraft_snowball.png",
+      "thumb": "thumbs/items/minecraft_snowball.webp",
+      "bytes": 194,
+      "sha256": "761b3a42fb22f7e2f2dfe17c2b7a79cf32a1febe5cf6b695e031897455e7d719",
+      "fetchedAt": "2026-09-23T21:19:57.141Z"
     },
     "pokemon/aerodactyl": {
       "status": "ok",
@@ -17569,6 +17537,316 @@
       "bytes": 158377,
       "sha256": "c7b4b95450cd3c2294889d4229fa3f55a63f288b57dfca9a99ad9c41d2d25f45",
       "fetchedAt": "2026-09-11T17:37:10.199Z"
+    },
+    "items/cobblemon:aprijuice_black_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Black_Leaf.png",
+      "textureBasenameTried": "aprijuice_black_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.809Z"
+    },
+    "items/cobblemon:aprijuice_blue_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Blue_Leaf.png",
+      "textureBasenameTried": "aprijuice_blue_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.818Z"
+    },
+    "items/cobblemon:aprijuice_green_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Green_Leaf.png",
+      "textureBasenameTried": "aprijuice_green_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.825Z"
+    },
+    "items/cobblemon:aprijuice_pink_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Pink_Leaf.png",
+      "textureBasenameTried": "aprijuice_pink_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.832Z"
+    },
+    "items/cobblemon:aprijuice_red_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Red_Leaf.png",
+      "textureBasenameTried": "aprijuice_red_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.840Z"
+    },
+    "items/cobblemon:aprijuice_white_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_White_Leaf.png",
+      "textureBasenameTried": "aprijuice_white_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.848Z"
+    },
+    "items/cobblemon:aprijuice_yellow_leaf": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Aprijuice_Yellow_Leaf.png",
+      "textureBasenameTried": "aprijuice_yellow_leaf",
+      "fetchedAt": "2026-09-25T06:33:05.856Z"
+    },
+    "items/cobblemon:pokedex_black_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Black_Model_Flat.png",
+      "textureBasenameTried": "pokedex_black_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.159Z"
+    },
+    "items/cobblemon:pokedex_black_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Black_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_black_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.161Z"
+    },
+    "items/cobblemon:pokedex_black_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Black_Model_Off.png",
+      "textureBasenameTried": "pokedex_black_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.162Z"
+    },
+    "items/cobblemon:pokedex_black_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Black_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_black_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.163Z"
+    },
+    "items/cobblemon:pokedex_blue_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Blue_Model_Flat.png",
+      "textureBasenameTried": "pokedex_blue_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.168Z"
+    },
+    "items/cobblemon:pokedex_blue_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Blue_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_blue_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.168Z"
+    },
+    "items/cobblemon:pokedex_blue_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Blue_Model_Off.png",
+      "textureBasenameTried": "pokedex_blue_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.169Z"
+    },
+    "items/cobblemon:pokedex_blue_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Blue_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_blue_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.170Z"
+    },
+    "items/cobblemon:pokedex_green_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Green_Model_Flat.png",
+      "textureBasenameTried": "pokedex_green_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.175Z"
+    },
+    "items/cobblemon:pokedex_green_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Green_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_green_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.176Z"
+    },
+    "items/cobblemon:pokedex_green_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Green_Model_Off.png",
+      "textureBasenameTried": "pokedex_green_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.176Z"
+    },
+    "items/cobblemon:pokedex_green_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Green_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_green_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.177Z"
+    },
+    "items/cobblemon:pokedex_pink_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Pink_Model_Flat.png",
+      "textureBasenameTried": "pokedex_pink_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.180Z"
+    },
+    "items/cobblemon:pokedex_pink_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Pink_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_pink_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.181Z"
+    },
+    "items/cobblemon:pokedex_pink_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Pink_Model_Off.png",
+      "textureBasenameTried": "pokedex_pink_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.182Z"
+    },
+    "items/cobblemon:pokedex_pink_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Pink_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_pink_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.183Z"
+    },
+    "items/cobblemon:pokedex_red_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Red_Model_Flat.png",
+      "textureBasenameTried": "pokedex_red_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.187Z"
+    },
+    "items/cobblemon:pokedex_red_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Red_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_red_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.188Z"
+    },
+    "items/cobblemon:pokedex_red_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Red_Model_Off.png",
+      "textureBasenameTried": "pokedex_red_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.188Z"
+    },
+    "items/cobblemon:pokedex_red_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Red_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_red_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.189Z"
+    },
+    "items/cobblemon:pokedex_white_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_White_Model_Flat.png",
+      "textureBasenameTried": "pokedex_white_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.194Z"
+    },
+    "items/cobblemon:pokedex_white_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_White_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_white_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.194Z"
+    },
+    "items/cobblemon:pokedex_white_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_White_Model_Off.png",
+      "textureBasenameTried": "pokedex_white_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.195Z"
+    },
+    "items/cobblemon:pokedex_white_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_White_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_white_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.195Z"
+    },
+    "items/cobblemon:pokedex_yellow_model_flat": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Yellow_Model_Flat.png",
+      "textureBasenameTried": "pokedex_yellow_model_flat",
+      "fetchedAt": "2026-09-25T06:33:07.200Z"
+    },
+    "items/cobblemon:pokedex_yellow_model_flat_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Yellow_Model_Flat_Off.png",
+      "textureBasenameTried": "pokedex_yellow_model_flat_off",
+      "fetchedAt": "2026-09-25T06:33:07.200Z"
+    },
+    "items/cobblemon:pokedex_yellow_model_off": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Yellow_Model_Off.png",
+      "textureBasenameTried": "pokedex_yellow_model_off",
+      "fetchedAt": "2026-09-25T06:33:07.201Z"
+    },
+    "items/cobblemon:pokedex_yellow_model_scanning": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Pokedex_Yellow_Model_Scanning.png",
+      "textureBasenameTried": "pokedex_yellow_model_scanning",
+      "fetchedAt": "2026-09-25T06:33:07.201Z"
+    },
+    "items/cobblemon:ponigiri_poisonous_potato": {
+      "status": "ok",
+      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/food/ponigiri/ponigiri_poisonous.png",
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_ponigiri_poisonous_potato.png",
+      "thumb": "thumbs/items/cobblemon_ponigiri_poisonous_potato.webp",
+      "bytes": 408,
+      "sha256": "0e2645d06031d01cb6d6c3f40c29519c8a084e6293b4b0785465bc29ecbf8b54",
+      "fetchedAt": "2026-09-23T21:21:44.625Z",
+      "matchedTexture": "ponigiri_poisonous",
+      "exactMatch": false
+    },
+    "items/cobblemon:ponigiri_rotten_flesh": {
+      "status": "ok",
+      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/food/ponigiri/ponigiri_rotten.png",
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_ponigiri_rotten_flesh.png",
+      "thumb": "thumbs/items/cobblemon_ponigiri_rotten_flesh.webp",
+      "bytes": 401,
+      "sha256": "c38ac242e0478f3e8f1ac25fa33f93ce6216b8c58b38d6ea0f78a7d3bd6bbc96",
+      "fetchedAt": "2026-09-23T21:21:45.102Z",
+      "matchedTexture": "ponigiri_rotten",
+      "exactMatch": false
+    },
+    "items/cobblemon:relic_coin_pouch_case": {
+      "status": "unresolved",
+      "error": "no File: page on the wiki and no texture in the mod asset tree",
+      "wikiTitleTried": "File:Relic_Coin_Pouch_Case.png",
+      "textureBasenameTried": "relic_coin_pouch_case",
+      "fetchedAt": "2026-09-25T06:33:07.385Z"
+    },
+    "items/cobblemon:saccharine_log_slathered": {
+      "status": "ok",
+      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/block/wood/saccharine_log_slathered_0.png",
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_saccharine_log_slathered.png",
+      "thumb": "thumbs/items/cobblemon_saccharine_log_slathered.webp",
+      "bytes": 702,
+      "sha256": "a69fbff4144c5409449e051da740d035e2834872255e6f9caec58e1e645be480",
+      "fetchedAt": "2026-09-23T21:21:45.756Z",
+      "matchedTexture": "saccharine_log_slathered_0",
+      "exactMatch": false
+    },
+    "items/cobblemon:tatami_block": {
+      "status": "ok",
+      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/block/building_blocks/tatami.png",
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_tatami_block.png",
+      "thumb": "thumbs/items/cobblemon_tatami_block.webp",
+      "bytes": 490,
+      "sha256": "d5df972a7b9d6a5512f37f58e6ef33bb742c876bfa897a17465e12e572069e00",
+      "fetchedAt": "2026-09-23T21:21:46.455Z",
+      "matchedTexture": "tatami",
+      "exactMatch": false
+    },
+    "items/cobblemon:ancient_azure_rod": {
+      "status": "ok",
+      "sourceUrl": "https://gitlab.com/cable-mc/cobblemon/-/raw/main/common/src/main/resources/assets/cobblemon/textures/item/fishing/ancient_azure_rod.png",
+      "licence": "MPL-2.0 - Cobblemon, https://gitlab.com/cable-mc/cobblemon",
+      "file": "items/cobblemon_ancient_azure_rod.png",
+      "thumb": "thumbs/items/cobblemon_ancient_azure_rod.webp",
+      "bytes": 300,
+      "sha256": "160389d7c5dec9be16568aada90e69ac6ba9199cf342077aae96cd0319d21af4",
+      "fetchedAt": "2026-09-25T06:33:05.667Z"
     }
   }
 }

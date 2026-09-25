@@ -49,9 +49,17 @@ columns are kept separate partly so the UI can tell which it is displaying.
 
 ### Cobblemon mod textures - MPL-2.0
 
-116 item textures. MPL-2.0 is file-level copyleft: it governs modification and
+127 item textures. MPL-2.0 is file-level copyleft: it governs modification and
 distribution of the covered files, and does not reach the site's own code. Using the
 textures unmodified with attribution is within it.
+
+**Seven of the 127 are modified, and MPL-2.0 §3.3 requires a modified file be marked as
+modified.** They are the Aprijuice umbrella variants, each stitched from the base juice
+texture and its per-colour umbrella overlay because the mod ships the item as two files.
+The marking lives in `assets/manifest.json`: those rows carry a `derived` field naming
+what was done and a `sourceUrls` array listing both originals, where an unmodified
+download carries a single `sourceUrl`. Anything that composites a covered texture in
+future must write the same two fields, or the file ships as an unmarked modification.
 
 Separately, Cobblemon's own asset policy asks that assets be attributed and **not used in
 a way that implies endorsement or affiliation**. The disclaimer line above is doing that

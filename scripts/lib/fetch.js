@@ -3,11 +3,37 @@
 // retries; a CDN does not need either.
 const queues = new Map();
 
+/*
+ * `allow` is the set of hosts a profile may actually reach, and it is enforced rather than
+ * documented. Half the URLs this module fetches are not written by us: an image URL comes
+ * back inside a MediaWiki `imageinfo` response and goes straight into fetch(), so a wiki
+ * that is compromised, MITM'd or simply misconfigured can name any host it likes and this
+ * script will request it from inside whatever network the build runs on.
+ *
+ * `cdn` carries two hosts because the mod textures live on GitLab and the PokeAPI sprites
+ * on GitHub, and they share a politeness profile. The three listed are every host the
+ * manifest has ever recorded a fetch from, checked 2026-09-24.
+ */
 export const HOSTS = {
-  wiki: { host: 'wiki.cobblemon.com', delayMs: 400, concurrency: 2 },
-  cdn: { host: 'raw.githubusercontent.com', delayMs: 0, concurrency: 8 },
-  pokeapi: { host: 'pokeapi.co', delayMs: 200, concurrency: 2 },
+  wiki: { host: 'wiki.cobblemon.com', allow: ['wiki.cobblemon.com'], delayMs: 400, concurrency: 2 },
+  cdn: { host: 'raw.githubusercontent.com', allow: ['raw.githubusercontent.com', 'gitlab.com'], delayMs: 0, concurrency: 8 },
+  pokeapi: { host: 'pokeapi.co', allow: ['pokeapi.co'], delayMs: 200, concurrency: 2 },
 };
+
+// Fails closed: an unparseable URL or an unknown profile is refused, not waved through.
+export function assertAllowedHost(profile, url) {
+  const allow = HOSTS[profile]?.allow;
+  if (!allow) throw new Error(`unknown fetch profile '${profile}'`);
+  let host;
+  try {
+    ({ host } = new URL(url));
+  } catch {
+    throw new Error(`refusing to fetch an unparseable URL: ${url}`);
+  }
+  if (!allow.includes(host)) {
+    throw new Error(`refusing to fetch ${host} on the '${profile}' profile (allowed: ${allow.join(', ')})`);
+  }
+}
 
 function queueFor(profile) {
   if (!queues.has(profile)) queues.set(profile, { active: 0, waiting: [], lastAt: 0 });
@@ -36,6 +62,8 @@ async function schedule(profile, fn) {
 }
 
 export async function request(profile, url, { retries = 3, binary = false } = {}) {
+  // Before the retry loop: a refused host is a refusal, not a transient failure to retry.
+  assertAllowedHost(profile, url);
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {

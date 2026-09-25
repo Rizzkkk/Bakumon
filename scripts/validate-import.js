@@ -216,6 +216,20 @@ await withClient(async (client) => {
       .map((r) => r.species_slug),
     ['bulbasaur']);
 
+  // Item artwork recovery, 2026-09-24. A count rather than a NOT NULL check: the failure
+  // this guards is a miner change that silently resolves fewer items than the last run,
+  // which "some rows have an image" would never catch. 190 rows stay blank on purpose and
+  // 01-data/known-gaps.md says which and why.
+  check('item artwork covers every row the miner can resolve',
+    Number((await one('SELECT count(*) FROM items WHERE image_url IS NOT NULL')).count), 744);
+
+  // The seven Aprijuice umbrella composites are modified MPL-2.0 files. MPL-2.0 3.3 wants
+  // a modified file marked, and the manifest's `derived` field is that marking - so the
+  // count is a licence assertion, not a cosmetic one. See 02-assets/attribution.md.
+  const manifest = JSON.parse(await fs.readFile(path.join(ROOT, 'assets/manifest.json'), 'utf8'));
+  check('every composited texture is marked as a modification',
+    Object.values(manifest.entries).filter((e) => e.derived).length, 7);
+
   const report = [
     '# Import validation',
     '',

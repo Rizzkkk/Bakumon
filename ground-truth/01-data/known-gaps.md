@@ -47,21 +47,46 @@ One consequence binds every list query: **three** display names collide - `Mime 
 `Mr. Mime` and `Mr. Rime` each appear twice - so ordering must be `display_name, id` and
 never `display_name` alone, or the same row can land on two pages or on neither.
 
-## Item artwork covers 78% of rows, 91% of real items
+## Item artwork covers 80% of rows, 93% of real items
 
-731 of 934 rows have an image. Of the 203 without one, most are not items:
+744 of 934 rows have an image, up from 731 on 2026-09-24. Of the 190 without one, most are
+not items:
 
 | Kind | Count |
 |---|---|
 | `poke_puff_overlay_*` GUI sprites | 119 |
 | Localisation fragments (dotted IDs) | 13 |
-| Runtime-tinted Aprijuice variants | 14 |
-| Pokedex model-state textures and similar | 57 |
+| Pokedex model-state rows | 28 |
+| Aprijuice leaf garnish | 7 |
+| Real items with no texture found | 23 |
 
-Excluding the GUI sprites and lang fragments, coverage is 731 of 802.
+Excluding the GUI sprites and lang fragments, coverage is 744 of 802.
 
-**Status**: accepted. Chasing the remainder means hand-mapping textures for things no
-player looks up. Live numbers in `ground-truth/reports/asset-manifest.md`.
+The thirteen recovered on 2026-09-24 came from three separate causes, none of them a
+missing texture:
+
+- **Two rows had no display name.** The workbook's `name` column holds `minecraft:bone`
+  and `minecraft:snowball` verbatim, so the miner asked for `File:minecraft:bone.png` - a
+  title MediaWiki cannot hold - against a wiki that has both under their plain English
+  name. The miner now derives a title from the ID when the name is a raw ID.
+- **Seven Aprijuice umbrella rows are composites.** The mod ships the base juice and a
+  per-colour umbrella overlay as separate files and the item is the two stacked.
+- **Four textures are named slightly differently from their item.** `tatami_block` is
+  `tatami.png`, `ponigiri_rotten_flesh` is `ponigiri_rotten.png`.
+
+**The seven Aprijuice leaf rows stay blank deliberately.** There is no leaf overlay in the
+mod tree. What exists is `aprijuice_overlay1.png` and `aprijuice_overlay2.png` - unnamed,
+and neither of them green; overlay1 is a gold wedge and overlay2 a white bar. Compositing
+one and captioning it "leaf" would put art on the wiki that the game does not have.
+
+**The 28 Pokedex model-state rows stay blank deliberately.** `pokedex_<colour>_model_off`
+and `_model_scanning` describe a held model's state, not an inventory icon, and the tree
+has no texture for them. An earlier pass resolved all 28 to the plain `pokedex_<colour>`
+icon, which meant four differently-named rows showing one picture that already belonged to
+a fifth row. The miner now refuses any texture another item matches exactly.
+
+**Status**: accepted. The remaining 23 are items whose texture is not in the indexed roots
+under any recognisable name. Live numbers in `ground-truth/reports/asset-manifest.md`.
 
 ## Item descriptions are 59% blank
 

@@ -9,8 +9,12 @@ import { sourceCategoryLabel } from '../../lib/labels.js';
 export function ItemCard({ item }) {
   return (
     <li className="index-row">
-      {/* imageUrl, not a thumbnail: item art is a 16x16 game texture averaging 1.4 KB, so a
-          24-row page is 33 KB and a thumbnail would save nothing worth a migration. */}
+      {/* imageUrl, not a thumbnail, and not for the reason this comment used to give. The
+          thumbnails do save: 639 B against 1364 B, so 15 KB a page against 33 KB. They are
+          not served because they are 128px upscales, and 739 of the 744 source textures are
+          16x16 or 32x32 - exactly 6x or 3x at this size, which is what makes `pixelated`
+          render clean blocks. Coming from 128px instead is a 0.75x downscale of
+          already-blocked pixels and the block widths go uneven. Measured 2026-09-24. */}
       <Artwork src={item.imageUrl} alt={itemAlt(item.name)} size={96} pixel />
       <div className="index-row__body">
         <Link className="index-row__name" to={`/wiki/items/${encodeURIComponent(item.itemId)}`}>

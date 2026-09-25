@@ -13,6 +13,19 @@ records what it supersedes.
 
 ### Added
 
+- **Item artwork covers 744 of 934 rows, up from 731** (`npm run mine items`, confirmed by
+  the new `npm run validate` assertion). The thirteen recovered were three unrelated bugs,
+  none of them a missing texture. Two rows have no display name at all - the workbook's
+  `name` column holds `minecraft:bone` and `minecraft:snowball` verbatim, so the miner
+  asked MediaWiki for `File:minecraft:bone.png`, a title it cannot hold, while the wiki has
+  both under `File:Bone.png`; `itemDisplayName()` now derives a title from the ID. Seven
+  Aprijuice umbrella rows are composites - the mod ships the juice and a per-colour
+  umbrella overlay as separate files - and `compositeAprijuice()` stitches them. Four
+  textures are named slightly differently from their item (`tatami_block` is `tatami.png`).
+- **Unresolved manifest rows record what was tried.** All 203 previously carried one
+  identical string, no `sourceUrl` and no per-item reason, so every retry was blind. They
+  now carry `wikiTitleTried` and `textureBasenameTried`, and no longer carry a licence -
+  nothing was downloaded, so there was nothing to licence.
 - **`GET /api/pokemon/:slug` carries `imageSource` and `imageVariant`; the Pokemon detail
   page names the variant next to the artwork.** ADR 0012: the Cobblemon wiki turned out to
   hold `(model)` renders for 66 of 904 species (measured via `list=allimages` per species,
@@ -151,6 +164,31 @@ records what it supersedes.
 
 ### Changed
 
+- **A mod texture that already belongs to another item is never offered as a near miss.**
+  The first cut of the near-miss fallback was a plain longest-prefix match and it resolved
+  40 rows, most of them wrong: all 28 `pokedex_<colour>_model_*` rows took the plain
+  `pokedex_<colour>` icon, all 7 `aprijuice_<colour>_leaf` rows took the plain juice, and
+  `saccharine_log_slathered` took the *un*-slathered log. In each the dropped suffix is
+  what distinguishes the item, and the texture picked up was already some other row's exact
+  match - four differently-named items showing one picture. `resolveModTexture` now checks
+  a `<base>_<digits>` series first (so `saccharine_log_slathered` finds its own stage 0)
+  and refuses any shorter basename another row claims exactly. 4 near misses survive, each
+  a genuine truncation, and all four were checked by eye.
+- **The Aprijuice leaf garnish and the 28 Pokedex model states stay blank on purpose.**
+  There is no leaf overlay in the mod tree - only `aprijuice_overlay1.png` and
+  `aprijuice_overlay2.png`, unnamed and neither green - and no `pokedex_*_model_*` texture
+  at all. Both are recorded in `01-data/known-gaps.md` rather than approximated.
+- **`ItemCard.jsx`'s reason for not serving thumbnails was wrong; the decision was right.**
+  It said a thumbnail "would save nothing"; measured, thumbnails are 639 B against 1364 B,
+  15 KB a page against 33 KB. The real reason is that 739 of the 744 textures are 16x16 or
+  32x32, which `image-rendering: pixelated` renders as exact 6x or 3x blocks at 96px, while
+  the 128px thumbnails would arrive as a 0.75x downscale with uneven block widths. The
+  planned `items.thumb_url` migration was dropped on that measurement.
+- **`TEXTURE_ROOTS` was measured rather than widened.** The Cobblemon texture tree holds
+  4,809 PNGs across fourteen roots; indexing all of them resolves exactly two more IDs and
+  both are the wrong picture - `cobblemon:apricorn` matches a boat hull under `entity/`,
+  `cobblemon:cobblemon` an advancement background under `gui/`. The five roots stand, with
+  the measurement recorded next to them.
 - **The site no longer tells anyone that legendaries need 25 players online.** The owner
   confirmed on 2026-09-24 that the Pebble Spawn Event player gate is off and legendaries
   now spawn genuinely at random. `EVENT_PLAYER_THRESHOLD` is deleted from `serverFacts.js`
@@ -253,6 +291,31 @@ records what it supersedes.
 
 ### Fixed
 
+- **The miner's resumability cache could not see a resolver change, and that cost a manual
+  cleanup.** `download()` skipped any entry that was `ok`, still on disk and carried the
+  same licence. Licence cannot distinguish two different textures from the same source, so
+  when `resolveModTexture` was tightened, all 40 wrongly-resolved items were skipped and
+  kept their wrong art until they were cleared by hand. The predicate now compares
+  `sourceUrl`, so a resolver change invalidates its own cache. Found by a review agent,
+  confirmed at the cited line.
+- **`scripts/lib/fetch.js` fetched whatever URL the wiki handed back** (CWE-918). Item and
+  Pokemon image URLs arrive inside a MediaWiki `imageinfo` response and went straight into
+  `fetch()`, so a compromised or MITM'd wiki could name any host and the build would request
+  it from inside whatever network it runs on. `request()` now checks the host against a
+  per-profile allowlist built from the three hosts the manifest has ever recorded, and fails
+  closed on an unparseable URL or an unknown profile.
+- **The fetch profile was chosen by substring, so every GitLab texture used the wiki's
+  queue.** `url.includes('raw.githubusercontent') ? 'cdn' : 'wiki'` put all 127 mod textures
+  behind the wiki's deliberately slow 2-at-a-time 400ms throttle. `profileFor()` now
+  resolves the profile from the URL's host. Surfaced because the new allowlist refused it.
+- **`store()` asserts its writes land under `assets/`** (CWE-22). Item IDs are scrubbed of
+  `:` and `/` at the call site but species slugs were interpolated raw into
+  `pokemon/<slug>.png`. Not reachable today - all 904 slugs match `^[a-z0-9_-]+$`, checked
+  against the database - but that is a fact about this export, and a re-export is exactly
+  what would change it. The thumbnail path inherited the same escape.
+- **`resolveModTexture` escapes the item base before building a RegExp.** Thirteen item IDs
+  carry a literal `.` (`cobblemon:aprijuice.quality_format` and siblings), which unescaped
+  is a wildcard that can match a texture one character off.
 - `pokemonAlt` no longer claims a source it does not know. Only the detail response carries
   `imageSource`, so every index thumbnail reaches it with the source undefined - and 66 of
   those 904 are wiki renders, which the old default described aloud as "official artwork".

@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import sharp from 'sharp';
 import { ROOT } from './lib/paths.js';
 import { withClient } from './lib/db.js';
-import { request, chunk, mapLimit } from './lib/fetch.js';
+import { request, chunk, mapLimit, HOSTS } from './lib/fetch.js';
 
 const ASSETS = path.join(ROOT, 'assets');
 const MANIFEST_PATH = path.join(ASSETS, 'manifest.json');
@@ -16,6 +16,12 @@ const GITLAB_RAW = 'https://gitlab.com/cable-mc/cobblemon/-/raw/main';
 const TEXTURE_BASE = 'common/src/main/resources/assets/cobblemon/textures';
 // Ores and placeable blocks are items in the workbook but their textures live under
 // block/, not item/. Searching item/ alone left every Dawn Stone Ore without art.
+//
+// Deliberately not widened past these five. The tree carries 4,809 PNGs across fourteen
+// roots; indexing all of them resolves exactly two more item IDs, and both are the wrong
+// picture - `cobblemon:apricorn` matches a boat hull under entity/, `cobblemon:cobblemon`
+// matches an advancement background under gui/. The unindexed roots are Pokemon models,
+// particles and GUI chrome, none of which is an inventory icon. Measured 2026-09-24.
 const TEXTURE_ROOTS = ['item', 'block', 'berries', 'fossils', 'poke_balls'];
 
 const LICENCES = {
@@ -55,45 +61,85 @@ async function exists(file) {
   return fs.access(file).then(() => true).catch(() => false);
 }
 
+// The profile decides both the politeness queue and the host allowlist, so it is resolved
+// from the URL's host rather than guessed from a substring of it.
+function profileFor(url) {
+  const { host } = new URL(url);
+  const profile = Object.keys(HOSTS).find((name) => HOSTS[name].allow.includes(host));
+  if (!profile) throw new Error(`no fetch profile allows ${host}`);
+  return profile;
+}
+
+// Writes the image, its thumbnail and the manifest row. Split out of download() because
+// the aprijuice composites produce their bytes rather than fetching them, and the
+// provenance a manifest row has to carry is the same either way.
+async function store(key, relativePath, buffer, provenance, { upscale = false } = {}) {
+  const absolute = path.join(ASSETS, relativePath);
+  /*
+   * Every path here is built from a workbook value. Item IDs are scrubbed of `:` and `/`
+   * at the call site but species slugs are interpolated raw, and all 904 happen to match
+   * ^[a-z0-9_-]+$ today (checked against the database 2026-09-24) - which is a fact about
+   * this export, not a property of the format. A re-export is exactly the event that would
+   * change it, so the containment is asserted here rather than inferred from the data.
+   */
+  if (path.relative(ASSETS, absolute).startsWith('..')) {
+    throw new Error(`${key}: refusing to write outside assets/ (${relativePath})`);
+  }
+  await fs.mkdir(path.dirname(absolute), { recursive: true });
+  await fs.writeFile(absolute, buffer);
+
+  const thumbRelative = path.join('thumbs', `${relativePath.replace(/\.[^.]+$/, '')}.webp`);
+  const thumbAbsolute = path.join(ASSETS, thumbRelative);
+  await fs.mkdir(path.dirname(thumbAbsolute), { recursive: true });
+  // Item textures are 16x16 game art. Upscaling them with anything but nearest
+  // neighbour turns crisp pixel art into mush.
+  await sharp(buffer)
+    .resize(upscale ? 128 : 256, upscale ? 128 : 256, {
+      fit: 'inside',
+      kernel: upscale ? sharp.kernel.nearest : sharp.kernel.lanczos3,
+      withoutEnlargement: !upscale,
+    })
+    .webp({ quality: 82 })
+    .toFile(thumbAbsolute);
+
+  manifest.entries[key] = {
+    status: 'ok',
+    ...provenance,
+    file: relativePath.replace(/\\/g, '/'),
+    thumb: thumbRelative.replace(/\\/g, '/'),
+    bytes: buffer.length,
+    sha256: crypto.createHash('sha256').update(buffer).digest('hex'),
+    fetchedAt: new Date().toISOString(),
+  };
+  return manifest.entries[key];
+}
+
 // Resumable by design: a run that dies partway leaves a manifest the next run trusts, so
 // only the missing and the failed are refetched.
 async function download(key, url, relativePath, licence, { upscale = false } = {}) {
   const absolute = path.join(ASSETS, relativePath);
   const entry = manifest.entries[key];
-  // A cached entry only satisfies resumability for the source it was fetched from. The
-  // wiki-first switch reuses the same pokemon/<slug>.png path for both sources, so a
-  // stale PokeAPI entry must not shadow a species that now resolves to a wiki render.
-  if (entry?.status === 'ok' && entry.licence === licence && await exists(absolute)) return entry;
+  /*
+   * A cached entry only satisfies resumability for the exact URL it was fetched from. The
+   * wiki-first switch reuses the same pokemon/<slug>.png path for both sources, so a stale
+   * PokeAPI entry must not shadow a species that now resolves to a wiki render.
+   *
+   * The URL, not just the licence. Licence alone cannot see a change of texture within one
+   * source, and that is not hypothetical: tightening resolveModTexture on 2026-09-24 left
+   * 40 items still pointing at the wrong mod texture, because the old file was `ok`, still
+   * on disk and still MPL-2.0, so every one of them was skipped. They had to be cleared by
+   * hand. Comparing the URL makes a resolver change invalidate its own cache.
+   */
+  if (entry?.status === 'ok' && entry.sourceUrl === url && entry.licence === licence
+      && await exists(absolute)) return entry;
 
   try {
-    const buffer = await request(url.includes('raw.githubusercontent') ? 'cdn' : 'wiki', url, { binary: true });
-    await fs.mkdir(path.dirname(absolute), { recursive: true });
-    await fs.writeFile(absolute, buffer);
-
-    const thumbRelative = path.join('thumbs', `${relativePath.replace(/\.[^.]+$/, '')}.webp`);
-    const thumbAbsolute = path.join(ASSETS, thumbRelative);
-    await fs.mkdir(path.dirname(thumbAbsolute), { recursive: true });
-    // Item textures are 16x16 game art. Upscaling them with anything but nearest
-    // neighbour turns crisp pixel art into mush.
-    await sharp(buffer)
-      .resize(upscale ? 128 : 256, upscale ? 128 : 256, {
-        fit: 'inside',
-        kernel: upscale ? sharp.kernel.nearest : sharp.kernel.lanczos3,
-        withoutEnlargement: !upscale,
-      })
-      .webp({ quality: 82 })
-      .toFile(thumbAbsolute);
-
-    manifest.entries[key] = {
-      status: 'ok',
-      sourceUrl: url,
-      file: relativePath.replace(/\\/g, '/'),
-      thumb: thumbRelative.replace(/\\/g, '/'),
-      licence,
-      bytes: buffer.length,
-      sha256: crypto.createHash('sha256').update(buffer).digest('hex'),
-      fetchedAt: new Date().toISOString(),
-    };
+    // By host, not by substring. The old test asked only whether the URL was GitHub, so
+    // every GitLab mod texture was fetched on the wiki profile - which meant 127 files
+    // queued behind the wiki's deliberately slow 2-at-a-time 400ms throttle, and which the
+    // host allowlist in lib/fetch.js now refuses outright.
+    const buffer = await request(profileFor(url), url, { binary: true });
+    await store(key, relativePath, buffer, { sourceUrl: url, licence }, { upscale });
   } catch (error) {
     manifest.entries[key] = {
       status: 'failed', sourceUrl: url, licence, error: String(error.message),
@@ -253,6 +299,17 @@ async function queryWikiTitles(titles, params) {
 
 const wikiTitle = (name) => name.replace(/ /g, '_');
 
+/*
+ * Two rows carry no display name: the workbook's name column holds `minecraft:bone` and
+ * `minecraft:snowball` verbatim. The miner asked the wiki for `File:minecraft:bone.png`,
+ * which is not a title MediaWiki can hold, so both failed against a wiki that has them
+ * under `File:Bone.png`. Derived from the ID rather than listed, so a re-export that
+ * leaves some other row unnamed recovers without another patch here.
+ */
+const itemDisplayName = (name) => (/^[a-z0-9_]+:/.test(name)
+  ? name.split(/[:/]/).pop().split('_').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+  : name);
+
 // Many real items have no wiki File: page at all - every Aprijuice variant and every
 // ancient fishing rod, among others. The mod ships their textures, so the fallback is the
 // mod's own asset tree, indexed once by filename and matched on the item ID.
@@ -283,15 +340,91 @@ async function loadModTextureIndex() {
   return index;
 }
 
+/*
+ * Exact basename, then a numbered series, then a shorter texture name that no other item
+ * has already claimed.
+ *
+ * `claimed` is the rule that matters and it was learned the expensive way. A plain
+ * longest-prefix fallback resolved 40 rows and most of them were wrong: every
+ * `pokedex_<colour>_model_off` took `pokedex_<colour>`, every `aprijuice_<colour>_leaf`
+ * took `aprijuice_<colour>`, and `saccharine_log_slathered` took the *un*-slathered log.
+ * In each case the suffix being dropped is the thing that distinguishes the item, and the
+ * texture picked up already belongs to a different row. Showing one item's picture under
+ * another item's name is worse than showing none, so a basename some row matches exactly
+ * is never offered to a row that does not.
+ *
+ * The numbered series is checked first because it is strictly more specific than the item
+ * name rather than less: `saccharine_log_slathered` -> `saccharine_log_slathered_0`, the
+ * first stage of a four-stage block, which is the item.
+ */
+function resolveModTexture(index, claimed, itemId) {
+  const base = itemId.split(/[:/]/).pop();
+  const exact = index.get(base);
+  if (exact) return { path: exact, base, exact: true };
+
+  // Escaped: thirteen item IDs carry a literal `.` (cobblemon:aprijuice.quality_format and
+  // friends), which unescaped is a wildcard that would match a texture one character off.
+  const literal = base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const series = [...index.keys()]
+    .filter((c) => new RegExp(`^${literal}_\\d+$`).test(c))
+    .sort();
+  if (series.length) return { path: index.get(series[0]), base, matched: series[0], exact: false };
+
+  let best = null;
+  for (const candidate of index.keys()) {
+    if (!base.startsWith(candidate) || claimed.has(candidate)) continue;
+    if (!best || candidate.length > best.length) best = candidate;
+  }
+  return best ? { path: index.get(best), base, matched: best, exact: false } : { base, exact: false };
+}
+
+/*
+ * Seven of the fourteen aprijuice garnish rows can be rebuilt from what the mod ships:
+ * aprijuice_<colour>.png and aprijuice_<colour>_overlay_umbrella.png stacked in that
+ * order is the item.
+ *
+ * The other seven are the leaf garnish and they stay unresolved. The tree has no leaf
+ * overlay - only `aprijuice_overlay1.png` and `aprijuice_overlay2.png`, unnamed, and
+ * neither is green: overlay1 is a gold wedge, overlay2 a white bar. Picking one and
+ * calling it a leaf would put art in the wiki that the game does not have.
+ *
+ * MPL-2.0 §3.3 requires a modified file be marked as modified, so the manifest row
+ * carries `derived` and both source URLs rather than reading as an unmodified download.
+ */
+const APRIJUICE_UMBRELLA = /^cobblemon:aprijuice_([a-z]+)_umbrella$/;
+
+async function compositeAprijuice(itemId, colour) {
+  const key = `items/${itemId}`;
+  const cached = manifest.entries[key];
+  // Same resumability contract as download(): `derived` distinguishes a composite from a
+  // plain fetch that happens to share the path, so a half-finished run is not re-stitched.
+  if (cached?.status === 'ok' && cached.derived && await exists(path.join(ASSETS, cached.file))) return cached;
+
+  const dir = `${GITLAB_RAW}/${TEXTURE_BASE}/item/aprijuice`;
+  const sources = [`${dir}/aprijuice_${colour}.png`, `${dir}/aprijuice_${colour}_overlay_umbrella.png`];
+  const [base, overlay] = await Promise.all(sources.map((u) => request('cdn', u, { binary: true })));
+  const buffer = await sharp(base).composite([{ input: overlay }]).png().toBuffer();
+
+  return store(
+    `items/${itemId}`,
+    `items/${itemId.replace(/[:/\\]/g, '_')}.png`,
+    buffer,
+    { derived: 'composited from the base juice and its umbrella overlay', sourceUrls: sources, licence: LICENCES.mod },
+    { upscale: true },
+  );
+}
+
 async function mineItems(client) {
   const { rows } = await client.query('SELECT id, item_id, name FROM items ORDER BY item_id');
   console.log(`\n== items (${rows.length})`);
 
-  const fileTitles = rows.map((r) => `File:${wikiTitle(r.name)}.png`);
+  const displayName = new Map(rows.map((r) => [r.item_id, itemDisplayName(r.name)]));
+
+  const fileTitles = rows.map((r) => `File:${wikiTitle(displayName.get(r.item_id))}.png`);
   const files = await queryWikiTitles(fileTitles, { prop: 'imageinfo', iiprop: 'url|size' });
   console.log(`   wiki files matched: ${files.size}/${rows.length}`);
 
-  const pageTitles = rows.map((r) => r.name);
+  const pageTitles = rows.map((r) => displayName.get(r.item_id));
   const extracts = await queryWikiTitles(pageTitles, {
     prop: 'extracts', explaintext: '1', exintro: '1',
   });
@@ -301,21 +434,41 @@ async function mineItems(client) {
   const modTextures = await loadModTextureIndex();
   console.log(`   mod texture index: ${modTextures.size}`);
 
+  const claimed = new Set(rows
+    .map((r) => r.item_id.split(/[:/]/).pop())
+    .filter((base) => modTextures.has(base)));
+
   let done = 0;
   let fromWiki = 0;
   let fromMod = 0;
+  let fromNearMiss = 0;
+  let composited = 0;
 
   for (const row of rows) {
-    const wikiUrl = files.get(`File:${row.name}.png`)?.imageinfo?.[0]?.url;
+    const title = displayName.get(row.item_id);
+    const wikiUrl = files.get(`File:${title}.png`)?.imageinfo?.[0]?.url;
     // IDs like `cobblemon:wearable/black_glasses` carry a path segment; the texture is
     // indexed under the last one.
-    const modPath = modTextures.get(row.item_id.split(/[:/]/).pop());
+    const texture = resolveModTexture(modTextures, claimed, row.item_id);
+    const umbrella = APRIJUICE_UMBRELLA.exec(row.item_id);
     const [url, licence] = wikiUrl
       ? [wikiUrl, LICENCES.wiki]
-      : [modPath && `${GITLAB_RAW}/${modPath}`, LICENCES.mod];
+      : [texture.path && `${GITLAB_RAW}/${texture.path}`, LICENCES.mod];
 
-    if (url) {
-      const entry = await download(
+    let entry = null;
+    // Ahead of the texture index on purpose: the index's best near miss for an umbrella
+    // row is the plain juice, which is the right drink without the thing that names it.
+    if (!wikiUrl && umbrella) {
+      try {
+        entry = await compositeAprijuice(row.item_id, umbrella[1]);
+        composited++;
+      } catch (error) {
+        console.log(`   [warn] composite ${row.item_id}: ${error.message}`);
+      }
+    }
+
+    if (!entry && url) {
+      entry = await download(
         `items/${row.item_id}`,
         url,
         `items/${row.item_id.replace(/[:/\\]/g, '_')}.png`,
@@ -323,19 +476,35 @@ async function mineItems(client) {
         { upscale: true },
       );
       if (entry.status === 'ok') {
-        if (wikiUrl) fromWiki++; else fromMod++;
-        await client.query('UPDATE items SET image_url = $2 WHERE id = $1',
-          [row.id, `/assets/${entry.file}`]);
+        if (wikiUrl) fromWiki++;
+        else if (texture.exact) fromMod++;
+        else {
+          fromNearMiss++;
+          // An inexact match is a guess about which texture belongs to this ID. Recorded
+          // so the next person can audit the five of them rather than assume all 700-odd
+          // were exact.
+          Object.assign(entry, { matchedTexture: texture.matched, exactMatch: false });
+        }
       }
-    } else {
+    }
+
+    if (entry?.status === 'ok') {
+      await client.query('UPDATE items SET image_url = $2 WHERE id = $1',
+        [row.id, `/assets/${entry.file}`]);
+    } else if (!entry) {
+      // No licence: nothing was downloaded, so there is nothing to licence. The fields
+      // that matter are what was actually asked for, because every previous retry of
+      // these 190-odd rows was blind - the old row said only "not found".
       manifest.entries[`items/${row.item_id}`] = {
-        status: 'unresolved', licence: LICENCES.wiki,
+        status: 'unresolved',
         error: 'no File: page on the wiki and no texture in the mod asset tree',
+        wikiTitleTried: `File:${wikiTitle(title)}.png`,
+        textureBasenameTried: texture.base,
         fetchedAt: new Date().toISOString(),
       };
     }
 
-    const extract = (extracts.get(row.name)?.extract ?? '').trim();
+    const extract = (extracts.get(title)?.extract ?? '').trim();
     if (extract) {
       // Never touches `description`; the workbook stays authoritative.
       await client.query('UPDATE items SET wiki_description = $2 WHERE id = $1',
@@ -343,7 +512,8 @@ async function mineItems(client) {
     }
     if (++done % 200 === 0) { console.log(`   ${done}/${rows.length}`); await save(); }
   }
-  console.log(`   images: ${fromWiki} from the wiki, ${fromMod} from the mod asset tree`);
+  console.log(`   images: ${fromWiki} from the wiki, ${fromMod} from the mod asset tree, `
+    + `${fromNearMiss} from a near-miss texture name, ${composited} composited`);
   await save();
 }
 
@@ -417,8 +587,11 @@ Item descriptions recovered from the wiki: **${db.item_descriptions}**, written 
 |---|---|
 ${Object.entries(summary).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}
 
-Total downloaded: **${(bytes / 1048576).toFixed(1)} MB** across ${entries.filter(([, e]) => e.status === 'ok').length} files,
-plus a 256px (Pokemon) or 128px nearest-neighbour (items) WebP thumbnail for each.
+Total stored: **${(bytes / 1048576).toFixed(1)} MB** across ${entries.filter(([, e]) => e.status === 'ok').length} files,
+plus a 256px (Pokemon) or 128px nearest-neighbour (items) WebP thumbnail for each. Stored
+rather than downloaded: ${entries.filter(([, e]) => e.derived).length} of them are composited from two mod textures each and were
+never fetched as a finished image - see \`02-assets/attribution.md\` on marking modified
+MPL-2.0 files.
 
 ## Sources and licences
 
